@@ -1,0 +1,98 @@
+
+*{
+    padding: 0;
+    margin: 0;
+}
+ion-content{
+    .header{
+        position: relative;
+        top: 13%;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+
+        h1{
+            font-size: 23px;
+            font-weight: bold;
+            color: black;
+        }
+        p{
+            width: 70%;
+            font-size: 13px;
+            text-align: center;
+            color: black;
+        }
+    }
+
+    .form-cont{
+        position: relative;
+        top: 18%;
+        
+        ion-label{
+            font-size: 12px;
+            font-weight: bold;
+            color:black;
+        }
+        form{
+            padding: 0% 10%;
+            ion-input{
+                color: black;
+            }
+            ion-button{
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+        .form-holder{
+            display: flex;
+            flex-direction: column;
+            ion-label{
+                margin-top: 10px;
+            }
+        }
+    }
+    .sign-up-with{
+        position: relative;
+        padding: 5%;
+        top: 20%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p{
+            color: black;
+            font-size: 13px;
+            vertical-align: center;
+        }
+        hr{
+            background-color: lightgray;
+            width: 30%;
+        }
+    }
+    .social-cont{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: 22%;
+        gap: 10px;
+        .soc-button{
+            background-color: transparent;
+        }
+    }
+    .already{
+        color: black;
+        position: relative;
+        top: 26%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: 13px;
+        a{
+            color: lightgray;
+        }
+    }
+}

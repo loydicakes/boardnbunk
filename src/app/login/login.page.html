@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <h1>Login</h1>
+    <p>Hi! Welcome Back, you've been missed</p>
+  </div>
+
+  <div class="form-cont ion-padding">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-holder ion-padding">
+        
+        <ion-label>Email</ion-label>
+        <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
+          <ion-input formControlName="email" type="email" placeholder="Enter your email"></ion-input>
+        </ion-item>
+        <div *ngIf="email.invalid && email.touched" class="error-message">
+          <p *ngIf="email.errors?.['required']">Email is required.</p>
+          <p *ngIf="email.errors?.['email']">Please enter a valid email.</p>
+        </div>
+        
+        <ion-label>Password</ion-label>
+        <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
+          <ion-input formControlName="password" type="password" placeholder="Enter your password"></ion-input>
+        </ion-item>
+        <div *ngIf="password.invalid && password.touched" class="error-message">
+          <p *ngIf="password.errors?.['required']">Password is required.</p>
+          <p *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long.</p>
+        </div>
+        <a>Forgot Password?</a>
+      </div>
+
+      <div *ngIf="loginError" class="error-message">
+        <p>{{ loginError }}</p>
+      </div>
+      
+      <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" style="margin-top: 10%; padding: 0 20%; --background: black; --color: white;">
+        Log in
+      </ion-button>
+    </form>
+  </div>
+
+  <div class="sign-up-with">
+    <hr>
+    <p>Sign in with</p>
+    <hr>
+  </div>
+
+  <div class="social-cont">
+    <ion-button size="large" style="--background: black" shape="round">
+      <ion-icon name="logo-facebook" style="color: white;" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button style="--background: black" shape="round" size="large">
+      <ion-icon name="logo-google" style="color: white;" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div class="already">
+    <p>Already have an account? <a routerLink="/home">Sign in</a></p>
+  </div>
+</ion-content>
