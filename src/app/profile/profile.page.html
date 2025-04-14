@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+    
+    <!-- Back Button -->
+    <ion-buttons class="backbutton" slot="start">
+      <ion-back-button defaultHref="/" class="circle-back-button"></ion-back-button>
+    </ion-buttons>
+
+    <!-- Profile Photo Holder -->
+    <div class="profile-section">
+      <div class="photo-holder"></div>
+      <div class="name-display">John Doe</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="action-buttons">
+      <ion-button fill="clear" expand="block" class="action-button-row">
+        <ion-icon name="person-circle-outline" slot="start" class="left-icon"></ion-icon>
+        <span class="button-text">Profile</span>
+        <ion-icon name="chevron-forward-outline" slot="end" class="arrow-icon"></ion-icon>
+      </ion-button>
+    
+      <div class="divider"></div>
+    
+      <ion-button fill="clear" expand="block" class="action-button-row">
+        <ion-icon name="settings-outline" slot="start" class="left-icon"></ion-icon>
+        <span class="button-text">Settings</span>
+        <ion-icon name="chevron-forward-outline" slot="end" class="arrow-icon"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Card -->
+    <ion-card class="custom-card">
+      <ion-card-content class="card-full-content">
+        <div class="card-content">
+          <ion-icon name="car-outline" class="card-icon"></ion-icon>
+          <div class="card-title">Current Rental</div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>
