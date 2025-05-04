@@ -15,6 +15,18 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
+  {
+    path: 'profile-pns',
+    loadChildren: () => import('./profile-pns/profile-pns.module').then( m => m.ProfilePnsPageModule)
+  },
+  {
+    path: 'profile-pm',
+    loadChildren: () => import('./profile-pm/profile-pm.module').then( m => m.ProfilePmPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
 ];
 
 @NgModule({

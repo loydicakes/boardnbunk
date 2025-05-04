@@ -1,0 +1,90 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+
+    <!-- Back Button -->
+    <ion-buttons class="backbutton" slot="start">
+      <ion-back-button defaultHref="/" class="circle-back-button"></ion-back-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <h4 class="title">Personal & Security</h4>
+
+    <!-- Edit Profile Title -->
+    <h4>Edit Profile</h4>
+    <!-- Edit Profile Section -->
+    <div class="section">
+      <div class="input-container">
+        <label>Name</label>
+        <div class="input-box">
+          <input type="text" value="John Doe" />
+          <ion-icon name="create-outline" class="edit-icon"></ion-icon>
+        </div>
+      </div>
+      <div class="input-container">
+        <label>Phone Number</label>
+        <div class="input-box">
+          <input type="number" value="09559374537" />
+          <ion-icon name="create-outline" class="edit-icon"></ion-icon>
+        </div>
+      </div>
+      <div class="input-container">
+        <label>Email</label>
+        <div class="input-box">
+          <input type="text" value="johndoe@gmail.com" />
+          <ion-icon name="create-outline" class="edit-icon"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Password Title -->
+    <h4>Change Password</h4>
+    <!-- Change Password Section -->
+    <div class="section">
+
+      <!-- Current Password -->
+      <div class="input-container">
+        <label>Current Password</label>
+        <div class="input-box">
+          <input [type]="showCurrentPassword ? 'text' : 'password'" [(ngModel)]="currentPassword"
+            id="current-password" />
+          <ion-icon *ngIf="currentPassword" [name]="showCurrentPassword ? 'eye-outline' : 'eye-off-outline'"
+            class="toggle-icon" (click)="togglePassword('current')">
+          </ion-icon>
+        </div>
+      </div>
+
+      <!-- New Password -->
+      <div class="input-container">
+        <label>New Password</label>
+        <div class="input-box">
+          <input [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="newPassword" id="new-password" />
+          <ion-icon *ngIf="newPassword" [name]="showNewPassword ? 'eye-outline' : 'eye-off-outline'" class="toggle-icon"
+            (click)="togglePassword('new')">
+          </ion-icon>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="input-container">
+        <label>Confirm Password</label>
+        <div class="input-box">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmPassword"
+            id="confirm-password" />
+          <ion-icon *ngIf="confirmPassword" [name]="showConfirmPassword ? 'eye-outline' : 'eye-off-outline'"
+            class="toggle-icon" (click)="togglePassword('confirm')">
+          </ion-icon>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Save Button -->
+    <div style="text-align: center; margin-top: 20px;">
+      <ion-button class="save-button">
+        Save
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

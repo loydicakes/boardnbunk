@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+
+    <!-- Back Button -->
+    <ion-buttons class="backbutton" slot="start">
+      <ion-back-button defaultHref="/" class="circle-back-button"></ion-back-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <h4 class="title">Settings</h4>
+
+    <div style="margin-top: 20px;" class="setting-card">
+      <div class="left-content">
+        <ion-icon name="moon" class="icon"></ion-icon>
+        <span>Dark Mode</span>
+      </div>
+      <ion-toggle slot="end"></ion-toggle>
+    </div>
+
+    <div class="setting-card">
+      <div class="left-content">
+        <ion-icon name="notifications-outline" class="icon"></ion-icon>
+        <span>Notification</span>
+      </div>
+      <ion-toggle slot="end"></ion-toggle>
+    </div>
+
+
+  </div>
+</ion-content>

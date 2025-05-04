@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+
+    <!-- Back Button -->
+    <ion-buttons class="backbutton" slot="start">
+      <ion-back-button defaultHref="/" class="circle-back-button"></ion-back-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <h4 class="title">Payment Options</h4>
+
+    <!-- Cash title -->
+    <h4>Cash</h4>
+    <div class="section" [class.selected]="selectedPayment === 'cash'">
+      <input type="radio" name="payment" id="cash" [(ngModel)]="selectedPayment" value="cash" class="radio-top" />
+      <label for="cash"><img src="assets/dollar.png" class="icon">Cash</label>
+    </div>
+
+    <!-- Credit Card title -->
+    <h4>Credit & Debit Card</h4>
+    <div class="section" [class.selected]="selectedPayment === 'card'">
+      <input type="radio" name="payment" id="card" [(ngModel)]="selectedPayment" value="card" class="radio-top" />
+      <label for="card"><img src="assets/credit.png" class="icon">Mastercard</label>
+
+      <div class="card-fields">
+        <div class="input-container">
+          <input type="number" placeholder="Card Number*" />
+        </div>
+        <div class="card-info">
+          <div class="input-container">
+            <input type="text" placeholder="MM*" />
+          </div>
+          <div class="input-container">
+            <input type="text" placeholder="YY*" />
+          </div>
+          <div class="input-container">
+            <input type="text" placeholder="CVC/CVV*" />
+          </div>
+        </div>
+        <div class="input-container">
+          <input type="text" placeholder="First Name*" />
+        </div>
+        <div class="input-container">
+          <input type="text" placeholder="Last Name*" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Online Payment title -->
+    <h4>Online Payment</h4>
+    <div class="section" [class.selected]="selectedPayment === 'gcash'">
+      <input type="radio" name="payment" id="gcash" [(ngModel)]="selectedPayment" value="gcash" class="radio-top" />
+      <label for="gcash"><img src="assets/paypal.png" class="icon">GCash</label>
+
+      <div class="input-container">
+        <input type="number" placeholder="Enter your mobile number" />
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <div style="text-align: center; margin-top: 32px;">
+      <ion-button class="save-button">
+        Save
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

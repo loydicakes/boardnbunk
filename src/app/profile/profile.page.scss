@@ -1,127 +1,354 @@
 #container {
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #F6F6F6;
+}
+
+.circle-back-button {
+  --background: #ffffff;
+  --color: #000000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backbutton {
+  margin-top: 20px;
+  margin-left: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.photo-holder-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.photo-holder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ccc;
+  position: relative;
+}
+
+.photo-holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  --border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  --background: #000000;
+  --color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-button img {
+  width: 60%;
+  height: 60%;
+  object-fit: cover;
+}
+
+.name-display {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.action-buttons {
+  margin: 20px 16px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+
+.action-button-row {
+  --padding-start: 30px;
+  --padding-end: 30px;
+  --background: transparent;
+  --box-shadow: none;
+  --color: #000;
+  justify-content: flex-start;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.left-icon {
+  margin-right: 12px;
+}
+
+.button-text {
+  flex: 1;
+  text-align: left;
+}
+
+.arrow-icon {
+  color: #888;
+}
+
+.divider {
+  margin-left: 15px;
+  margin-right: 25px;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.button-text {
+  flex: 1;
+  text-align: left;
+  text-transform: none;
+  /* Prevent all caps */
+}
+
+.action-buttons ion-icon {
+  font-size: 30px;
+}
+
+//////rental here
+
+.rental-icon {
+  font-size: 36px;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.rental-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.rental-section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+  /* Or whatever max height you want this section to fill */
+}
+
+.rental-card {
+  width: 95%;
+  flex: 1;
+  border: 1px solid #133DAB;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.rental-location {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-left: -5px;
+}
+
+.rental-info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.rental-contact-title {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.rental-contact-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+//end rental
+
+// profile popup
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  display: none;
+}
+
+.photo-card.centered {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  padding: 20px 16px;
+  display: none;
+  animation: fadeInScale 0.25s ease;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
   }
-  
-  .circle-back-button {
-    --background: #ffffff;
-    --color: #000000;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
-  
-  .backbutton {
-    margin-top: 20px;
-    margin-left: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .profile-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 80px;
-  }
-  
-  .photo-holder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #ccc;
-    margin-bottom: 10px;
-  }
-  
-  .name-display {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .action-buttons {
-    margin: 20px 16px 0 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  
-  .action-button-row {
-    --padding-start: 12px;
-    --padding-end: 12px;
-    --background: transparent;
-    --box-shadow: none;
-    --color: #000;
-    justify-content: flex-start;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    font-size: 16px;
-  }
-  
-  .left-icon {
-    font-size: 20px;
+}
+
+.photo-option-button {
+  justify-content: flex-start;
+  --background: transparent;
+  --color: #000;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  text-align: left;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+
+  ion-icon {
     margin-right: 12px;
+    font-size: 25px;
   }
-  
-  .button-text {
-    flex: 1;
+
+  ion-label {
     text-align: left;
+    flex: 1;
+    text-transform: none;
   }
-  
-  .arrow-icon {
-    font-size: 20px;
-    color: #888;
-  }
-  
-  .divider {
-    height: 1px;
-    background-color: #ccc;
-    margin: 8px 0;
-  }
-  
-  .custom-card {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 360px; // Adjust this based on your actual layout
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    background-color: #f0efef;
-    margin: 0;        // Remove any default margin
-    margin-top: 30px;
-    padding: 0;       // Remove internal spacing
-    width: 100vw;     // Stretch to full viewport width
-    max-width: 100%;  // Ensure no restrictions
-    text-align: center;
-  }
-  
-  ion-card-content.card-full-content {
-    height: 100%;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 20px;
-  }
-  
-  .card-icon {
-    font-size: 32px;
-    margin-bottom: 8px;
-  }
-  
-  .card-title {
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
+}
+
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.line-divider {
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 16px;
+}
+
+ion-button.popup_cancel {
+  --border-radius: 15px;
+  --background: #133DAB;
+  width: 80%;
+  margin: 0 auto;
+}
+//end popup
+
+//logout popup
+.logout-card.centered {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  padding: 20px 16px;
+  display: none;
+  animation: fadeInScale 0.25s ease;
+}
+
+.logout-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.logout-btn {
+  width: 48%;
+  --border-radius: 12px;
+  font-weight: 500;
+}
+
+.done-btn {
+  --background: transparent;
+  --color: #000;
+  border: 3px solid #f6f6f6;
+  border-radius: 12px;
+}
+
+.cancel-btn {
+  --background: #133DAB;
+  --color: #ffffff;
+}
+//end logout
+
+//settings
+
+.settings-button {
+  margin-top: 20px;
+  margin-right: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.circle-settings-button {
+  --background: #F6F6F6;
+  --color: #000000;
+  width: 50px;
+  height: 50px;
+}
+
+.circle-settings-button img {
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+}
+
+
+//settings end
