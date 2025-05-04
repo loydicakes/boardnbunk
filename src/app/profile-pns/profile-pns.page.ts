@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-pns',
@@ -18,7 +19,7 @@ export class ProfilePnsPage implements OnInit {
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
@@ -34,5 +35,9 @@ export class ProfilePnsPage implements OnInit {
         this.showConfirmPassword = !this.showConfirmPassword;
         break;
     }
+  }
+
+  goToProfileMethod() {
+    this.router.navigate(['/profile']);
   }
 }

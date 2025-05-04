@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-pm',
@@ -9,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class ProfilePmPage implements OnInit {
   selectedPayment: string = 'cash'; // default selection
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  goToProfileMethod() {
+    this.router.navigate(['/profile']);
+  }
 }
