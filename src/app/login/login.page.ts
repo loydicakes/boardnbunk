@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
         const user = await this.FirestoreService.loginUser(email, password);
         if (user) {
           loading.dismiss();
-          this.router.navigate(['/home']);
+          this.router.navigate(['/homepage']);
         }
       } catch (error) {
         loading.dismiss();

@@ -1,0 +1,124 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="search-pop-up" *ngIf="searchFocused">
+    <h5>Recent Search</h5>
+    <div class="recent-searches">
+        <div class="searches">
+          <p style="padding: 0; margin: 0; color: gray;">Green Land Apartment</p>
+          <ion-icon name="close-outline" color="medium"></ion-icon>
+        </div>
+        <div class="searches">
+          <p style="padding: 0; margin: 0; color: gray;">Room for rent</p>
+          <ion-icon name="close-outline" color="medium"></ion-icon>
+        </div>
+        <div class="searches">
+          <p style="padding: 0; margin: 0; color: gray;">Studio Type</p>
+          <ion-icon name="close-outline" color="medium"></ion-icon>
+        </div>
+    </div>
+    <h5>Recent View</h5>
+    <div class="recent-view">
+      <div class="viewed">
+        <img src="assets/Spoliarium.jpg" alt="" class="viewed-image">
+        <div class="viewed-info">
+          <div class="viewed-info-one">
+            <p style="font-size: 14px;">Apartment</p>
+            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
+          </div>
+          <h5>Green Land Apartment</h5>
+          <p style="margin-top: 1px;"><ion-icon name="pin-sharp" color="light"></ion-icon>Carig Sur, Tug. City</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="searchnnotif">
+    <ion-searchbar
+    placeholder="Search"
+    (ionFocus)="searchFocused = true"
+    (ionBlur)="searchFocused = false"
+    ></ion-searchbar>
+    <ion-button shape="round" color="medium" routerLink="/notifs">  
+      <ion-icon name="notifications" size="small" slot="icon-only" color="dark"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="room-buttons">
+    <div class="button-hold">
+      <ion-button shape="round" color="medium" size="large">
+        <ion-icon name="person" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+      <p>Solo Room</p>
+    </div>
+    <div class="button-hold">
+      <ion-button shape="round" color="medium" size="large">
+        <ion-icon name="people" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+      <p>Couple Room</p>
+    </div>
+    <div class="button-hold">
+      <ion-button shape="round" color="medium" size="large">
+        <ion-icon name="bed" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+      <p>Bed Space</p>
+    </div>
+  </div>
+  <div class="room-list">
+    <div class="labels">
+      <p style="font-size: 14px; font-weight: bold;">Available Rooms</p>
+      <p style="font-size: 12px; font-weight: bold; color: gray;">See all</p>
+    </div>
+    <div class="room-cards-container">
+      <div class="room-card">
+        <ion-icon class="fav-icon" name="heart-circle" size="large" color="danger"></ion-icon>
+        <img src="assets/Spoliarium.jpg" alt="Room 1" class="room-image">
+        <div class="room-infos">
+          <div class="typenstar">
+            <p class="room-type">Solo Room</p>
+            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
+          </div>
+          <div class="room-name">
+            <h5>Green Land Residences</h5>
+            <p class="price"><span>10,000</span>/Month</p>
+          </div>
+        </div>
+        <p class="location" style="margin: 0; padding: 0; color:whitesmoke; margin-top: -5px;"><ion-icon name="pin-sharp" color="light"></ion-icon>Carig sur, Tuguegarao City</p>
+      </div>
+      <div class="room-card" routerLink="/infos">
+        <ion-icon class="fav-icon" name="heart-circle" size="large" color="danger"></ion-icon>
+        <img src="assets/Spoliarium.jpg" alt="Room 1" class="room-image">
+        <div class="room-infos">
+          <div class="typenstar">
+            <p class="room-type">Solo Room</p>
+            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
+          </div>
+          <div class="room-name">
+            <h5>Green Land Residences</h5>
+            <p class="price"><span>10,000</span>/Month</p>
+          </div>
+        </div>
+        <p class="location" style="margin: 0; padding: 0; color:whitesmoke; margin-top: -5px;"><ion-icon name="pin-sharp" color="light"></ion-icon>Carig sur, Tuguegarao City</p>
+      </div>      <div class="room-card">
+        <ion-icon class="fav-icon" name="heart-circle" size="large" color="danger"></ion-icon>
+        <img src="assets/Spoliarium.jpg" alt="Room 1" class="room-image">
+        <div class="room-infos">
+          <div class="typenstar">
+            <p class="room-type">Solo Room</p>
+            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
+          </div>
+          <div class="room-name">
+            <h5>Green Land Residences</h5>
+            <p class="price"><span>10,000</span>/Month</p>
+          </div>
+        </div>
+        <p class="location" style="margin: 0; padding: 0; color:whitesmoke; margin-top: -5px;"><ion-icon name="pin-sharp" color="danger"></ion-icon>Carig sur, Tuguegarao City</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="custom-tab-bar">
+  <div class="tab-container" *ngIf="!searchFocused">
+    <ion-button fill="clear"><ion-icon name="home" class="tab-icon" color="dark"></ion-icon></ion-button>
+    <ion-button fill="clear"><ion-icon name="heart" class="tab-icon" color="medium"></ion-icon></ion-button>
+    <ion-button fill="clear"><ion-icon name="mail" class="tab-icon" color="medium"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/profile"><ion-icon name="person" class="tab-icon" color="medium"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/settings"><ion-icon name="settings" class="tab-icon" color="medium"></ion-icon></ion-button>
+  </div>
+</ion-footer>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'faves', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
@@ -39,6 +39,20 @@ const routes: Routes = [
     path: 'message',
     loadChildren: () => import('./message/message.module').then( m => m.MessagePageModule)
   },
+  {
+    path: 'homepage',
+    loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepagePageModule)
+  },
+  {
+    path: 'infos',
+    loadChildren: () => import('./infos/infos.module').then( m => m.InfosPageModule)
+  },  {
+    path: 'landing',
+    loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
+  },
+
+
+
 ];
 
 @NgModule({

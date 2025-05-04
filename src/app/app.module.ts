@@ -1,5 +1,5 @@
 import { FirestoreService } from './services/firestore.service';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -19,6 +19,7 @@ import {AngularFireModule} from '@angular/fire/compat'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent,],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, AngularFireModule,
     AngularFireAuthModule,AngularFireModule.initializeApp(environment.firebaseConfig)
@@ -31,5 +32,5 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }],
     
   bootstrap: [AppComponent],
-})
+})  
 export class AppModule {}
