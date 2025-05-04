@@ -387,7 +387,7 @@ ion-content {
     color: white;
     display: flex;
     gap: 12px;
-    align-items: center; /* Align children vertically centered for balanced layout */
+    align-items: center; 
   }
   
   .image-section {
@@ -557,7 +557,6 @@ ion-content {
     background-color: #0f2d8b;
   }
   
-  /* Message box specific styling overrides for the room card */
   .message-card {
     width: 100% !important;
     background: #005a9a;
@@ -568,13 +567,11 @@ ion-content {
     box-shadow: none;
   }
   
-  /* Adjust image size in message box to be a bit larger */
   .message-card .image-section {
     width: 120px;
     border-radius: 6px;
   }
   
-  /* Ensure info-section in message box looks good */
   .message-card .info-section {
     flex-grow: 1;
     padding-left: 0;

@@ -1,0 +1,76 @@
+<ion-content>
+  <!-- Chat List Screen -->
+  <div class="chat-list" *ngIf="!selectedChat">
+    <div class="custom-header">
+      <div class="header-container">
+        <div class="back-btn" (click)="closeChat()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </div>
+        <h2>Messages</h2>
+      </div>
+    </div>
+
+    <ion-item button (click)="openChat('John Doe')">
+      <ion-avatar slot="start" class="avatar">
+        <img src="assets/icon/avatar.jpeg" alt=" avatar" />
+      </ion-avatar>
+      <ion-label>
+        <h2><strong>John Doe</strong></h2>
+        <p>Ano kunin mo ba?!</p>
+      </ion-label>
+      <ion-note slot="end" class="time-note">9:15 AM</ion-note>
+    </ion-item>
+  </div>
+
+  <!-- Chat Message Screen -->
+  <div class="chat-window" *ngIf="selectedChat">
+    <div class="chat-header">
+      <ion-button fill="clear" (click)="closeChat()" class="back-button">
+        <ion-icon name="arrow-back-outline" class="arrow"></ion-icon>
+      </ion-button>
+
+      <div class="chat-title">
+        <h2 class="name-header">John Doe</h2>
+        <ion-avatar class="avatar-header">
+          <img src="assets/icon/avatar.jpeg" alt=" avatar" />
+        </ion-avatar>
+      </div>
+    </div>
+
+    <div class="messages" #messagesContainer>
+      <div class="message left">Good Morning po, pede po i-visit yung apartment?</div>
+      <div class="message right">g lang naman beh, kelan mo ba i-visit?</div>
+      <div class="message left">Ngayon na po sana, otw na.</div>
+      <div class="message right">Ay sige bet kuh yan!</div>
+      <div class="message right">Nakita mo na</div>
+      <div class="message right">Ano kunin mo ba?!</div>
+      <div class="message left">Good Morning po, pede po i-visit yung apartment?</div>
+      <div class="message right">g lang naman beh, kelan mo ba i-visit?</div>
+      <div class="message left">Ngayon na po sana, otw na.</div>
+      <div class="message right">Ay sige bet kuh yan!</div>
+      <div class="message right">Nakita mo na</div>
+      <div class="message right">Ano kunin mo ba?!</div>
+      <div class="message left">Good Morning po, pede po i-visit yung apartment?</div>
+      <div class="message right">g lang naman beh, kelan mo ba i-visit?</div>
+      <div class="message left">Ngayon na po sana, otw na.</div>
+      <div class="message right">Ay sige bet kuh yan!</div>
+      <div class="message right">Nakita mo na</div>
+      <div class="message right">Ano kunin mo ba?!</div>
+
+      <div class="input-container">
+        <textarea
+          placeholder="Type a message here.."
+          class="message-input"
+          rows="1"
+          (input)="autoGrow($event)"
+          [(ngModel)]="messageText"
+          (keyup.enter)="sendMessage()"
+        ></textarea>
+        <ion-button fill="clear" class="send-button" (click)="sendMessage()">
+          <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

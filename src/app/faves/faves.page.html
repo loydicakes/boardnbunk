@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <!-- Category Filter Section -->
+  <!-- Categories -->
   <div class="filter-bar">
     <div
       class="filter-shape"
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <!-- Info Section -->
+  <!-- Information -->
   <div class="room-wrapper" [@fadeSlideAnimation]="selectedCategory">
     <div class="room-card" *ngFor="let room of filteredRooms">
       <div class="image-section">
@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <!-- Message Box with full card inside -->
+  <!-- Message Box -->
   <div class="overlay-container" *ngIf="showMessageBox">
     <div class="overlay" (click)="cancel()"></div>
     <div class="message-box">
@@ -59,7 +59,7 @@
         <h3>Remove from Favorites?</h3>
       </div>
       
-      <!-- Full styled room card for the selected room inside the message box -->
+      
       <div class="room-card message-card">
         <div class="image-section">
           <img [src]="selectedRoom?.imageUrl || 'https://via.placeholder.com/100'" alt="{{ selectedRoom?.name }}" class="room-image" />
