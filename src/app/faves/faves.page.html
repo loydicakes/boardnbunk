@@ -1,0 +1,97 @@
+<ion-content [fullscreen]="true">
+  <div class="custom-header">
+    <div class="header-container">
+      <div class="back-btn">
+        <ion-icon name="arrow-back"></ion-icon>
+      </div>
+      <h2>Favorites</h2>
+    </div>
+  </div>
+
+  <!-- Category Filter Section -->
+  <div class="filter-bar">
+    <div
+      class="filter-shape"
+      *ngFor="let category of categories"
+      [class.active]="selectedCategory === category"
+      (click)="selectCategory(category)"
+    >
+      {{ category }}
+    </div>
+  </div>
+
+  <!-- Info Section -->
+  <div class="room-wrapper" [@fadeSlideAnimation]="selectedCategory">
+    <div class="room-card" *ngFor="let room of filteredRooms">
+      <div class="image-section">
+        <img [src]="room.imageUrl || 'https://via.placeholder.com/100'" alt="{{ room.name }}" class="room-image" />
+        <div class="heart-btn" (click)="toggleFavorite(room)">
+          <ion-icon [name]="room.favorited ? 'heart' : 'heart-outline'"></ion-icon>
+        </div>
+      </div>
+      <div class="info-section">
+        <div class="type-review-row">
+          <div class="room-type">{{ room.type }}</div>
+          <div class="review">
+            <ion-icon name="star"></ion-icon>
+            <span class="review-text">{{ room.rating }}</span>
+          </div>
+        </div>
+        <div class="title-rating">
+          <h3>{{ room.name }}</h3>
+        </div>
+        <div class="location">
+          <ion-icon name="location"></ion-icon>
+          {{ room.location }}
+        </div>
+        <div class="price">
+          ₱{{ room.price.toLocaleString() }} <span>/month</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Box with full card inside -->
+  <div class="overlay-container" *ngIf="showMessageBox">
+    <div class="overlay" (click)="cancel()"></div>
+    <div class="message-box">
+      <div class="message-header">
+        <h3>Remove from Favorites?</h3>
+      </div>
+      
+      <!-- Full styled room card for the selected room inside the message box -->
+      <div class="room-card message-card">
+        <div class="image-section">
+          <img [src]="selectedRoom?.imageUrl || 'https://via.placeholder.com/100'" alt="{{ selectedRoom?.name }}" class="room-image" />
+          <div class="heart-btn">
+            <ion-icon [name]="selectedRoom?.favorited ? 'heart' : 'heart-outline'"></ion-icon>
+          </div>
+        </div>
+        <div class="info-section">
+          <div class="type-review-row">
+            <div class="room-type">{{ selectedRoom?.type }}</div>
+            <div class="review">
+              <ion-icon name="star"></ion-icon>
+              <span class="review-text">{{ selectedRoom?.rating }}</span>
+            </div>
+          </div>
+          <div class="title-rating">
+            <h3>{{ selectedRoom?.name }}</h3>
+          </div>
+          <div class="location">
+            <ion-icon name="location"></ion-icon>
+            {{ selectedRoom?.location }}
+          </div>
+          <div class="price">
+            ₱{{ selectedRoom?.price.toLocaleString() }} <span>/month</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="message-actions">
+        <button class="cancel-btn" (click)="cancel()">Cancel</button>
+        <button class="remove-btn" (click)="remove()">Remove</button>
+      </div>
+    </div>
+  </div>
+</ion-content>
