@@ -3,7 +3,7 @@
   <div class="chat-list" *ngIf="!selectedChat">
     <div class="custom-header">
       <div class="header-container">
-        <div class="back-btn" (click)="closeChat()">
+        <div class="back-btn" (click)="closeChat()" routerLink="/homepage">
           <ion-icon name="arrow-back"></ion-icon>
         </div>
         <h2>Messages</h2>
