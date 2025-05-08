@@ -1,124 +1,102 @@
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="search-pop-up" *ngIf="searchFocused">
-    <h5>Recent Search</h5>
-    <div class="recent-searches">
-        <div class="searches">
-          <p style="padding: 0; margin: 0; color: gray;">Green Land Apartment</p>
-          <ion-icon name="close-outline" color="medium"></ion-icon>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<ion-content [fullscreen]="true" class="main-page ion-padding">
+
+    <ion-button size="small" class="notif-button"><ion-icon name="notifications" slot="icon-only"></ion-icon></ion-button>
+    
+    <div class="top-part">
+        <div class="header-part">
+            <ion-icon name="location-outline" color="second" size="large"></ion-icon>
+            <h5>Board n' Bunk</h5>
         </div>
-        <div class="searches">
-          <p style="padding: 0; margin: 0; color: gray;">Room for rent</p>
-          <ion-icon name="close-outline" color="medium"></ion-icon>
-        </div>
-        <div class="searches">
-          <p style="padding: 0; margin: 0; color: gray;">Studio Type</p>
-          <ion-icon name="close-outline" color="medium"></ion-icon>
+
+        <div class="custom-search-wrapper">
+            <input type="text" placeholder="Search..." class="custom-search-input" />
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
         </div>
     </div>
-    <h5>Recent View</h5>
-    <div class="recent-view">
-      <div class="viewed">
-        <img src="assets/Spoliarium.jpg" alt="" class="viewed-image">
-        <div class="viewed-info">
-          <div class="viewed-info-one">
-            <p style="font-size: 14px;">Apartment</p>
-            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
-          </div>
-          <h5>Green Land Apartment</h5>
-          <p style="margin-top: 1px;"><ion-icon name="pin-sharp" color="light"></ion-icon>Carig Sur, Tug. City</p>
+    
+    <div class="categ-part">
+        <h3>Categories</h3>
+        <div class="button-container">
+          <ion-button>Solo Room</ion-button>
+          <ion-button>Couples Room</ion-button>
+          <ion-button>Studio Type</ion-button>
+          <ion-button>Bedspace</ion-button>
         </div>
+    </div>
+
+    <div class="featured-rooms-part">
+      <h3>Featured</h3>
+      <div class="img-container">    
+        <img src="assets/room/room1.jpg" alt="">
+        <img src="assets/room/room2.jpg" alt="">
+        <img src="assets/room/room3.jpg" alt="">
       </div>
     </div>
-  </div>
-  <div class="searchnnotif">
-    <ion-searchbar
-    placeholder="Search"
-    (ionFocus)="searchFocused = true"
-    (ionBlur)="searchFocused = false"
-    ></ion-searchbar>
-    <ion-button shape="round" color="medium" routerLink="/notifs">  
-      <ion-icon name="notifications" size="small" slot="icon-only" color="dark"></ion-icon>
-    </ion-button>
-  </div>
-  <div class="room-buttons">
-    <div class="button-hold">
-      <ion-button shape="round" color="medium" size="large">
-        <ion-icon name="person" slot="icon-only" color="dark"></ion-icon>
-      </ion-button>
-      <p>Solo Room</p>
-    </div>
-    <div class="button-hold">
-      <ion-button shape="round" color="medium" size="large">
-        <ion-icon name="people" slot="icon-only" color="dark"></ion-icon>
-      </ion-button>
-      <p>Couple Room</p>
-    </div>
-    <div class="button-hold">
-      <ion-button shape="round" color="medium" size="large">
-        <ion-icon name="bed" slot="icon-only" color="dark"></ion-icon>
-      </ion-button>
-      <p>Bed Space</p>
-    </div>
-  </div>
-  <div class="room-list">
-    <div class="labels">
-      <p style="font-size: 14px; font-weight: bold;">Available Rooms</p>
-      <p style="font-size: 12px; font-weight: bold; color: gray;">See all</p>
-    </div>
-    <div class="room-cards-container">
-      <div class="room-card" routerLink="/infos">
-        <ion-icon class="fav-icon" name="heart-circle" size="large" color="danger"></ion-icon>
-        <img src="assets/Spoliarium.jpg" alt="Room 1" class="room-image">
-        <div class="room-infos">
-          <div class="typenstar">
-            <p class="room-type">Solo Room</p>
-            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
-          </div>
-          <div class="room-name">
-            <h5>Green Land Residences</h5>
-            <p class="price"><span>10,000</span>/Month</p>
-          </div>
-        </div>
-        <p class="location" style="margin: 0; padding: 0; color:whitesmoke; margin-top: -5px;"><ion-icon name="pin-sharp" color="light"></ion-icon>Carig sur, Tuguegarao City</p>
-      </div>
-      <div class="room-card" routerLink="/infos">
-        <ion-icon class="fav-icon" name="heart-circle" size="large" color="danger"></ion-icon>
-        <img src="assets/Spoliarium.jpg" alt="Room 1" class="room-image">
-        <div class="room-infos">
-          <div class="typenstar">
-            <p class="room-type">Solo Room</p>
-            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
-          </div>
-          <div class="room-name">
-            <h5>Green Land Residences</h5>
-            <p class="price"><span>10,000</span>/Month</p>
-          </div>
-        </div>
-        <p class="location" style="margin: 0; padding: 0; color:whitesmoke; margin-top: -5px;"><ion-icon name="pin-sharp" color="light"></ion-icon>Carig sur, Tuguegarao City</p>
-      </div>      <div class="room-card" routerLink="/infos">
-        <ion-icon class="fav-icon" name="heart-circle" size="large" color="danger"></ion-icon>
-        <img src="assets/Spoliarium.jpg" alt="Room 1" class="room-image">
-        <div class="room-infos">
-          <div class="typenstar">
-            <p class="room-type">Solo Room</p>
-            <p><ion-icon name="star" size="small" color="warning"></ion-icon> 4.5</p>
-          </div>
-          <div class="room-name">
-            <h5>Green Land Residences</h5>
-            <p class="price"><span>10,000</span>/Month</p>
-          </div>
-        </div>
-        <p class="location" style="margin: 0; padding: 0; color:whitesmoke; margin-top: -5px;"><ion-icon name="pin-sharp" color="danger"></ion-icon>Carig sur, Tuguegarao City</p>
+
+    <div class="explore-part">
+      <h3>Explore</h3>
+      <div class="explore-img-container">
+        <ion-card class="hotel-card">
+          <ion-img src="assets/room/room1.jpg"></ion-img>
+        
+          <ion-card-content class="ion-padding">
+            <div class="hotel-header">
+              <h2>Luna, Philippines</h2>
+              <div class="hotel-header-fav">           
+                <ion-icon name="star" class="star-icon"></ion-icon>
+                <span>4.9</span>
+              </div>
+            </div>
+            <p>53 Kilometers away</p>
+            <p id="last"><span>₱ 5,050</span> per Month</p>
+          </ion-card-content>
+        
+          <ion-button fill="clear" size="small" class="favorite-button">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-button>
+        </ion-card>
+        <ion-card class="hotel-card">
+          <ion-img src="assets/room/room1.jpg"></ion-img>
+        
+          <ion-card-content class="ion-padding">
+            <div class="hotel-header">
+              <h2>Luna, Philippines</h2>
+              <div class="hotel-header-fav">           
+                <ion-icon name="star" class="star-icon"></ion-icon>
+                <span>4.9</span>
+              </div>
+            </div>
+            <p>53 Kilometers away</p>
+            <p id="last"><span>₱ 5,050</span> per Month</p>
+          </ion-card-content>
+        
+          <ion-button fill="clear" size="small" class="favorite-button">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-button>
+        </ion-card>
+        <ion-card class="hotel-card">
+          <ion-img src="assets/room/room1.jpg"></ion-img>
+        
+          <ion-card-content class="ion-padding">
+            <div class="hotel-header">
+              <h2>Luna, Philippines</h2>
+              <div class="hotel-header-fav">           
+                <ion-icon name="star" class="star-icon"></ion-icon>
+                <span>4.9</span>
+              </div>
+            </div>
+            <p>53 Kilometers away</p>
+            <p id="last"><span>₱ 5,050</span> per Month</p>
+          </ion-card-content>
+        
+          <ion-button fill="clear" size="small" class="favorite-button">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-button>
+        </ion-card>
       </div>
     </div>
-  </div>
 </ion-content>
-<ion-footer class="custom-tab-bar">
-  <div class="tab-container" *ngIf="!searchFocused">
-    <ion-button fill="clear"><ion-icon name="home" class="tab-icon" color="dark"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/faves"><ion-icon name="heart" class="tab-icon" color="medium"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/message"><ion-icon name="mail" class="tab-icon" color="medium"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/profile"><ion-icon name="person" class="tab-icon" color="medium"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/settings"><ion-icon name="settings" class="tab-icon" color="medium"></ion-icon></ion-button>
-  </div>
+<ion-footer>
+  
 </ion-footer>

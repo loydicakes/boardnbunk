@@ -1,218 +1,217 @@
-ion-content{
-    --background:whitesmoke;
-    margin-top: 10px;
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+.main-page{
+    --background: #F2F0EF;
+    --border-radius: 0;
+}
+.top-part{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin-top: 28px;
+    gap:30px;
+    padding: 0 2%;
 
-    .searchnnotif{
+    .header-part{
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        vertical-align: middle;
+
+        h5{
+            margin-left: 5px;
+            font-weight: lighter;
+            font-size: 1.2rem;
+        }
     }
-    .room-buttons{
-        height:auto;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
+
+    .custom-search-wrapper {
+        position: relative;
         width: 100%;
-        margin: 0 auto;
-
-        .button-hold{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            
-            p{
-                font-size: 12px;
-                color: #111111;
-                font-weight: bold;
-                margin-top: 0px;
-            }
-        }
-    }
-    .room-list{
+      }
+      
+      .custom-search-input {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .labels{
-            width:95%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .room-cards-container{
-            width: 100%;
-            height: auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+        height: 60px;
+        padding: 0 45px 0 15px; /* leave space for icon */
+        font-size: 18px;
+        border: 0px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* shadow added */
+        outline: none; /* optional: remove blue outline */
+      }
+      
+      .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: #666;
+      }
+      
+}
 
-            .room-card{
-                width: 360px;
-                height: 250px;
-                background-color: #005a9a;
-                border-radius: 10px;
-                padding: 10px 15px;
-                position: relative;
+.notif-button{
+    position: absolute;
+    right: 5%;
+    top: 3%;
+}
 
-                .fav-icon{
-                    position: absolute;
-                    right: 6%;
-                    top: 10%;
-                }
-                img{
-                    width: 100%;
-                    height: 60%;
-                    object-fit: cover;
-                    border-radius: 5px;
-                }
-                .room-infos{
-                    .typenstar{
-                        margin-top: -10px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        .room-type{
-                            font-size: 12px;
-                            color: black;
-                            padding: 3px 4px;
-                            background-color: whitesmoke;
-                            border-radius:2px;
-                        }
-                        p{
-                            font-size: 14px;
-                            justify-content: center;
-                            text-align: center;
-                            color: whitesmoke;
-                            vertical-align: middle;
-                            font-weight: bold;
-                        }
-                    }
-                    .room-name{
-                        margin-top: -20px;
-                        display: flex;
-                        justify-content: space-between;
-                        h5{
-                            font-size: 15px;
-                            color: whitesmoke;
-                            font-weight: bold;
-                        }
-                        .price{
-                            span{
-                                font-weight: bold;
-                            }
-                            font-size: 15px;
-                            color:whitesmoke
-                        }
-                    }
-                }
-            }
-            
-        }
-    }
-.search-pop-up{
-    padding: 0 20px;
-    width: 100%;
-    height: 92%;
-    position: fixed;
-    background-color: whitesmoke;
-    left:0;
-    bottom: 0;
-    z-index: 1000;
-    
-    h5{
-        font-size: 16px;
+.categ-part{
+    margin-top: 50px;
+    padding-left: 2%;
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+
+    h3{
         font-weight: bold;
     }
-    .recent-searches{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
 
-        .searches{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: gray;
+    .button-container{
+        ion-button{
+            width: 140px;
+            text-wrap: nowrap;
+            height: 50px;
+            --border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        width: auto;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        gap: 10px;
+    }
+}
+
+.featured-rooms-part {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 2%;
+    margin-top: 40px;
+
+    h3 {
+        font-weight: bold;
+    }
+
+    .img-container {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        width: auto;
+        flex-wrap: nowrap;
+        gap: 20px;
+        padding-bottom: 20px;  // Adjusted the gap to ensure better spacing between larger images
+
+        img {
+            width: 300px;    // Increased the width of the images
+            height: 350px;   // Increased the height of the images
+            object-fit: cover;  // Ensure the entire image is visible without cropping
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     }
-    .recent-view{
-        width: 100%;
-        padding: 0 10px;
-        display: flex;
-        justify-content: space-between;
-        .viewed{
-            width: 100%;
-            height: 130px;
-            border-radius: 6px;
-            background-color: #005a9a;
-            display: flex;
-            padding: 0 7px;
-            align-items: center;
+}
 
-            .viewed-image{
-                width: 40%;
-                height: 90%;
-                border-radius: 3px ;
+.explore-part{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 2%;
+    margin-top: 40px;
+
+    h3{
+        font-weight: bold;
+    }
+
+    .explore-img-container{
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+
+        .hotel-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:none;
+            
+            ion-img {
+                width: 400px;
+                height: 250px;
                 object-fit: cover;
             }
-
-            .viewed-info{
+          
+            .hotel-header {
+                margin-top: 10px;
                 display: flex;
-                flex-direction: column;
-                align-items: start;
-                padding: 0 10px;
-                height: 100%;
-                width: 100%; 
-                gap: 0;
-                ;
-
-                .viewed-info-one{
-                    display: flex;
-                    width: 100%;
-                    justify-content: space-between;
-                }
-                p{  
-                    vertical-align: middle;
-                    font-size: 12px;
-                    color: whitesmoke;
-                    font-weight: bold;
-                }
-                h5{
-                    color: whitesmoke;
-                    font-size: 16px;
-                    font-weight: bold;
-                    margin: 0;
-                    padding: 0;
-                }
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 2%;
+            
+    
+              .hotel-header-fav{
+                display: flex;
+              }
+              h2 {
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin: 0;
+              }
+          
+              .star-icon {
+                color: #fbbf24; // Tailwind's yellow-400
+                font-size: 1rem;
+                margin-left: 0.25rem;
+              }
+          
+              span {
+                font-size: 0.9rem;
+              }
             }
-        }
+            p{
+                padding: 0 2%;
+            }
+            span{
+                color: #267ba0;
+                font-weight: 600;
+                text-decoration: underline;
+            }
+            .info {
+                font-size: 0.85rem;
+                color: #666;
+                margin: 2px 0;
+
+            }
+          
+            .price {
+                font-size: 0.95rem;
+                margin-top: 4px;
+            }
+          
+            .favorite-button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: white;
+                border-radius: 50%;
+                --padding-start: 6px;
+                --padding-end: 6px;
+                --padding-top: 6px;
+                --padding-bottom: 6px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            }
+          }
     }
+      
 }
-}
-.custom-tab-bar {
-  background: transparent;
-  --ion-safe-area-bottom: 0;
-
-  .tab-container {
-    background: gray;
-    border-radius: 40px;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-    margin: 0 auto 20px auto;
-    width: 90%;
-    height: 60px;
-  }
-
-  .tab-icon {
-    color: #005a9a;
-    font-size: 24px;
-  }
-
+#last{
+    margin-bottom: 10px;
 }
