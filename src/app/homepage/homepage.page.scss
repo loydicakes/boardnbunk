@@ -215,3 +215,29 @@
 #last{
     margin-bottom: 10px;
 }
+  .custom-tab-bar {
+    background: transparent;
+    --ion-safe-area-bottom: 0;
+    position: fixed;
+    bottom: 8px;
+
+
+    .tab-container {
+      background:#0054e9;
+      border-radius: 15px;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: relative;
+      margin: 0 auto 20px auto;
+      width: 90%;
+      height: 60px;
+    }
+  
+    .tab-icon {
+      color: #005a9a;
+      font-size: 24px;
+    }
+  
+  }
