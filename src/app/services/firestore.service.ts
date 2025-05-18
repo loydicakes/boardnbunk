@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +9,9 @@ export class FirestoreService {
 
   constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) { }
 
-  // Register user and add them to Firestore users collection
   async registerUser(email: string, password: string) {
     try {
       const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
-      
       await this.addUserToDatabase(email, password); 
       return userCredential;
     } catch (error) {
@@ -22,12 +19,14 @@ export class FirestoreService {
       throw error;
     }
   }
+
   async addUserToDatabase(email: string, password: string) {
     try {
       const userRef = collection(this.firestore, 'users'); 
       await addDoc(userRef, {
         email: email,
-        password: password 
+        password: password,
+        usertype: 'user'  
       });
       console.log('User added to Firestore successfully');
     } catch (error) {
@@ -35,11 +34,34 @@ export class FirestoreService {
       throw error;  
     }
   }
-  async loginUser(email: string, password: string) {
-    try {
-      return await this.ngFireBase.signInWithEmailAndPassword(email, password);
+
+async loginUser(email: string, password: string) {
+  try {
+      const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+
+      if (user) {
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email
+        }));
+      }
+
+      return userCredential;
     } catch (error) {
       console.error('Login error:', error);
+      throw error;
+    }
+  }
+
+  
+  async logoutUser() {
+    try {
+      await this.ngFireBase.signOut();
+      localStorage.removeItem('user');
+      console.log('Logged out');
+    } catch (error) {
+      console.error('Logout error:', error);
       throw error;
     }
   }

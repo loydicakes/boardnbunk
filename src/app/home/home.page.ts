@@ -41,22 +41,23 @@ export class HomePage implements OnInit {
   }
 
   async signUp() {
-    const loading = await this.loadingCtrl.create();
-    await loading.present();
+  const loading = await this.loadingCtrl.create();
+  await loading.present();
 
-    if (this.regForm?.valid) {
-      const email = this.regForm.get('email').value;
-      const password = this.regForm.get('password').value;
-      try {
-        const user = await this.FirestoreService.registerUser(email, password);
-        console.log('User registered successfully:', user);
-        loading.dismiss()
-        this.router.navigate[('/login')]
-      } catch (error) {
-        console.error('Registration error:', error);
-      } finally {
-        await loading.dismiss();
-      }
+  if (this.regForm?.valid) {
+    const email = this.regForm.get('email').value;
+    const password = this.regForm.get('password').value;
+    try {
+      const user = await this.FirestoreService.registerUser(email, password);
+      console.log('User registered successfully:', user);
+      loading.dismiss();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Registration error:', error);
+    } finally {
+      await loading.dismiss();
     }
   }
+}
+
 }

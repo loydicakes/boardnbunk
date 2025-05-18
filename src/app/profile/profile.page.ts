@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
+import { FirestoreService } from '../services/firestore.service'; // Adjust the import path as necessary
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(private router: Router) { } 
+  constructor(private firestoreService:FirestoreService, private router: Router) { } 
 
   ngOnInit() { }
 
@@ -53,11 +54,15 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  confirmLogout() {
-    // Add actual logout logic here
-    //this.router.navigate(['/login']); // Example redirect
-    this.closeLogoutCard();
+  async confirmLogout() {
+    try {
+      await this.firestoreService.logoutUser();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   }
+
 
   //end logout
 
@@ -72,4 +77,5 @@ export class ProfilePage implements OnInit {
   goToSettingsMethod() {
     this.router.navigate(['/settings']);
   }
+  
 }
