@@ -1,0 +1,123 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<ion-content [fullscreen]="true" class="main-page ion-padding">
+
+  <ion-button size="small" class="notif-button"><ion-icon name="notifications" slot="icon-only"></ion-icon></ion-button>
+
+  <div class="top-part">
+    <div class="header-part">
+      <ion-icon name="location-outline" color="second" size="large"></ion-icon>
+      <h5>Board n' Bunk</h5>
+    </div>
+  </div>
+
+  <div class="activity-section">
+    <h3>Activity</h3>
+    <div class="activity-card">
+      <img src="assets/john-doe.jpg" class="activity-img" />
+      <div class="activity-content">
+        <strong>Maria Garcia</strong>
+        <p>Has paid the rent</p>
+      </div>
+    </div>
+
+    <div class="activity-card">
+      <img src="assets/john-doe.jpg" class="activity-img" />
+      <div class="activity-content">
+        <strong>John Reyes</strong>
+        <p class="overdue" style="color: red;">Overdue payment for April</p>
+      </div>
+    </div>
+
+    <div class="activity-card">
+      <img src="assets/john-doe.jpg" class="activity-img" />
+      <div class="activity-content">
+        <strong>Ana Santos</strong>
+        <p>Moved into Room 302</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="explore-part">
+    <h3>Your properties</h3>
+    <div class="explore-img-container">
+      <ion-card class="hotel-card">
+        <ion-img src="assets/room/room1.jpg"></ion-img>
+
+        <ion-card-content class="ion-padding">
+          <div class="hotel-header">
+            <h2>Luna, Philippines</h2>
+            <div class="hotel-header-fav">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <span>4.9</span>
+            </div>
+          </div>
+          <p class="rented" style="color: green;">Available</p>
+        </ion-card-content>
+
+        <ion-button fill="clear" size="small" class="favorite-button">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-button>
+      </ion-card>
+      <ion-card class="hotel-card">
+        <ion-img src="assets/room/room1.jpg"></ion-img>
+
+        <ion-card-content class="ion-padding">
+          <div class="hotel-header">
+            <h2>Luna, Philippines</h2>
+            <div class="hotel-header-fav">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <span>4.9</span>
+            </div>
+          </div>
+          <p class="rented" style="color: red;">Rented</p>
+          <div class="tenant-row">
+            <p>Tenant:</p>
+            <p class="tenant-name">John Doe</p>
+          </div>
+        </ion-card-content>
+
+        <ion-button fill="clear" size="small" class="favorite-button">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-button>
+      </ion-card>
+      <ion-card class="hotel-card">
+        <ion-img src="assets/room/room1.jpg"></ion-img>
+
+        <ion-card-content class="ion-padding">
+          <div class="hotel-header">
+            <h2>Luna, Philippines</h2>
+            <div class="hotel-header-fav">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <span>4.9</span>
+            </div>
+          </div>
+          <p class="rented" style="color: red;">Rented</p>
+          <div class="tenant-row">
+            <p>Tenant:</p>
+            <p class="tenant-name">John Doe</p>
+          </div>
+        </ion-card-content>
+
+        <ion-button fill="clear" size="small" class="favorite-button">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-button>
+      </ion-card>
+    </div>
+  </div>
+
+
+</ion-content>
+<ion-footer class="custom-tab-bar">
+  <div class="tab-container">
+    <ion-button fill="clear" routerLink="/landlord-home"><ion-icon name="home" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/faves"><ion-icon name="reader" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/message"><ion-icon name="people-circle" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/landlord-profile"><ion-icon name="person" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/settings"><ion-icon name="settings" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+  </div>
+</ion-footer>

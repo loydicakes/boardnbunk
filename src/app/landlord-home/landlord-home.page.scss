@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-page {
+    --background: #F2F0EF;
+    --border-radius: 0;
+}
+
+.top-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin-top: 28px;
+    gap: 30px;
+    padding: 0 2%;
+
+    .header-part {
+        display: flex;
+        align-items: center;
+        vertical-align: middle;
+
+        h5 {
+            margin-left: 5px;
+            font-weight: lighter;
+            font-size: 1.2rem;
+        }
+    }
+
+    .custom-search-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .custom-search-input {
+        width: 100%;
+        height: 60px;
+        padding: 0 45px 0 15px;
+        /* leave space for icon */
+        font-size: 18px;
+        border: 0px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        /* shadow added */
+        outline: none;
+        /* optional: remove blue outline */
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: #666;
+    }
+
+}
+
+.notif-button {
+    position: absolute;
+    right: 5%;
+    top: 3%;
+}
+
+.explore-part {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 2%;
+    margin-top: 40px;
+
+    h3 {
+        font-weight: bold;
+    }
+
+    .tenant-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #444;
+    }
+
+    .tenant-name {
+        color: #267ba0;
+    }
+
+    .explore-img-container {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+
+        .hotel-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: none;
+
+            ion-img {
+                width: 400px;
+                height: 250px;
+                object-fit: cover;
+            }
+
+            .hotel-header {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 2%;
+
+
+                .hotel-header-fav {
+                    display: flex;
+                }
+
+                h2 {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    margin: 0;
+                }
+
+                .star-icon {
+                    color: #fbbf24; // Tailwind's yellow-400
+                    font-size: 1rem;
+                    margin-left: 0.25rem;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                }
+            }
+
+            p {
+                padding: 0 2%;
+            }
+
+            span {
+                color: #267ba0;
+                font-weight: 600;
+                text-decoration: underline;
+            }
+
+            .info {
+                font-size: 0.85rem;
+                color: #666;
+                margin: 2px 0;
+
+            }
+
+            .price {
+                font-size: 0.95rem;
+                margin-top: 4px;
+            }
+
+            .favorite-button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: white;
+                border-radius: 50%;
+                --padding-start: 6px;
+                --padding-end: 6px;
+                --padding-top: 6px;
+                --padding-bottom: 6px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+
+}
+
+#last {
+    margin-bottom: 10px;
+}
+
+.custom-tab-bar {
+    background: transparent;
+    --ion-safe-area-bottom: 0;
+    position: fixed;
+    bottom: 8px;
+
+
+    .tab-container {
+        background: #0054e9;
+        border-radius: 15px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+        margin: 0 auto 20px auto;
+        width: 90%;
+        height: 60px;
+    }
+
+    .tab-icon {
+        color: #005a9a;
+        font-size: 24px;
+    }
+
+}
+
+.activity-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 2%;
+    margin-top: 40px;
+}
+
+.activity-section h3 {
+    font-weight: bold;
+}
+
+.activity-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 12px 16px;
+    margin-right: 2%;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+}
+
+.activity-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.activity-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-content strong {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.activity-content p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.alert-icon {
+    font-size: 50px;
+    --color: #e53935;
+}
+
+.overdue {
+    color: #e53935;
+    font-weight: 500;
+}

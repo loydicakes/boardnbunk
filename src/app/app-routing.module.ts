@@ -50,7 +50,15 @@ const routes: Routes = [
   {
     path: 'landing',
     loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
+  },  {
+    path: 'landlord-home',
+    loadChildren: () => import('./landlord-home/landlord-home.module').then( m => m.LandlordHomePageModule)
   },
+  {
+    path: 'landlord-profile',
+    loadChildren: () => import('./landlord-profile/landlord-profile.module').then( m => m.LandlordProfilePageModule)
+  },
+
 
 
 
