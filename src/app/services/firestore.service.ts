@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { query, where, getDocs, Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -35,19 +35,36 @@ export class FirestoreService {
     }
   }
 
-  async loginUser(email: string, password: string) {
-    try {
+async loginUser(email: string, password: string) {
+  try {
       const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
       if (user) {
+        // 🔍 Query the users collection
+        const usersRef = collection(this.firestore, 'users');
+        const q = query(usersRef, where('email', '==', email));
+        const querySnapshot = await getDocs(q);
+
+        let usertype = 'user';
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data['usertype']) {
+            usertype = data['usertype'];
+          }
+        });
+
+        // 💾 Save to localStorage
         localStorage.setItem('user', JSON.stringify({
           uid: user.uid,
-          email: user.email
+          email: user.email,
+          usertype: usertype
         }));
+
+        return { userCredential, usertype }; // return usertype too
       }
 
-      return userCredential;
+      return null;
     } catch (error) {
       console.error('Login error:', error);
       throw error;

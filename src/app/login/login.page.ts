@@ -33,28 +33,37 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async onSubmit() {
-    const loading = await this.LoadingCtrl.create();
-    await loading.present();
+async onSubmit() {
+  const loading = await this.LoadingCtrl.create();
+  await loading.present();
 
-    if (this.loginForm?.valid) {
-      const email = this.loginForm.get('email').value;
-      const password = this.loginForm.get('password').value;
-      try {
-        const user = await this.FirestoreService.loginUser(email, password);
-        if (user) {
-          loading.dismiss();
+  if (this.loginForm?.valid) {
+    const email = this.loginForm.get('email').value;
+    const password = this.loginForm.get('password').value;
+
+    try {
+      const result = await this.FirestoreService.loginUser(email, password);
+      loading.dismiss();
+
+      if (result && result.usertype) {
+        const usertype = result.usertype;
+
+        // 👇 Conditional navigation
+        if (usertype === 'landlord') {
+          this.router.navigate(['/landlord-home']);
+        } else {
           this.router.navigate(['/homepage']);
         }
-      } catch (error) {
-        loading.dismiss();
-        await this.presentAlert('Login failed', 'Invalid email or password');
       }
-    } else {
+    } catch (error) {
       loading.dismiss();
-      this.loginForm.markAllAsTouched();
+      await this.presentAlert('Login failed', 'Invalid email or password');
     }
+  } else {
+    loading.dismiss();
+    this.loginForm.markAllAsTouched();
   }
+}
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
