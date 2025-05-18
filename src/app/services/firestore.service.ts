@@ -7,7 +7,7 @@ import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 })
 export class FirestoreService {
 
-  constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) { }
+  constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) {}
 
   async registerUser(email: string, password: string) {
     try {
@@ -35,8 +35,8 @@ export class FirestoreService {
     }
   }
 
-async loginUser(email: string, password: string) {
-  try {
+  async loginUser(email: string, password: string) {
+    try {
       const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
@@ -54,7 +54,6 @@ async loginUser(email: string, password: string) {
     }
   }
 
-  
   async logoutUser() {
     try {
       await this.ngFireBase.signOut();
@@ -62,6 +61,26 @@ async loginUser(email: string, password: string) {
       console.log('Logged out');
     } catch (error) {
       console.error('Logout error:', error);
+      throw error;
+    }
+  }
+
+  // ✅ Add Room
+  async addRoom(roomData: {
+    availability: boolean;
+    image: string;
+    name: string;
+    price: number;
+    tenants: string[];
+    type: string;
+  }) {
+    try {
+      const roomRef = collection(this.firestore, 'room');
+      const docRef = await addDoc(roomRef, roomData);
+      console.log('Room added with ID:', docRef.id);
+      return docRef;
+    } catch (error) {
+      console.error('Error adding room:', error);
       throw error;
     }
   }

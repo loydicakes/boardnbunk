@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add New Room</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="roomForm" (ngSubmit)="submitRoom()">
+
+    <ion-item>
+      <ion-label position="stacked">Room Name</ion-label>
+      <ion-input formControlName="name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Room Type</ion-label>
+      <ion-input formControlName="type" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Price (₱)</ion-label>
+      <ion-input type="number" formControlName="price" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Availability</ion-label>
+      <ion-toggle formControlName="availability"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Tenants (comma separated)</ion-label>
+      <ion-input formControlName="tenants"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Image URL (optional)</ion-label>
+      <ion-input formControlName="image"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="roomForm.invalid">
+      Add Room
+    </ion-button>
+  </form>
+</ion-content>
