@@ -10,6 +10,37 @@
     </div>
   </div>
 
+  <div class="dashboard-section">
+    <h3>Dashboard</h3>
+    <ion-card class="dashboard-card">
+      <div class="dashboard-grid">
+
+        <div class="dashboard-item">
+          <ion-icon name="home-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Room</span>
+          <span class="dashboard-value">10/15</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Tenant</span>
+          <span class="dashboard-value">13</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Request</span>
+          <span class="dashboard-value">5</span>
+        </div>
+
+      </div>
+    </ion-card>
+  </div>
+
   <div class="activity-section">
     <h3>Activity</h3>
     <div class="activity-card">
@@ -35,9 +66,59 @@
         <p>Moved into Room 302</p>
       </div>
     </div>
+
+    <div class="see-more-wrapper">
+      <a routerLink="/activity-log" class="see-more-link">See More</a>
+    </div>
   </div>
 
   <div class="explore-part">
+    <h3>Rooms</h3>
+    <div class="explore-img-container">
+
+      <!-- Available Rooms Card -->
+      <ion-card class="action-card available-rooms">
+        <div class="card-overlay">
+          <h2>Available Rooms</h2>
+        </div>
+      </ion-card>
+
+      <!-- Rented Rooms Card -->
+      <ion-card class="action-card rented-rooms">
+        <div class="card-overlay">
+          <h2>Rented Rooms</h2>
+        </div>
+      </ion-card>
+
+      <!-- Add Room Card -->
+      <ion-card class="action-card add-room">
+        <div class="card-overlay">
+          <h2>Add Room</h2>
+        </div>
+      </ion-card>
+
+
+    </div>
+  </div>
+
+</ion-content>
+<ion-footer class="custom-tab-bar">
+  <div class="tab-container">
+    <ion-button fill="clear" routerLink="/landlord-home"><ion-icon name="home" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/faves"><ion-icon name="chatbubbles" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/message"><ion-icon name="people-circle" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/landlord-profile"><ion-icon name="person" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+  </div>
+</ion-footer>
+
+
+
+
+<!-- <div class="explore-part">
     <h3>Your properties</h3>
     <div class="explore-img-container">
       <ion-card class="hotel-card">
@@ -58,6 +139,7 @@
           <ion-icon name="heart-outline"></ion-icon>
         </ion-button>
       </ion-card>
+      
       <ion-card class="hotel-card">
         <ion-img src="assets/room/room1.jpg"></ion-img>
 
@@ -103,21 +185,4 @@
         </ion-button>
       </ion-card>
     </div>
-  </div>
-
-
-</ion-content>
-<ion-footer class="custom-tab-bar">
-  <div class="tab-container">
-    <ion-button fill="clear" routerLink="/landlord-home"><ion-icon name="home" class="tab-icon"
-        color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/faves"><ion-icon name="reader" class="tab-icon"
-        color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/message"><ion-icon name="people-circle" class="tab-icon"
-        color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/landlord-profile"><ion-icon name="person" class="tab-icon"
-        color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/settings"><ion-icon name="settings" class="tab-icon"
-        color="light"></ion-icon></ion-button>
-  </div>
-</ion-footer>
+  </div> -->

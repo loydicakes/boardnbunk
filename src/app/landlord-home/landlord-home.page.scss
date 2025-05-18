@@ -68,118 +68,83 @@
 }
 
 .explore-part {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding-left: 2%;
-    margin-top: 40px;
-
-    h3 {
-        font-weight: bold;
-    }
-
-    .tenant-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #444;
-    }
-
-    .tenant-name {
-        color: #267ba0;
-    }
-
-    .explore-img-container {
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
-
-        .hotel-card {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: none;
-
-            ion-img {
-                width: 400px;
-                height: 250px;
-                object-fit: cover;
-            }
-
-            .hotel-header {
-                margin-top: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 2%;
-
-
-                .hotel-header-fav {
-                    display: flex;
-                }
-
-                h2 {
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    margin: 0;
-                }
-
-                .star-icon {
-                    color: #fbbf24; // Tailwind's yellow-400
-                    font-size: 1rem;
-                    margin-left: 0.25rem;
-                }
-
-                span {
-                    font-size: 0.9rem;
-                }
-            }
-
-            p {
-                padding: 0 2%;
-            }
-
-            span {
-                color: #267ba0;
-                font-weight: 600;
-                text-decoration: underline;
-            }
-
-            .info {
-                font-size: 0.85rem;
-                color: #666;
-                margin: 2px 0;
-
-            }
-
-            .price {
-                font-size: 0.95rem;
-                margin-top: 4px;
-            }
-
-            .favorite-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background: white;
-                border-radius: 50%;
-                --padding-start: 6px;
-                --padding-end: 6px;
-                --padding-top: 6px;
-                --padding-bottom: 6px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            }
-        }
-    }
-
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 2%;
+  margin-top: 40px;
 }
 
-#last {
-    margin-bottom: 10px;
+.explore-part h3 {
+  font-weight: bold;
 }
 
+.explore-img-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Common card style */
+.action-card {
+  width: 100%;
+  max-width: 400px;
+  height: 100px;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay with blur and dark tint */
+.card-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-overlay h2 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+/* Add Room*/
+.add-room {
+  background: #0054e9;
+}
+
+.available-rooms {
+  background-image: url('/assets/room/room1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.rented-rooms {
+  background-image: url('/assets/room/room1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+//tab
 .custom-tab-bar {
     background: transparent;
     --ion-safe-area-bottom: 0;
@@ -206,6 +171,9 @@
     }
 
 }
+//end tab
+
+//activity
 
 .activity-section {
     display: flex;
@@ -262,3 +230,204 @@
     color: #e53935;
     font-weight: 500;
 }
+
+.see-more-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-right: 4px;
+}
+
+.see-more-link {
+  color: #3880ff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.see-more-link:hover {
+  text-decoration: underline;
+}
+//end activity
+
+//dashborad
+
+.dashboard-section {
+  padding-left: 2%;
+  margin-top: 30px;
+}
+
+.dashboard-section h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px 10px;
+  margin-right: 2%;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  align-items: center;
+  text-align: center;
+}
+
+.dashboard-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0;
+}
+
+.vertical-divider {
+  width: 1px;
+  background-color: #ccc;
+  height: 60px;
+  margin: 0 10px;
+}
+
+.dashboard-icon {
+  font-size: 28px;
+  color: #0054e9;
+}
+
+.dashboard-label {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.dashboard-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.vertical-divider {
+  width: 1px;
+  background-color: #ccc;
+  height: 50px;
+}
+
+
+//end dashbord
+
+
+// .explore-part {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 15px;
+//     padding-left: 2%;
+//     margin-top: 40px;
+
+//     h3 {
+//         font-weight: bold;
+//     }
+
+//     .tenant-row {
+//         display: flex;
+//         justify-content: space-between;
+//         font-size: 0.9rem;
+//         font-weight: 500;
+//         color: #444;
+//     }
+
+//     .tenant-name {
+//         color: #267ba0;
+//     }
+
+//     .explore-img-container {
+//         margin-top: 20px;
+//         display: flex;
+//         flex-wrap: wrap;
+//         gap: 25px;
+
+//         .hotel-card {
+//             position: relative;
+//             border-radius: 16px;
+//             overflow: hidden;
+//             box-shadow: none;
+
+//             ion-img {
+//                 width: 400px;
+//                 height: 250px;
+//                 object-fit: cover;
+//             }
+
+//             .hotel-header {
+//                 margin-top: 10px;
+//                 display: flex;
+//                 align-items: center;
+//                 justify-content: space-between;
+//                 padding: 0 2%;
+
+
+//                 .hotel-header-fav {
+//                     display: flex;
+//                 }
+
+//                 h2 {
+//                     font-size: 1.1rem;
+//                     font-weight: 600;
+//                     margin: 0;
+//                 }
+
+//                 .star-icon {
+//                     color: #fbbf24; // Tailwind's yellow-400
+//                     font-size: 1rem;
+//                     margin-left: 0.25rem;
+//                 }
+
+//                 span {
+//                     font-size: 0.9rem;
+//                 }
+//             }
+
+//             p {
+//                 padding: 0 2%;
+//             }
+
+//             span {
+//                 color: #267ba0;
+//                 font-weight: 600;
+//                 text-decoration: underline;
+//             }
+
+//             .info {
+//                 font-size: 0.85rem;
+//                 color: #666;
+//                 margin: 2px 0;
+
+//             }
+
+//             .price {
+//                 font-size: 0.95rem;
+//                 margin-top: 4px;
+//             }
+
+//             .favorite-button {
+//                 position: absolute;
+//                 top: 10px;
+//                 right: 10px;
+//                 background: white;
+//                 border-radius: 50%;
+//                 --padding-start: 6px;
+//                 --padding-end: 6px;
+//                 --padding-top: 6px;
+//                 --padding-bottom: 6px;
+//                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+//             }
+//         }
+//     }
+
+// }
+
+// #last {
+//     margin-bottom: 10px;
+// }
