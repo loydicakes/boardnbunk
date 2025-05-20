@@ -80,3 +80,107 @@
     width: 90%;
     margin: 0 auto;
   }
+
+  //save changes
+
+  /* Save changes popup styles */
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+#saveOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  display: none;
+}
+
+#saveCard {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  padding: 20px 16px;
+  display: none;
+  animation: fadeInScale 0.25s ease;
+}
+
+.logout-card.centered {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  padding: 20px 16px;
+  display: none;
+  animation: fadeInScale 0.25s ease;
+}
+
+.logout-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.logout-btn {
+  width: 48%;
+  --border-radius: 12px;
+  font-weight: 500;
+}
+
+.done-btn {
+  --background: transparent;
+  --color: #000;
+  border: 3px solid #f6f6f6;
+  border-radius: 12px;
+}
+
+.cancel-btn {
+  --background: #133DAB;
+  --color: #ffffff;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.line-divider {
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 16px;
+}
+
+ion-button.popup_cancel {
+  --border-radius: 15px;
+  --background: #133DAB;
+  width: 80%;
+  margin: 0 auto;
+}
+  //save changes end

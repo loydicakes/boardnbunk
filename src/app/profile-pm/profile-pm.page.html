@@ -59,10 +59,21 @@
 
     <!-- Save Button -->
     <div style="text-align: center; margin-top: 32px;">
-      <ion-button class="save-button">
+      <ion-button class="save-button" (click)="showSaveCard()">
         Save
       </ion-button>
     </div>
-
   </div>
 </ion-content>
+
+<!-- Save Changes Confirmation Modal -->
+<div class="overlay" id="saveOverlay" (click)="closeSaveCard()"></div>
+<div class="logout-card centered" id="saveCard">
+  <div class="card-title">Save Changes?</div>
+  <div class="line-divider"></div>
+
+  <div class="logout-buttons">
+    <ion-button fill="clear" class="logout-btn done-btn" (click)="confirmSave()">Done</ion-button>
+    <ion-button fill="clear" class="logout-btn cancel-btn" (click)="closeSaveCard()">Cancel</ion-button>
+  </div>
+</div>

@@ -67,12 +67,14 @@
     top: 3%;
 }
 
+//rooms
+
 .explore-part {
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding-left: 2%;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 .explore-part h3 {
@@ -143,6 +145,8 @@
   background-repeat: no-repeat;
 }
 
+//rooms end
+
 
 //tab
 .custom-tab-bar {
@@ -180,7 +184,7 @@
     flex-direction: column;
     gap: 15px;
     padding-left: 2%;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .activity-section h3 {

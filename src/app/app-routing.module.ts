@@ -62,7 +62,11 @@ const routes: Routes = [
   {
     path: 'landlord-profile',
     loadChildren: () => import('./landlord-profile/landlord-profile.module').then( m => m.LandlordProfilePageModule)
+  },  {
+    path: 'activity',
+    loadChildren: () => import('./activity/activity.module').then( m => m.ActivityPageModule)
   },
+
 
 ];
 

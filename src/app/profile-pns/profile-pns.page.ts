@@ -40,4 +40,28 @@ export class ProfilePnsPage implements OnInit {
   goToProfileMethod() {
     this.router.navigate(['/profile']);
   }
+
+    showSaveCard() {
+    const overlay = document.getElementById('saveOverlay');
+    const card = document.getElementById('saveCard');
+    if (overlay && card) {
+      overlay.style.display = 'block';
+      card.style.display = 'block';
+    }
+  }
+
+  closeSaveCard() {
+    const overlay = document.getElementById('saveOverlay');
+    const card = document.getElementById('saveCard');
+    if (overlay && card) {
+      overlay.style.display = 'none';
+      card.style.display = 'none';
+    }
+  }
+
+  confirmSave() {
+    this.closeSaveCard();
+    // Add save logic here (e.g., show success toast, save to server, etc.)
+    console.log('Changes saved!');
+  }
 }
