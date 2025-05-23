@@ -1,3 +1,4 @@
+file
 <ion-header>
   <ion-toolbar>
     <ion-title>Add New Room</ion-title>
@@ -14,8 +15,13 @@
 
     <ion-item>
       <ion-label position="stacked">Room Type</ion-label>
-      <ion-input formControlName="type" required></ion-input>
+      <ion-select formControlName="type" interface="popover" placeholder="Select Type">
+        <ion-select-option value="solo">Solo</ion-select-option>
+        <ion-select-option value="studio">Studio Type</ion-select-option>
+        <ion-select-option value="bedspacer">Bed Spacer</ion-select-option>
+      </ion-select>
     </ion-item>
+
 
     <ion-item>
       <ion-label position="stacked">Price (₱)</ion-label>
@@ -33,9 +39,14 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Image URL (optional)</ion-label>
-      <ion-input formControlName="image"></ion-input>
+      <ion-label position="stacked">Upload Image</ion-label>
+      <input type="file" accept="image/*" (change)="onImageSelected($event)" />
     </ion-item>
+
+    <div class="image-preview" *ngIf="previewUrl">
+      <img [src]="previewUrl" alt="Room Preview" />
+    </div>
+
 
     <ion-button expand="block" type="submit" [disabled]="roomForm.invalid">
       Add Room

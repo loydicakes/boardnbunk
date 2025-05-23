@@ -4,13 +4,15 @@ import { FirestoreService } from '../services/firestore.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({
-  standalone: false,
+  standalone:false,
   selector: 'app-add-room',
   templateUrl: './room.page.html',
-  styleUrls: ['./room.page.scss'],
+  styleUrls: ['./room.page.scss']
 })
+
 export class RoomPage implements OnInit {
   roomForm: FormGroup;
+  previewUrl: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -22,36 +24,44 @@ export class RoomPage implements OnInit {
       type: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(1)]],
       availability: [true],
-      tenants: [''], // Will split by comma
+      tenants: [''],
       image: ['']
     });
   }
 
   ngOnInit() {}
 
+  onImageSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const tempUrl = URL.createObjectURL(file);
+      this.previewUrl = tempUrl;
+      this.roomForm.patchValue({ image: tempUrl }); // store blob URL in form
+    }
+  }
+
   async submitRoom() {
-    if (this.roomForm.valid) {
-      const formData = this.roomForm.value;
+    const formData = this.roomForm.value;
 
-      const roomData = {
-        name: formData.name,
-        type: formData.type,
-        price: formData.price,
-        availability: formData.availability,
-        tenants: formData.tenants
-          ? formData.tenants.split(',').map((t: string) => t.trim())
-          : [],
-        image: formData.image || ''
-      };
+    const roomData = {
+      name: formData.name,
+      type: formData.type,
+      price: formData.price,
+      availability: formData.availability,
+      tenants: formData.tenants
+        ? formData.tenants.split(',').map((t: string) => t.trim())
+        : [],
+      image: formData.image // This is just a blob: URL, not persistent
+    };
 
-      try {
-        await this.firestoreService.addRoom(roomData);
-        this.roomForm.reset({ availability: true, price: 0 });
-        this.showToast('Room added successfully!');
-      } catch (error) {
-        this.showToast('Failed to add room.');
-        console.error(error);
-      }
+    try {
+      await this.firestoreService.addRoom(roomData);
+      this.roomForm.reset({ availability: true, price: 0 });
+      this.previewUrl = null;
+      this.showToast('Room added with temporary image preview!');
+    } catch (error) {
+      this.showToast('Failed to add room.');
+      console.error(error);
     }
   }
 
@@ -64,3 +74,4 @@ export class RoomPage implements OnInit {
     toast.present();
   }
 }
+

@@ -1,88 +1,78 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { query, where, getDocs, Firestore, collection, addDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs
+} from '@angular/fire/firestore';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class FirestoreService {
+  constructor(
+    public ngFireBase: AngularFireAuth,
+    private firestore: Firestore
+  ) {}
 
-  constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) {}
-
+  // ✅ Register a new user and store user data in Firestore
   async registerUser(email: string, password: string) {
-    try {
-      const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
-      await this.addUserToDatabase(email, password); 
-      return userCredential;
-    } catch (error) {
-      console.error('Error during registration:', error);
-      throw error;
-    }
+    const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
+    await this.addUserToDatabase(email, password);
+    return userCredential;
   }
 
+  // ✅ Add user document to Firestore
   async addUserToDatabase(email: string, password: string) {
-    try {
-      const userRef = collection(this.firestore, 'users'); 
-      await addDoc(userRef, {
-        email: email,
-        password: password,
-        usertype: 'user'  
-      });
-      console.log('User added to Firestore successfully');
-    } catch (error) {
-      console.error('Error adding user to Firestore:', error);
-      throw error;  
-    }
+    const userRef = collection(this.firestore, 'users');
+    return await addDoc(userRef, {
+      email,
+      password,
+      usertype: 'user'
+    });
   }
 
-async loginUser(email: string, password: string) {
-  try {
-      const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
-      const user = userCredential.user;
+  // ✅ Login and fetch user type from Firestore
+  async loginUser(email: string, password: string) {
+    const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
 
-      if (user) {
-        // 🔍 Query the users collection
-        const usersRef = collection(this.firestore, 'users');
-        const q = query(usersRef, where('email', '==', email));
-        const querySnapshot = await getDocs(q);
+    if (user) {
+      const usersRef = collection(this.firestore, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
 
-        let usertype = 'user';
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data['usertype']) {
-            usertype = data['usertype'];
-          }
-        });
+      let usertype = 'user';
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data['usertype']) {
+          usertype = data['usertype'];
+        }
+      });
 
-        // 💾 Save to localStorage
-        localStorage.setItem('user', JSON.stringify({
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
           uid: user.uid,
           email: user.email,
           usertype: usertype
-        }));
+        })
+      );
 
-        return { userCredential, usertype }; // return usertype too
-      }
-
-      return null;
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
+      return { userCredential, usertype };
     }
+
+    return null;
   }
 
+  // ✅ Logout and clear local storage
   async logoutUser() {
-    try {
-      await this.ngFireBase.signOut();
-      localStorage.removeItem('user');
-      console.log('Logged out');
-    } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
-    }
+    await this.ngFireBase.signOut();
+    localStorage.removeItem('user');
   }
 
-  // ✅ Add Room
+  // ✅ Add room with image path or external URL
   async addRoom(roomData: {
     availability: boolean;
     image: string;
@@ -91,14 +81,7 @@ async loginUser(email: string, password: string) {
     tenants: string[];
     type: string;
   }) {
-    try {
-      const roomRef = collection(this.firestore, 'room');
-      const docRef = await addDoc(roomRef, roomData);
-      console.log('Room added with ID:', docRef.id);
-      return docRef;
-    } catch (error) {
-      console.error('Error adding room:', error);
-      throw error;
-    }
+    const roomRef = collection(this.firestore, 'room');
+    return await addDoc(roomRef, roomData);
   }
 }
