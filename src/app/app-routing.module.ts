@@ -66,6 +66,18 @@ const routes: Routes = [
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then( m => m.ActivityPageModule)
   },
+  {
+    path: 'room-list-avail',
+    loadChildren: () => import('./room-list-avail/room-list-avail.module').then( m => m.RoomListAvailPageModule)
+  },
+  {
+    path: 'room-edit-modal',
+    loadChildren: () => import('./room-edit-modal/room-edit-modal.module').then( m => m.RoomEditModalPageModule)
+  },
+  {
+    path: 'room-unavailable-list',
+    loadChildren: () => import('./room-unavailable-list/room-unavailable-list.module').then( m => m.RoomUnavailableListPageModule)
+  },
 
 
 ];

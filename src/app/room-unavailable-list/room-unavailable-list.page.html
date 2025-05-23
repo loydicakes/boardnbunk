@@ -1,0 +1,32 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Unavailable Rooms with Tenants</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ng-container *ngIf="rooms.length > 0; else noRooms">
+    <ion-item *ngFor="let room of rooms">
+      <ion-thumbnail slot="start">
+        <img [src]="room.image">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ room.name }}</h2>
+        <p>₱{{ room.price }} - {{ room.type }}</p>
+        <p>Status: Unavailable</p>
+        <p>Tenants: {{ room.tenants.join(', ') }}</p>
+      </ion-label>
+
+      <ion-button fill="clear" color="primary" slot="end" (click)="openEditModal(room)">
+        Edit
+      </ion-button>
+    </ion-item>
+  </ng-container>
+  <ng-template #noRooms>
+    <ion-item>
+      <ion-label>
+        <h2>No unavailable rooms with tenants found.</h2>
+      </ion-label>
+    </ion-item>
+  </ng-template>
+</ion-content>

@@ -37,65 +37,29 @@
     <div class="explore-part">
       <h3>Explore</h3>
       <div class="explore-img-container">
-        <ion-card class="hotel-card" routerLink="/infos">
-          <ion-img src="assets/room/room1.jpg"></ion-img>
-        
+        <ion-card class="hotel-card" *ngFor="let room of rooms" routerLink="/infos">
+          <ion-img [src]="room.image || 'assets/placeholder.jpg'"></ion-img>
+
           <ion-card-content class="ion-padding">
             <div class="hotel-header">
-              <h2>Luna, Philippines</h2>
-              <div class="hotel-header-fav">           
+              <h2>{{ room.name }}</h2>
+              <div class="hotel-header-fav">
                 <ion-icon name="star" class="star-icon"></ion-icon>
-                <span>4.9</span>
+                <span>4.9</span> <!-- optional: make dynamic later -->
               </div>
             </div>
-            <p>53 Kilometers away</p>
-            <p id="last"><span>₱ 5,050</span> per Month</p>
+            <!-- Removed Kilometers Away -->
+            <p id="last"><span>₱ {{ room.price }}</span> per Month</p>
           </ion-card-content>
-        
-          <ion-button fill="clear" size="small" class="favorite-button">
-            <ion-icon name="heart-outline"></ion-icon>
-          </ion-button>
-        </ion-card>
-        <ion-card class="hotel-card" routerLink="/infos">
-          <ion-img src="assets/room/room2.jpg"></ion-img>
-        
-          <ion-card-content class="ion-padding">
-            <div class="hotel-header">
-              <h2>Luna, Philippines</h2>
-              <div class="hotel-header-fav">           
-                <ion-icon name="star" class="star-icon"></ion-icon>
-                <span>4.9</span>
-              </div>
-            </div>
-            <p>53 Kilometers away</p>
-            <p id="last"><span>₱ 5,050</span> per Month</p>
-          </ion-card-content>
-        
-          <ion-button fill="clear" size="small" class="favorite-button">
-            <ion-icon name="heart-outline"></ion-icon>
-          </ion-button>
-        </ion-card>
-        <ion-card class="hotel-card" routerLink="/infos">
-          <ion-img src="assets/room/room3.jpg"></ion-img>
-        
-          <ion-card-content class="ion-padding">
-            <div class="hotel-header">
-              <h2>Luna, Philippines</h2>
-              <div class="hotel-header-fav">           
-                <ion-icon name="star" class="star-icon"></ion-icon>
-                <span>4.9</span>
-              </div>
-            </div>
-            <p>53 Kilometers away</p>
-            <p id="last"><span>₱ 5,050</span> per Month</p>
-          </ion-card-content>
-        
+
           <ion-button fill="clear" size="small" class="favorite-button">
             <ion-icon name="heart-outline"></ion-icon>
           </ion-button>
         </ion-card>
       </div>
     </div>
+
+
 </ion-content>
 <ion-footer class="custom-tab-bar">
   <div class="tab-container">

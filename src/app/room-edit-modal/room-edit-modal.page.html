@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Room</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="editForm" (ngSubmit)="submitEdit()">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Type</ion-label>
+      <ion-input formControlName="type"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Price</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Availability</ion-label>
+      <ion-toggle formControlName="availability"></ion-toggle>
+    </ion-item>
+
+    <ion-item *ngIf="editForm.get('availability')?.value === false">
+      <ion-label position="stacked">Tenants (comma separated)</ion-label>
+      <ion-input formControlName="tenants"></ion-input>
+    </ion-item>
+    
+    <ion-button expand="block" type="submit" [disabled]="editForm.invalid">Update</ion-button>
+  </form>
+
+</ion-content>

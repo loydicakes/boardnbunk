@@ -4,12 +4,11 @@ import { FirestoreService } from '../services/firestore.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({
-  standalone:false,
+  standalone: false,
   selector: 'app-add-room',
   templateUrl: './room.page.html',
   styleUrls: ['./room.page.scss']
 })
-
 export class RoomPage implements OnInit {
   roomForm: FormGroup;
   previewUrl: string | null = null;
@@ -24,12 +23,20 @@ export class RoomPage implements OnInit {
       type: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(1)]],
       availability: [true],
-      tenants: [''],
+      tenants: ['None'],
       image: ['']
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.roomForm.get('availability')?.valueChanges.subscribe((available) => {
+      if (available) {
+        this.roomForm.get('tenants')?.setValue('None');
+      } else {
+        this.roomForm.get('tenants')?.setValue('');
+      }
+    });
+  }
 
   onImageSelected(event: any) {
     const file: File = event.target.files[0];
@@ -48,7 +55,7 @@ export class RoomPage implements OnInit {
       type: formData.type,
       price: formData.price,
       availability: formData.availability,
-      tenants: formData.tenants
+      tenants: formData.tenants && formData.tenants !== 'None'
         ? formData.tenants.split(',').map((t: string) => t.trim())
         : [],
       image: formData.image // This is just a blob: URL, not persistent
@@ -56,7 +63,7 @@ export class RoomPage implements OnInit {
 
     try {
       await this.firestoreService.addRoom(roomData);
-      this.roomForm.reset({ availability: true, price: 0 });
+      this.roomForm.reset({ availability: true, price: 0, tenants: 'None' });
       this.previewUrl = null;
       this.showToast('Room added with temporary image preview!');
     } catch (error) {
@@ -74,4 +81,3 @@ export class RoomPage implements OnInit {
     toast.present();
   }
 }
-

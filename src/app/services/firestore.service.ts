@@ -6,9 +6,20 @@ import {
   addDoc,
   query,
   where,
-  getDocs
+  getDocs, 
+  deleteDoc,
+  doc
 } from '@angular/fire/firestore';
 
+interface Room {
+  id: string;
+  name: string;
+  price: number;
+  type: string;
+  image: string;
+  availability: boolean;
+  tenants: string[]; // ✅ required
+}
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
   constructor(
@@ -16,14 +27,12 @@ export class FirestoreService {
     private firestore: Firestore
   ) {}
 
-  // ✅ Register a new user and store user data in Firestore
   async registerUser(email: string, password: string) {
     const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
     await this.addUserToDatabase(email, password);
     return userCredential;
   }
 
-  // ✅ Add user document to Firestore
   async addUserToDatabase(email: string, password: string) {
     const userRef = collection(this.firestore, 'users');
     return await addDoc(userRef, {
@@ -33,7 +42,6 @@ export class FirestoreService {
     });
   }
 
-  // ✅ Login and fetch user type from Firestore
   async loginUser(email: string, password: string) {
     const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
@@ -66,13 +74,11 @@ export class FirestoreService {
     return null;
   }
 
-  // ✅ Logout and clear local storage
   async logoutUser() {
     await this.ngFireBase.signOut();
     localStorage.removeItem('user');
   }
 
-  // ✅ Add room with image path or external URL
   async addRoom(roomData: {
     availability: boolean;
     image: string;
@@ -81,7 +87,27 @@ export class FirestoreService {
     tenants: string[];
     type: string;
   }) {
-    const roomRef = collection(this.firestore, 'room');
+    const roomRef = collection(this.firestore, 'room'); // ✅ fixed here (was 'room')
     return await addDoc(roomRef, roomData);
+  }
+
+  async getAllRooms(): Promise<Room[]> {
+    const roomsCol = collection(this.firestore, 'room');
+    const roomSnapshot = await getDocs(roomsCol);
+
+    const rooms: Room[] = roomSnapshot.docs.map(docSnap => {
+      const data = docSnap.data() as Omit<Room, 'id'>;
+      return {
+        id: docSnap.id,
+        ...data
+      };
+    });
+    console.log('Fetched rooms:', rooms);
+    return rooms;
+  }
+
+  async deleteRoom(roomId: string) {
+    const roomDoc = doc(this.firestore, 'room', roomId); // ✅ fixed here too
+    return await deleteDoc(roomDoc);
   }
 }
