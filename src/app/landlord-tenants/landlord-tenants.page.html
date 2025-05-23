@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+
+    <!-- Back Button -->
+    <div class="back-btn">
+      <ion-icon name="arrow-back"></ion-icon>
+    </div>
+
+    <ion-buttons class="settings-button" slot="end">
+      <ion-button class="circle-settings-button">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <h4 class="title">Tenants</h4>
+
+    <!-- Tenants Cards -->
+    <div class="tenant-card" *ngFor="let tenant of tenants" (click)="openTenantModal(tenant)">
+      <img [src]="tenant.image" class="tenant-img" />
+      <div class="tenant-content">
+        <strong>{{ tenant.name }}</strong>
+        <p>Room {{ tenant.roomNumber }}, Building {{ tenant.buildingNumber }}</p>
+        <div class="payment-dates">
+          <span>Last Paid: {{ tenant.lastPaid }}</span>
+          <span>Next Due: {{ tenant.nextDue }}</span>
+        </div>
+      </div>
+      <ion-icon name="information-circle-outline" class="chat-icon"></ion-icon>
+    </div>
+
+    <!-- Tenant Modal -->
+    <div class="tenant-modal" *ngIf="selectedTenant" (click)="closeTenantModal()">
+      <div class="modal-card" (click)="$event.stopPropagation()">
+        <ion-icon name="chatbubbles-outline" class="chat-icon top-right"></ion-icon>
+        <h2>{{ selectedTenant.name }}</h2>
+        <p><strong>First Attended:</strong> {{ selectedTenant.attendedDate }}</p>
+        <p><strong>Address:</strong> {{ selectedTenant.address }}</p>
+        <p><strong>Contact:</strong> {{ selectedTenant.contact }}</p>
+        <p><strong>Room:</strong> Room {{ selectedTenant.roomNumber }}, Building {{ selectedTenant.buildingNumber }}</p>
+      </div>
+    </div>
+
+
+  </div>
+</ion-content>
