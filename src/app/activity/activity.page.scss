@@ -1,0 +1,112 @@
+ion-content{
+    --background: #f6f6f6;
+}
+#container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px 0px 30px;
+}
+
+.back-btn {
+  margin-top: 10px;
+  position: absolute;
+  left: 16px;
+  background: white;
+  border: black 1px solid;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 20px;
+    color: #0D0D19;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+}
+
+h4 {
+  font-weight: bold;
+}
+
+.activity-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  gap: 15px;
+  width: 100%;           /* Added */
+  box-sizing: border-box; /* Ensures padding fits in width */
+}
+
+.activity-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.activity-content strong {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.alert-icon {
+    font-size: 50px;
+    --color: #e53935;
+}
+
+.activity-content p.overdue {
+  color: #e53935;
+  font-weight: 500;
+}
+
+
+.activity-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  background: white;
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.activity-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* ensures it takes up full space */
+  min-width: 0; /* REQUIRED for text truncation inside flex */
+}
+
+.activity-content p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.timestamp {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  font-size: 0.75rem;
+  color: #aaa;
+}
