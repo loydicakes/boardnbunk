@@ -78,6 +78,10 @@ const routes: Routes = [
     path: 'room-unavailable-list',
     loadChildren: () => import('./room-unavailable-list/room-unavailable-list.module').then( m => m.RoomUnavailableListPageModule)
   },
+  {
+    path: 'landlord-tenants',
+    loadChildren: () => import('./landlord-tenants/landlord-tenants.module').then( m => m.LandlordTenantsPageModule)
+  },
 
 
 ];
