@@ -1,6 +1,11 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
+      <!-- Back Button -->
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/landlord-home"></ion-back-button>
+      </ion-buttons>
+
       <ion-title size="large">Unavailable Rooms with Tenants</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -22,6 +27,7 @@
       </ion-button>
     </ion-item>
   </ng-container>
+
   <ng-template #noRooms>
     <ion-item>
       <ion-label>
