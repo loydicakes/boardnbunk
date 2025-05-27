@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-landlord-home',
@@ -7,11 +8,20 @@ import { Component, OnInit } from '@angular/core';
   standalone:false, 
 })
 export class LandlordHomePage implements OnInit {
+  totalRooms: number = 0;
+  rentedRooms: number = 0;
+  availableRooms: number = 0;
+
 
   searchFocused: boolean = false;
-  constructor() { }
+  constructor(private firestoreService: FirestoreService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const allRooms = await this.firestoreService.getAllRooms();
+    this.totalRooms = allRooms.length;
+    this.rentedRooms = allRooms.filter(room => room.tenants.length > 0).length;
+    this.availableRooms = allRooms.filter(room => room.availability === true).length;
+
   }
 
 }
