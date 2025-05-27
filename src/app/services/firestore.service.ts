@@ -6,7 +6,7 @@ import {
   addDoc,
   query,
   where,
-  getDocs, 
+  getDocs,
   deleteDoc,
   doc
 } from '@angular/fire/firestore';
@@ -18,8 +18,9 @@ interface Room {
   type: string;
   image: string;
   availability: boolean;
-  tenants: string[]; // ✅ required
+  tenants: string[];
 }
+
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
   constructor(
@@ -27,12 +28,14 @@ export class FirestoreService {
     private firestore: Firestore
   ) {}
 
+  // 🔐 Register user and save to Firestore
   async registerUser(email: string, password: string) {
     const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
     await this.addUserToDatabase(email, password);
     return userCredential;
   }
 
+  // ➕ Add user data to Firestore
   async addUserToDatabase(email: string, password: string) {
     const userRef = collection(this.firestore, 'users');
     return await addDoc(userRef, {
@@ -42,6 +45,7 @@ export class FirestoreService {
     });
   }
 
+  // 🔑 Login and fetch user type
   async loginUser(email: string, password: string) {
     const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
@@ -74,11 +78,13 @@ export class FirestoreService {
     return null;
   }
 
+  // 🔒 Logout
   async logoutUser() {
     await this.ngFireBase.signOut();
     localStorage.removeItem('user');
   }
 
+  // ➕ Add a new room
   async addRoom(roomData: {
     availability: boolean;
     image: string;
@@ -87,10 +93,11 @@ export class FirestoreService {
     tenants: string[];
     type: string;
   }) {
-    const roomRef = collection(this.firestore, 'room'); // ✅ fixed here (was 'room')
+    const roomRef = collection(this.firestore, 'room'); // Collection is 'room'
     return await addDoc(roomRef, roomData);
   }
 
+  // 📥 Get all rooms
   async getAllRooms(): Promise<Room[]> {
     const roomsCol = collection(this.firestore, 'room');
     const roomSnapshot = await getDocs(roomsCol);
@@ -102,12 +109,14 @@ export class FirestoreService {
         ...data
       };
     });
+
     console.log('Fetched rooms:', rooms);
     return rooms;
   }
 
+  // 🗑️ Delete a room by ID
   async deleteRoom(roomId: string) {
-    const roomDoc = doc(this.firestore, 'room', roomId); // ✅ fixed here too
+    const roomDoc = doc(this.firestore, 'room', roomId);
     return await deleteDoc(roomDoc);
   }
 }

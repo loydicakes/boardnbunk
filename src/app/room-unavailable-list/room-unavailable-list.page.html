@@ -25,6 +25,10 @@
       <ion-button fill="clear" color="primary" slot="end" (click)="openEditModal(room)">
         Edit
       </ion-button>
+
+      <ion-button fill="clear" color="danger" slot="end" (click)="deleteRoom(room.id)">
+        Delete
+      </ion-button>
     </ion-item>
   </ng-container>
 
