@@ -44,8 +44,8 @@ const routes: Routes = [
     loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepagePageModule)
   },
   {
-    path: 'infos',
-    loadChildren: () => import('./infos/infos.module').then( m => m.InfosPageModule)
+    path: 'infos/:id',
+    loadChildren: () => import('./infos/infos.module').then(m => m.InfosPageModule)
   },
   {
     path: 'landing',
@@ -62,7 +62,8 @@ const routes: Routes = [
   {
     path: 'landlord-profile',
     loadChildren: () => import('./landlord-profile/landlord-profile.module').then( m => m.LandlordProfilePageModule)
-  },  {
+  },
+  {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then( m => m.ActivityPageModule)
   },

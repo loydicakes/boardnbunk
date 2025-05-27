@@ -41,17 +41,17 @@
         >All</ion-button
       >
       <ion-button
-        [color]="selectedType === 'Solo' ? 'primary' : 'medium'"
+        [color]="selectedType === 'solo' ? 'primary' : 'medium'"
         (click)="filterRooms('solo')"
         >Solo</ion-button
       >
       <ion-button
-        [color]="selectedType === 'Studio Type' ? 'primary' : 'medium'"
+        [color]="selectedType === 'studio' ? 'primary' : 'medium'"
         (click)="filterRooms('studio')"
         >Studio Type</ion-button
       >
       <ion-button
-        [color]="selectedType === 'Bed Spacer' ? 'primary' : 'medium'"
+        [color]="selectedType === 'bedspacer' ? 'primary' : 'medium'"
         (click)="filterRooms('bedspacer')"
         >Bed Spacer</ion-button
       >
@@ -64,7 +64,7 @@
       <ion-card
         class="hotel-card"
         *ngFor="let room of filteredRooms"
-        routerLink="/infos"
+        [routerLink]="['/infos', room.id]"
       >
         <ion-img [src]="room.image || 'assets/placeholder.jpg'"></ion-img>
 
