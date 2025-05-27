@@ -27,28 +27,15 @@ export class HomepagePage implements OnInit {
       return;
     }
 
-    // Load all available rooms once
     this.rooms = (await this.firestoreService.getAvailableRooms()) || [];
     this.filteredRooms = [...this.rooms];
   }
 
-  // Filter rooms by category (type)
-  async filterRooms(type: string) {
+  filterRooms(type: string) {
     this.selectedType = type;
-    // For local filtering:
-    // this.applyFilters();
-
-    // OR, for server-side filtering, uncomment this block:
-    /*
-    this.rooms = await this.firestoreService.getRoomsByType(type);
-    this.applySearchFilter();
-    */
-
-    // Here we do local filtering for simplicity:
     this.applyFilters();
   }
 
-  // Apply both category and search filters locally
   applyFilters() {
     this.filteredRooms = this.rooms.filter((room) => {
       const matchesType = this.selectedType ? room.type === this.selectedType : true;

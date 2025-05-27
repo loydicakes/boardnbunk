@@ -9,6 +9,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  getDoc,
 } from '@angular/fire/firestore';
 
 export interface Room {
@@ -150,4 +151,17 @@ export class FirestoreService {
     const roomDoc = doc(this.firestore, 'room', roomId);
     return await deleteDoc(roomDoc);
   }
+
+  async getRoomById(roomId: string): Promise<Room | null> {
+    const roomDocRef = doc(this.firestore, 'room', roomId);
+    const roomSnap = await getDoc(roomDocRef);
+    if (roomSnap.exists()) {
+      return {
+        id: roomSnap.id,
+        ...(roomSnap.data() as Omit<Room, 'id'>),
+      };
+    }
+    return null;
+  }
+
 }
