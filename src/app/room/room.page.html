@@ -1,6 +1,10 @@
-file
 <ion-header>
   <ion-toolbar>
+    <!-- ✅ Back Button -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/landlord-home"></ion-back-button>
+    </ion-buttons>
+
     <ion-title>Add New Room</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -21,7 +25,6 @@ file
         <ion-select-option value="bedspacer">Bed Spacer</ion-select-option>
       </ion-select>
     </ion-item>
-
 
     <ion-item>
       <ion-label position="stacked">Price (₱)</ion-label>
@@ -46,7 +49,6 @@ file
     <div class="image-preview" *ngIf="previewUrl">
       <img [src]="previewUrl" alt="Room Preview" />
     </div>
-
 
     <ion-button expand="block" type="submit" [disabled]="roomForm.invalid">
       Add Room
