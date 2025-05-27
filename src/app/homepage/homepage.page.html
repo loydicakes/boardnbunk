@@ -1,71 +1,105 @@
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 <ion-content [fullscreen]="true" class="main-page ion-padding">
 
-    <ion-button size="small" class="notif-button"><ion-icon name="notifications" slot="icon-only"></ion-icon></ion-button>
-    
-    <div class="top-part">
-        <div class="header-part">
-            <ion-icon name="location-outline" color="second" size="large"></ion-icon>
-            <h5>Board n' Bunk</h5>
-        </div>
+  <ion-button size="small" class="notif-button">
+    <ion-icon name="notifications" slot="icon-only"></ion-icon>
+  </ion-button>
 
-        <div class="custom-search-wrapper">
-            <input type="text" placeholder="Search..." class="custom-search-input" />
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-        </div>
-    </div>
-    
-    <div class="categ-part">
-        <h3>Categories</h3>
-        <div class="button-container">
-          <ion-button>Solo Room</ion-button>
-          <ion-button>Couples Room</ion-button>
-          <ion-button>Studio Type</ion-button>
-          <ion-button>Bedspace</ion-button>
-        </div>
+  <div class="top-part">
+    <div class="header-part">
+      <ion-icon name="location-outline" color="second" size="large"></ion-icon>
+      <h5>Board n' Bunk</h5>
     </div>
 
-    <div class="featured-rooms-part">
-      <h3>Featured</h3>
-      <div class="img-container">    
-        <img src="assets/room/room1.jpg" alt="">
-        <img src="assets/room/room2.jpg" alt="">
-        <img src="assets/room/room3.jpg" alt="">
-      </div>
+    <div class="custom-search-wrapper">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="custom-search-input"
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+      />
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
     </div>
+  </div>
 
-    <div class="explore-part">
-      <h3>Explore</h3>
-      <div class="explore-img-container">
-        <ion-card class="hotel-card" *ngFor="let room of rooms" routerLink="/infos">
-          <ion-img [src]="room.image || 'assets/placeholder.jpg'"></ion-img>
+  <div class="categ-part">
+    <h3>Categories</h3>
+    <div class="button-container">
+      <ion-button
+        [color]="selectedType === '' ? 'primary' : 'medium'"
+        (click)="filterRooms('')"
+        >All</ion-button
+      >
+      <ion-button
+        [color]="selectedType === 'Solo' ? 'primary' : 'medium'"
+        (click)="filterRooms('solo')"
+        >Solo</ion-button
+      >
+      <ion-button
+        [color]="selectedType === 'Studio Type' ? 'primary' : 'medium'"
+        (click)="filterRooms('studio')"
+        >Studio Type</ion-button
+      >
+      <ion-button
+        [color]="selectedType === 'Bed Spacer' ? 'primary' : 'medium'"
+        (click)="filterRooms('bedspacer')"
+        >Bed Spacer</ion-button
+      >
+    </div>
+  </div>
 
-          <ion-card-content class="ion-padding">
-            <div class="hotel-header">
-              <h2>{{ room.name }}</h2>
-              <div class="hotel-header-fav">
-                <ion-icon name="star" class="star-icon"></ion-icon>
-                <span>4.9</span> <!-- optional: make dynamic later -->
-              </div>
+  <div class="featured-rooms-part">
+    <h3>Featured</h3>
+    <div class="img-container">
+      <img src="assets/room/room1.jpg" alt="" />
+      <img src="assets/room/room2.jpg" alt="" />
+      <img src="assets/room/room3.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="explore-part">
+    <h3>Explore</h3>
+    <div class="explore-img-container">
+      <ion-card
+        class="hotel-card"
+        *ngFor="let room of filteredRooms"
+        routerLink="/infos"
+      >
+        <ion-img [src]="room.image || 'assets/placeholder.jpg'"></ion-img>
+
+        <ion-card-content class="ion-padding">
+          <div class="hotel-header">
+            <h2>{{ room.name }}</h2>
+            <div class="hotel-header-fav">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <span>4.9</span>
             </div>
-            <!-- Removed Kilometers Away -->
-            <p id="last"><span>₱ {{ room.price }}</span> per Month</p>
-          </ion-card-content>
+          </div>
+          <p id="last"><span>₱ {{ room.price }}</span> per Month</p>
+        </ion-card-content>
 
-          <ion-button fill="clear" size="small" class="favorite-button">
-            <ion-icon name="heart-outline"></ion-icon>
-          </ion-button>
-        </ion-card>
-      </div>
+        <ion-button fill="clear" size="small" class="favorite-button">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-button>
+      </ion-card>
     </div>
-
-
+  </div>
 </ion-content>
+
 <ion-footer class="custom-tab-bar">
   <div class="tab-container">
-    <ion-button fill="clear" routerLink="/homepage"><ion-icon name="home" class="tab-icon" color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/faves"><ion-icon name="heart" class="tab-icon" color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/message"><ion-icon name="mail" class="tab-icon" color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/profile"><ion-icon name="person" class="tab-icon" color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/homepage"
+      ><ion-icon name="home" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/faves"
+      ><ion-icon name="heart" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/message"
+      ><ion-icon name="mail" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/profile"
+      ><ion-icon name="person" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
   </div>
 </ion-footer>

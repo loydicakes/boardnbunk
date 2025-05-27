@@ -8,10 +8,10 @@ import {
   where,
   getDocs,
   deleteDoc,
-  doc
+  doc,
 } from '@angular/fire/firestore';
 
-interface Room {
+export interface Room {
   id: string;
   name: string;
   price: number;
@@ -23,29 +23,29 @@ interface Room {
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
-  constructor(
-    public ngFireBase: AngularFireAuth,
-    private firestore: Firestore
-  ) {}
+  constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) {}
 
-  // 🔐 Register user and save to Firestore
+  // Register user and save to Firestore
   async registerUser(email: string, password: string) {
-    const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
+    const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     await this.addUserToDatabase(email, password);
     return userCredential;
   }
 
-  // ➕ Add user data to Firestore
+  // Add user data to Firestore
   async addUserToDatabase(email: string, password: string) {
     const userRef = collection(this.firestore, 'users');
     return await addDoc(userRef, {
       email,
       password,
-      usertype: 'user'
+      usertype: 'user',
     });
   }
 
-  // 🔑 Login and fetch user type
+  // Login and fetch user type
   async loginUser(email: string, password: string) {
     const userCredential = await this.ngFireBase.signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
@@ -68,7 +68,7 @@ export class FirestoreService {
         JSON.stringify({
           uid: user.uid,
           email: user.email,
-          usertype: usertype
+          usertype: usertype,
         })
       );
 
@@ -78,13 +78,13 @@ export class FirestoreService {
     return null;
   }
 
-  // 🔒 Logout
+  // Logout
   async logoutUser() {
     await this.ngFireBase.signOut();
     localStorage.removeItem('user');
   }
 
-  // ➕ Add a new room
+  // Add a new room
   async addRoom(roomData: {
     availability: boolean;
     image: string;
@@ -97,16 +97,16 @@ export class FirestoreService {
     return await addDoc(roomRef, roomData);
   }
 
-  // 📥 Get all rooms
+  // Get all rooms
   async getAllRooms(): Promise<Room[]> {
     const roomsCol = collection(this.firestore, 'room');
     const roomSnapshot = await getDocs(roomsCol);
 
-    const rooms: Room[] = roomSnapshot.docs.map(docSnap => {
+    const rooms: Room[] = roomSnapshot.docs.map((docSnap) => {
       const data = docSnap.data() as Omit<Room, 'id'>;
       return {
         id: docSnap.id,
-        ...data
+        ...data,
       };
     });
 
@@ -114,7 +114,38 @@ export class FirestoreService {
     return rooms;
   }
 
-  // 🗑️ Delete a room by ID
+  // Get available rooms only (filtered server-side)
+  async getAvailableRooms(): Promise<Room[]> {
+    const roomsCol = collection(this.firestore, 'room');
+    const q = query(roomsCol, where('availability', '==', true));
+    const roomSnapshot = await getDocs(q);
+
+    return roomSnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...(docSnap.data() as Omit<Room, 'id'>),
+    }));
+  }
+
+  // Get rooms by type and availability (filtered server-side)
+  async getRoomsByType(type: string): Promise<Room[]> {
+    const roomsCol = collection(this.firestore, 'room');
+    let q;
+
+    if (type) {
+      q = query(roomsCol, where('availability', '==', true), where('type', '==', type));
+    } else {
+      q = query(roomsCol, where('availability', '==', true));
+    }
+
+    const roomSnapshot = await getDocs(q);
+
+    return roomSnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...(docSnap.data() as Omit<Room, 'id'>),
+    }));
+  }
+
+  // Delete a room by ID
   async deleteRoom(roomId: string) {
     const roomDoc = doc(this.firestore, 'room', roomId);
     return await deleteDoc(roomDoc);
