@@ -5,7 +5,7 @@ ion-content {
 #container {
   display: flex;
   flex-direction: column;
-  padding: 20px 30px 0px 30px;
+  padding: 20px 30px 0 30px;
 }
 
 .back-btn {
@@ -56,6 +56,7 @@ h4 {
 }
 
 .tenant-img {
+  margin-top: 10px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -96,6 +97,43 @@ h4 {
   color: #0D0D19;
 }
 
+.current-section h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Approval Buttons inside card */
+.approval-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.approval-buttons button {
+  flex: 1;
+  padding: 6px 0;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.approval-buttons button:first-child {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.approval-buttons button:last-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.approval-buttons button:hover {
+  filter: brightness(0.9);
+}
+
 /* Modal Styles */
 .tenant-modal {
   position: fixed;
@@ -129,30 +167,75 @@ h4 {
   margin: 8px 0;
 }
 
-.chat-icon.top-right {
-  height: 30px;
-  width: 30px;
-}
-
-//settings
-
-.settings-button {
+/* Buttons inside approval modal - centered side by side */
+.modal-buttons {
   margin-top: 20px;
-  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  max-width: 130px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.modal-buttons button:first-child {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.modal-buttons button:last-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.modal-buttons button:hover {
+  filter: brightness(0.9);
+}
+
+/* Exit (X) button in modal top-right */
+.modal-exit-btn {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+  user-select: none;
 }
 
-.circle-settings-button {
-  --background: #F6F6F6;
-  --color: #000000;
-  width: 50px;
-  height: 50px;
+.modal-exit-btn:hover {
+  color: #333;
 }
 
-.circle-settings-button ion-icon {
+/* Remove tenant button style (red, full width) */
+.remove-tenant-btn {
+  margin-top: 20px;
   width: 100%;
-  height: 100%;
-  object-fit:cover;
+  padding: 12px 0;
+  background-color: #ff4d4f;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.remove-tenant-btn:hover {
+  background-color: #d9363e;
 }

@@ -1,0 +1,106 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<ion-content [fullscreen]="true" class="main-page ion-padding">
+
+  <ion-button size="small" class="notif-button"><ion-icon name="log-out-outline" slot="icon-only"></ion-icon></ion-button>
+
+  <div class="top-part">
+    <div class="header-part">
+      <ion-icon name="location-outline" color="second" size="large"></ion-icon>
+      <h5>Soafer Admin Par</h5>
+    </div>
+  </div>
+
+  <div class="dashboard-section">
+    <h3>Room</h3>
+    <ion-card class="dashboard-card">
+      <div class="dashboard-grid">
+
+        <div class="dashboard-item">
+          <ion-icon name="home-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Total</span>
+          <span class="dashboard-value">{{ totalRooms }}</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Rented</span>
+          <span class="dashboard-value">{{ rentedRooms }}</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Available</span>
+          <span class="dashboard-value">{{ availableRooms }}</span>
+        </div>
+
+      </div>
+    </ion-card>
+  </div>
+
+  <div class="dashboard-section">
+    <h3>Type</h3>
+    <ion-card class="dashboard-card">
+      <div class="dashboard-grid">
+
+        <div class="dashboard-item">
+          <ion-icon name="home-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Solo</span>
+          <span class="dashboard-value">0</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Studio</span>
+          <span class="dashboard-value">0</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Bedspace</span>
+          <span class="dashboard-value">0</span>
+        </div>
+
+      </div>
+    </ion-card>
+  </div>
+
+  <div class="dashboard-section">
+    <h3>User</h3>
+    <ion-card class="dashboard-card">
+      <div class="dashboard-grid">
+
+        <div class="dashboard-item">
+          <ion-icon name="home-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Total</span>
+          <span class="dashboard-value">0</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Tenant</span>
+          <span class="dashboard-value">0</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="dashboard-item">
+          <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
+          <span class="dashboard-label">Non-tenant</span>
+          <span class="dashboard-value">0</span>
+        </div>
+
+      </div>
+    </ion-card>
+  </div>
+
+</ion-content>

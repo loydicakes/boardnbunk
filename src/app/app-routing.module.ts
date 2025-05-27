@@ -82,6 +82,10 @@ const routes: Routes = [
     path: 'landlord-tenants',
     loadChildren: () => import('./landlord-tenants/landlord-tenants.module').then( m => m.LandlordTenantsPageModule)
   },
+  {
+    path: 'superadmin',
+    loadChildren: () => import('./superadmin/superadmin.module').then( m => m.SuperadminPageModule)
+  },
 
 
 ];

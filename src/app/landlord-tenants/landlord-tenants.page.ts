@@ -31,10 +31,31 @@ export class LandlordTenantsPage implements OnInit {
       address: '456 Oak Avenue',
       contact: '0918-987-6543'
     },
-    // Add more tenant objects as needed
+  ];
+
+  approvalTenants = [
+    {
+      name: 'Anna Cruz',
+      image: 'assets/john-doe.jpg',
+      roomNumber: '305',
+      buildingNumber: 'C',
+      attendedDate: 'May 1, 2025',
+      address: '789 Pine Road',
+      contact: '0922-333-5555'
+    },
+    {
+      name: 'Mark Villanueva',
+      image: 'assets/john-doe.jpg',
+      roomNumber: '110',
+      buildingNumber: 'A',
+      attendedDate: 'May 3, 2025',
+      address: '246 Cedar Lane',
+      contact: '0933-444-6666'
+    }
   ];
 
   selectedTenant: any = null;
+  approvalModalTenant: any = null;
 
   constructor() { }
 
@@ -47,4 +68,15 @@ export class LandlordTenantsPage implements OnInit {
   closeTenantModal() {
     this.selectedTenant = null;
   }
+
+  openApprovalModal(tenant: any, event: Event) {
+    event.stopPropagation();
+    this.approvalModalTenant = tenant;
+  }
+
+  closeApprovalModal() {
+    this.approvalModalTenant = null;
+  }
+
+  // Approve, Decline, Remove functions are intentionally removed/disabled
 }
