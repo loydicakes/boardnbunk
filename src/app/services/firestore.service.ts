@@ -1,4 +1,3 @@
-// firestore.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -11,7 +10,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  setDoc, 
+  setDoc,
   Timestamp
 } from '@angular/fire/firestore';
 
@@ -95,7 +94,7 @@ export class FirestoreService {
     tenants: string[];
     type: string;
   }) {
-    const roomRef = collection(this.firestore, 'room'); // Collection is 'room'
+    const roomRef = collection(this.firestore, 'room');
     return await addDoc(roomRef, roomData);
   }
 
@@ -187,5 +186,13 @@ export class FirestoreService {
       name,
       datentime: Timestamp.fromDate(datentime)
     });
+  }
+
+  // Check if user has already requested
+  async hasUserRequested(fullName: string): Promise<boolean> {
+    const requestsCol = collection(this.firestore, 'request');
+    const q = query(requestsCol, where('name', '==', fullName));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
   }
 }

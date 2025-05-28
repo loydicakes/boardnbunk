@@ -1,4 +1,3 @@
-// infos.page.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService, Room } from '../services/firestore.service';
@@ -14,6 +13,7 @@ export class InfosPage implements OnInit {
   roomId: string | null = null;
   room: Room | null = null;
   loading = true;
+  requestSent = false; // Flag to track if user already sent a request
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +25,7 @@ export class InfosPage implements OnInit {
     if (this.roomId) {
       this.room = await this.firestoreService.getRoomById(this.roomId);
     }
+    await this.checkIfRequested();
     this.loading = false;
   }
 
@@ -34,6 +35,38 @@ export class InfosPage implements OnInit {
       return parsed.protocol === "http:" || parsed.protocol === "https:";
     } catch {
       return false;
+    }
+  }
+
+  async checkIfRequested() {
+    try {
+      const user = await this.firestoreService.ngFireBase.currentUser;
+      if (!user) {
+        this.requestSent = false;
+        return;
+      }
+
+      const usersCollection = collection(this.firestoreService['firestore'], 'users');
+      const userDocRef = doc(usersCollection, user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (!userSnap.exists()) {
+        this.requestSent = false;
+        return;
+      }
+
+      const userData = userSnap.data() as { firstname?: string; lastname?: string };
+      const fullName = `${userData.firstname || ''} ${userData.lastname || ''}`.trim();
+
+      if (!fullName) {
+        this.requestSent = false;
+        return;
+      }
+
+      this.requestSent = await this.firestoreService.hasUserRequested(fullName);
+    } catch (error) {
+      console.error('Error checking request status:', error);
+      this.requestSent = false;
     }
   }
 
@@ -65,6 +98,8 @@ export class InfosPage implements OnInit {
       const now = new Date();
       await this.firestoreService.addRequest(fullName, now);
       console.log('Request submitted with name:', fullName);
+
+      this.requestSent = true; // Update flag so button disables and text changes
     } catch (error) {
       console.error('Failed to submit request:', error);
     }
