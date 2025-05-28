@@ -195,4 +195,10 @@ export class FirestoreService {
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   }
+
+  async getRequestCount(): Promise<number> {
+    const requestsCol = collection(this.firestore, 'request');
+    const querySnapshot = await getDocs(requestsCol);
+    return querySnapshot.size;  // number of documents
+  }
 }

@@ -12,6 +12,7 @@ export class LandlordHomePage implements OnInit {
   rentedRooms: number = 0;
   availableRooms: number = 0;
   totalTenants: number = 0;
+  totalRequests: number = 0;
 
   constructor(private firestoreService: FirestoreService) {}
 
@@ -23,5 +24,7 @@ export class LandlordHomePage implements OnInit {
 
     // Count total tenants across all rooms
     this.totalTenants = allRooms.reduce((count, room) => count + (room.tenants?.length || 0), 0);
+    
+    this.totalRequests = await this.firestoreService.getRequestCount();
   }
 }
