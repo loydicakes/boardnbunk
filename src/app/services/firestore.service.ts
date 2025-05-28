@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  setDoc
 } from '@angular/fire/firestore';
 
 export interface Room {
@@ -26,24 +27,22 @@ export interface Room {
 export class FirestoreService {
   constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) {}
 
-  // Register user and save to Firestore
-  async registerUser(email: string, password: string) {
-    const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(
-      email,
-      password
-    );
-    await this.addUserToDatabase(email, password);
-    return userCredential;
-  }
+  // Register user and save profile info (firstname, lastname, email) to Firestore under users/{uid}
+  async registerUser(email: string, password: string, firstname: string, lastname: string) {
+    const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
 
-  // Add user data to Firestore
-  async addUserToDatabase(email: string, password: string) {
-    const userRef = collection(this.firestore, 'users');
-    return await addDoc(userRef, {
-      email,
-      password,
-      usertype: 'user',
-    });
+    if (user) {
+      const userRef = doc(this.firestore, 'users', user.uid);
+      await setDoc(userRef, {
+        email,
+        firstname,
+        lastname,
+        usertype: 'user',
+        createdAt: new Date()
+      });
+    }
+    return userCredential;
   }
 
   // Login and fetch user type
@@ -163,5 +162,4 @@ export class FirestoreService {
     }
     return null;
   }
-
 }

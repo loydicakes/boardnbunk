@@ -20,23 +20,32 @@ export class HomePage implements OnInit {
     public loadingCtrl: LoadingController,
     public FirestoreService: FirestoreService,
     public router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.regForm = this.formBuilder.group({
-      firstname: [''],
-      lastname: [''],
-      email: ['', [
-        Validators.required,
-        Validators.email,
-        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")
-      ]],
-      password: ['', [
-        Validators.required,
-        Validators.pattern("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
-      ]],
-      confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
+    this.regForm = this.formBuilder.group(
+      {
+        firstname: ['', Validators.required],
+        lastname: ['', Validators.required],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.email,
+            Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'),
+          ],
+        ],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator }
+    );
   }
 
   passwordMatchValidator(formGroup: FormGroup) {
@@ -48,15 +57,15 @@ export class HomePage implements OnInit {
   revealPassword(type: 'password' | 'confirm') {
     if (type === 'password') {
       this.showPassword = true;
-      setTimeout(() => this.showPassword = false, 1000);
+      setTimeout(() => (this.showPassword = false), 1000);
     } else {
       this.showConfirmPassword = true;
-      setTimeout(() => this.showConfirmPassword = false, 1000);
+      setTimeout(() => (this.showConfirmPassword = false), 1000);
     }
   }
 
   checkPasswordInputs() {
-    // Triggers change detection on input events
+    // Trigger change detection on input events if needed
   }
 
   async signUp() {
@@ -66,16 +75,25 @@ export class HomePage implements OnInit {
     if (this.regForm?.valid) {
       const email = this.regForm.get('email')?.value;
       const password = this.regForm.get('password')?.value;
+      const firstname = this.regForm.get('firstname')?.value;
+      const lastname = this.regForm.get('lastname')?.value;
+
       try {
-        const user = await this.FirestoreService.registerUser(email, password);
-        console.log('User registered successfully:', user);
+        const userCredential = await this.FirestoreService.registerUser(
+          email,
+          password,
+          firstname,
+          lastname
+        );
+        console.log('User registered successfully:', userCredential);
         loading.dismiss();
         this.router.navigate(['/login']);
       } catch (error) {
         console.error('Registration error:', error);
-      } finally {
-        await loading.dismiss();
+        loading.dismiss();
       }
+    } else {
+      loading.dismiss();
     }
   }
 
