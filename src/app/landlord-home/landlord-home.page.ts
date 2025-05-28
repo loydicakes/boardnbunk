@@ -5,16 +5,15 @@ import { FirestoreService } from '../services/firestore.service';
   selector: 'app-landlord-home',
   templateUrl: './landlord-home.page.html',
   styleUrls: ['./landlord-home.page.scss'],
-  standalone:false, 
+  standalone: false,
 })
 export class LandlordHomePage implements OnInit {
   totalRooms: number = 0;
   rentedRooms: number = 0;
   availableRooms: number = 0;
+  totalTenants: number = 0;
 
-
-  searchFocused: boolean = false;
-  constructor(private firestoreService: FirestoreService) { }
+  constructor(private firestoreService: FirestoreService) {}
 
   async ngOnInit() {
     const allRooms = await this.firestoreService.getAllRooms();
@@ -22,6 +21,7 @@ export class LandlordHomePage implements OnInit {
     this.rentedRooms = allRooms.filter(room => room.tenants.length > 0).length;
     this.availableRooms = allRooms.filter(room => room.availability === true).length;
 
+    // Count total tenants across all rooms
+    this.totalTenants = allRooms.reduce((count, room) => count + (room.tenants?.length || 0), 0);
   }
-
 }
