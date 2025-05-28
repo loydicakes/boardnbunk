@@ -1,6 +1,8 @@
+// infos.page.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService, Room } from '../services/firestore.service';
+import { collection, doc, getDoc } from '@angular/fire/firestore';
 
 @Component({
   standalone: false,
@@ -32,6 +34,39 @@ export class InfosPage implements OnInit {
       return parsed.protocol === "http:" || parsed.protocol === "https:";
     } catch {
       return false;
+    }
+  }
+
+  async submitRequest() {
+    try {
+      const user = await this.firestoreService.ngFireBase.currentUser;
+      if (!user) {
+        console.error('No logged in user');
+        return;
+      }
+
+      const usersCollection = collection(this.firestoreService['firestore'], 'users');
+      const userDocRef = doc(usersCollection, user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (!userSnap.exists()) {
+        console.error('User document not found');
+        return;
+      }
+
+      const userData = userSnap.data() as { firstname?: string; lastname?: string };
+      const fullName = `${userData.firstname || ''} ${userData.lastname || ''}`.trim();
+
+      if (!fullName) {
+        console.error('User name fields are empty');
+        return;
+      }
+
+      const now = new Date();
+      await this.firestoreService.addRequest(fullName, now);
+      console.log('Request submitted with name:', fullName);
+    } catch (error) {
+      console.error('Failed to submit request:', error);
     }
   }
 }

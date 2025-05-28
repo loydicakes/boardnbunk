@@ -11,7 +11,8 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  setDoc
+  setDoc, 
+  Timestamp
 } from '@angular/fire/firestore';
 
 export interface Room {
@@ -176,6 +177,15 @@ export class FirestoreService {
         lastname: data['lastname'],
         email: data['email']
       };
+    });
+  }
+
+  // Add a request document with user full name and datetime
+  async addRequest(name: string, datentime: Date) {
+    const requestRef = collection(this.firestore, 'request');
+    return await addDoc(requestRef, {
+      name,
+      datentime: Timestamp.fromDate(datentime)
     });
   }
 }
