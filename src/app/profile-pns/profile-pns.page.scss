@@ -1,146 +1,165 @@
 #container {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 30px 0px 30px;
-    background-color: #F6F6F6;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px 0px 30px;
+  background-color: #f6f6f6;
+}
+
+.back-btn {
+  margin-top: 10px;
+  position: absolute;
+  left: 16px;
+  background: white;
+  border: black 1px solid;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 20px;
+    color: #0d0d19;
+    width: 20px;
+    height: 20px;
   }
-    
-  .back-btn {
-    margin-top: 10px;
-    position: absolute;
-    left: 16px;
-    background: white;
-    border: black 1px solid;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+}
+
+h4 {
+  font-weight: bold;
+}
+
+.section {
+  border: 0.1px solid black;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  height: 80%;
+  width: 100%;
+  max-width: 400px;
+  align-self: center;
+  background-color: #ffffff;
+}
+
+.input-container {
+  margin-bottom: 10px;
+}
+.input-container label {
+  font-size: 10px;
+}
+
+/* Profile Picture container with rectangular box and edit icon */
+.profile-picture-container {
+  label {
+    display: block;
+    margin-bottom: 6px;
+  }
+  .profile-picture-box {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    height: 180px;
+    border: 2px solid #133dab;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #e0e0e0;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-  
-    ion-icon {
-      font-size: 20px;
-      color: #0D0D19;
-      width: 20px;
-      height: 20px;
+
+    img.profile-picture {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    ion-icon.edit-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 24px;
+      color: #133dab;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      padding: 4px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s ease;
+    }
+    ion-icon.edit-icon:hover {
+      background: rgba(255, 255, 255, 1);
     }
   }
-
-  .title{
-    text-align: center;
-    font-weight: bold;
-  }
-  h4{
-    font-weight: bold;
-  }
-  
-  .section {
-    border: .1px solid black;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    height: 80%;
-    width: 90%;
-    align-self: center;
-    background-color: #ffffff;
-  }
-  
-  .input-container {
-    margin-bottom: 10px;
-  }
-  .input-container label{
-    font-size: 10px;
-  }
-  
-  .input-box {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  
-  .input-box input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 5px;
-    font-size: 13px;
-  }
-  
-  .edit-icon, .toggle-icon {
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  ion-button.save-button {
-    --border-radius: 15px;
-    --background: #133DAB; 
-    width: 90%;
-    margin: 0 auto;
-  }
-
-  //save changes
-
-  /* Save changes popup styles */
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
 }
-#saveOverlay {
+
+.input-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.input-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.edit-icon,
+.toggle-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+ion-button.save-button {
+  --border-radius: 15px;
+  --background: #133dab;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Overlay for modals */
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   backdrop-filter: blur(2px);
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: 99;
-  display: none;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 1000;
 }
 
-#saveCard {
+/* Centered modals */
+.logout-card.centered,
+.profile-pic-card.centered {
   position: fixed;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 360px;
   background: #fff;
+  max-width: 360px;
+  width: 90vw;
   border-radius: 18px;
   box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
-  z-index: 100;
   padding: 20px 16px;
-  display: none;
-  animation: fadeInScale 0.25s ease;
+  z-index: 1001;
 }
 
-.logout-card.centered {
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 360px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  padding: 20px 16px;
-  display: none;
-  animation: fadeInScale 0.25s ease;
-}
-
-.logout-buttons {
+.logout-buttons,.pic-options  {
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
@@ -160,7 +179,7 @@
 }
 
 .cancel-btn {
-  --background: #133DAB;
+  --background: #133dab;
   --color: #ffffff;
 }
 
@@ -176,11 +195,3 @@
   background-color: #ccc;
   margin-bottom: 16px;
 }
-
-ion-button.popup_cancel {
-  --border-radius: 15px;
-  --background: #133DAB;
-  width: 80%;
-  margin: 0 auto;
-}
-  //save changes end

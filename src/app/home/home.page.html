@@ -3,11 +3,21 @@
     <h1>Create Account</h1>
     <p>Fill your information below or register with your social account</p>
   </div>
-  
+
   <div class="form-cont ion-padding">
     <form [formGroup]="regForm" novalidate>
       <div class="ion-padding form-holder">
-        
+
+        <ion-label>Firstname</ion-label>
+        <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
+          <ion-input formControlName="firstname" type="text"></ion-input>
+        </ion-item>
+
+        <ion-label>Lastname</ion-label>
+        <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
+          <ion-input formControlName="lastname" type="text"></ion-input>
+        </ion-item>
+
         <ion-label>Email</ion-label>
         <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
           <ion-input formControlName="email" type="email"></ion-input>
@@ -19,36 +29,47 @@
 
         <ion-label>Password</ion-label>
         <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
-          <ion-input formControlName="password" type="password"></ion-input>
+          <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'"
+            (ionInput)="checkPasswordInputs()"></ion-input>
+          <ion-icon *ngIf="regForm.get('password')?.value" slot="end" name="eye"
+            (click)="revealPassword('password')"></ion-icon>
         </ion-item>
         <ion-text color="danger" *ngIf="regForm.get('password').touched && regForm.get('password').invalid">
           <small *ngIf="regForm.get('password').hasError('required')">Password is required</small>
-          <small *ngIf="regForm.get('password').hasError('pattern')">Password must contain a number, uppercase and lowercase letters, and be at least 8 characters long</small>
+          <small *ngIf="regForm.get('password').hasError('pattern')">Password must contain a number, uppercase and
+            lowercase letters, and be at least 8 characters long</small>
         </ion-text>
 
         <ion-label>Confirm Password</ion-label>
         <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
-          <ion-input formControlName="confirmPassword" type="password"></ion-input>
+          <ion-input formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'"
+            (ionInput)="checkPasswordInputs()"></ion-input>
+          <ion-icon *ngIf="regForm.get('confirmPassword')?.value" slot="end" name="eye"
+            (click)="revealPassword('confirm')"></ion-icon>
         </ion-item>
-        <ion-text color="danger" *ngIf="regForm.get('confirmPassword').touched && regForm.get('confirmPassword').hasError('mismatch')">
+        <ion-text color="danger"
+          *ngIf="regForm.get('confirmPassword').touched && regForm.get('confirmPassword').hasError('mismatch')">
           <small>Passwords do not match</small>
         </ion-text>
 
-        <ion-button expand="block" style="margin-top: 20%; padding: 0 20%; --background: black; --color: white;" (click)="signUp()">
+        <ion-button expand="block" style="margin-top: 12%; padding: 0 20%; --background: black; --color: white;"
+          (click)="signUp()">
           Sign Up
         </ion-button>
       </div>
     </form>
   </div>
-  
+
   <div class="sign-up-with">
     <hr>
     <p>or sign up with</p>
     <hr>
   </div>
   <div class="social-cont">
-    <ion-button size="large" style="--background: black" shape="round"><ion-icon name="logo-facebook" style="color: white;" slot="icon-only"></ion-icon></ion-button>
-    <ion-button style="--background: black" shape="round" size="large"><ion-icon name="logo-google" style="color: white;" slot="icon-only"></ion-icon></ion-button>
+    <ion-button size="large" style="--background: black" shape="round"><ion-icon name="logo-facebook"
+        style="color: white;" slot="icon-only"></ion-icon></ion-button>
+    <ion-button style="--background: black" shape="round" size="large"><ion-icon name="logo-google"
+        style="color: white;" slot="icon-only"></ion-icon></ion-button>
   </div>
   <div class="already">
     <p>Already have an account? <a routerLink="/login">Sign in</a></p>

@@ -10,7 +10,7 @@
         
         <ion-label>Email</ion-label>
         <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
-          <ion-input formControlName="email" type="email" placeholder="Enter your email"></ion-input>
+          <ion-input formControlName="email" type="email"></ion-input>
         </ion-item>
         <div *ngIf="email.invalid && email.touched" class="error-message">
           <p *ngIf="email.errors?.['required']">Email is required.</p>
@@ -19,7 +19,8 @@
         
         <ion-label>Password</ion-label>
         <ion-item style="--ion-item-background: lightgray; border-radius: 10px; margin-top: 2px;">
-          <ion-input formControlName="password" type="password" placeholder="Enter your password"></ion-input>
+          <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" (ionInput)="checkPasswordInput()"></ion-input>
+          <ion-icon *ngIf="password?.value" slot="end" name="eye" (click)="revealPassword()"></ion-icon>
         </ion-item>
         <div *ngIf="password.invalid && password.touched" class="error-message">
           <p *ngIf="password.errors?.['required']">Password is required.</p>

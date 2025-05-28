@@ -12,11 +12,20 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
   regForm: FormGroup | undefined;
+  showPassword = false;
+  showConfirmPassword = false;
 
-  constructor(public formBuilder: FormBuilder, public loadingCtrl: LoadingController, public FirestoreService: FirestoreService, public router: Router) { }
+  constructor(
+    public formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController,
+    public FirestoreService: FirestoreService,
+    public router: Router
+  ) { }
 
   ngOnInit() {
     this.regForm = this.formBuilder.group({
+      firstname: [''],
+      lastname: [''],
       email: ['', [
         Validators.required,
         Validators.email,
@@ -31,33 +40,46 @@ export class HomePage implements OnInit {
   }
 
   passwordMatchValidator(formGroup: FormGroup) {
-    const password = formGroup.get('password').value;
-    const confirmPassword = formGroup.get('confirmPassword').value;
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { mismatch: true };
+  }
+
+  revealPassword(type: 'password' | 'confirm') {
+    if (type === 'password') {
+      this.showPassword = true;
+      setTimeout(() => this.showPassword = false, 1000);
+    } else {
+      this.showConfirmPassword = true;
+      setTimeout(() => this.showConfirmPassword = false, 1000);
+    }
+  }
+
+  checkPasswordInputs() {
+    // Triggers change detection on input events
+  }
+
+  async signUp() {
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+
+    if (this.regForm?.valid) {
+      const email = this.regForm.get('email')?.value;
+      const password = this.regForm.get('password')?.value;
+      try {
+        const user = await this.FirestoreService.registerUser(email, password);
+        console.log('User registered successfully:', user);
+        loading.dismiss();
+        this.router.navigate(['/login']);
+      } catch (error) {
+        console.error('Registration error:', error);
+      } finally {
+        await loading.dismiss();
+      }
+    }
   }
 
   get errorControl() {
     return this.regForm?.controls;
   }
-
-  async signUp() {
-  const loading = await this.loadingCtrl.create();
-  await loading.present();
-
-  if (this.regForm?.valid) {
-    const email = this.regForm.get('email').value;
-    const password = this.regForm.get('password').value;
-    try {
-      const user = await this.FirestoreService.registerUser(email, password);
-      console.log('User registered successfully:', user);
-      loading.dismiss();
-      this.router.navigate(['/login']);
-    } catch (error) {
-      console.error('Registration error:', error);
-    } finally {
-      await loading.dismiss();
-    }
-  }
-}
-
 }
