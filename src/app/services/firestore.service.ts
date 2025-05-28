@@ -1,3 +1,4 @@
+// firestore.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -161,5 +162,20 @@ export class FirestoreService {
       };
     }
     return null;
+  }
+
+  async getAllUsers() {
+    const usersCol = collection(this.firestore, 'users');
+    const snapshot = await getDocs(usersCol);
+    
+    return snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        firstname: data['firstname'],
+        lastname: data['lastname'],
+        email: data['email']
+      };
+    });
   }
 }

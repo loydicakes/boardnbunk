@@ -1,3 +1,4 @@
+<!-- room.page.html -->
 <ion-header>
   <ion-toolbar>
     <!-- ✅ Back Button -->
@@ -39,6 +40,7 @@
     <ion-item *ngIf="roomForm.get('availability')?.value === false">
       <ion-label position="stacked">Tenants (comma separated)</ion-label>
       <ion-input formControlName="tenants"></ion-input>
+      <ion-button size="small" slot="end" (click)="openTenantSelector()">Add Tenant</ion-button>
     </ion-item>
 
     <ion-item>

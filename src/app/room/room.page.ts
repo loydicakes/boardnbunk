@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../services/firestore.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   standalone: false,
@@ -12,11 +12,13 @@ import { ToastController } from '@ionic/angular';
 export class RoomPage implements OnInit {
   roomForm: FormGroup;
   previewUrl: string | null = null;
+  usersList: { id: string; firstname: string; lastname: string; email: string }[] = [];
 
   constructor(
     private fb: FormBuilder,
     private firestoreService: FirestoreService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController
   ) {
     this.roomForm = this.fb.group({
       name: ['', Validators.required],
@@ -36,6 +38,51 @@ export class RoomPage implements OnInit {
         this.roomForm.get('tenants')?.setValue('');
       }
     });
+
+    // Load users for tenant selection
+    this.loadUsers();
+  }
+
+  async loadUsers() {
+    this.usersList = await this.firestoreService.getAllUsers();
+  }
+
+  async openTenantSelector() {
+    const alert = await this.alertController.create({
+      header: 'Select Tenant',
+      inputs: this.usersList.map(user => ({
+        name: 'tenant',
+        type: 'radio',
+        label: `${user.firstname} ${user.lastname}`,
+        value: `${user.firstname} ${user.lastname}`
+      })),
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Add',
+          handler: (selectedTenant: string) => {
+            this.addTenant(selectedTenant);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  addTenant(name: string) {
+    const currentTenants = this.roomForm.get('tenants')?.value;
+    let tenantsArray: string[] = [];
+
+    if (currentTenants && currentTenants.trim() !== '' && currentTenants !== 'None') {
+      tenantsArray = currentTenants.split(',').map((t: string) => t.trim());
+    }
+
+    // Avoid duplicates
+    if (!tenantsArray.includes(name)) {
+      tenantsArray.push(name);
+      this.roomForm.get('tenants')?.setValue(tenantsArray.join(', '));
+    }
   }
 
   onImageSelected(event: any) {
@@ -43,7 +90,7 @@ export class RoomPage implements OnInit {
     if (file) {
       const tempUrl = URL.createObjectURL(file);
       this.previewUrl = tempUrl;
-      this.roomForm.patchValue({ image: tempUrl }); // store blob URL in form
+      this.roomForm.patchValue({ image: tempUrl });
     }
   }
 
@@ -58,7 +105,7 @@ export class RoomPage implements OnInit {
       tenants: formData.tenants && formData.tenants !== 'None'
         ? formData.tenants.split(',').map((t: string) => t.trim())
         : [],
-      image: formData.image // This is just a blob: URL, not persistent
+      image: formData.image
     };
 
     try {
