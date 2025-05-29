@@ -8,65 +8,167 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class ProfilePnsPage implements OnInit {
-  // Profile fields
   firstname: string = 'John';
   lastname: string = 'Doe';
   contactNumber: string = '09559374537';
   address: string = '123 Sample St';
-  email: string = 'johndoe@gmail.com'; // readonly
+  email: string = 'johndoe@gmail.com';
 
-  // Profile Picture base64 string or URL
+  originalProfile = {
+    firstname: this.firstname,
+    lastname: this.lastname,
+    contactNumber: this.contactNumber,
+    address: this.address,
+  };
+  profileChanged: boolean = false;
+
   profilePicture: string | null = null;
 
-  // Password input values
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
 
-  // Visibility toggles
-  showCurrentPassword: boolean = false;
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  // Dropdown toggle for Change Password
-  changePasswordDropdownOpen: boolean = false;
+  changePasswordStep: number = 0;
 
-  // Validation flags
   isNewPasswordValid: boolean = true;
   isConfirmPasswordValid: boolean = true;
 
-  // Modal visibility states
+  isVerifying: boolean = false;
+  verificationError: string = '';
+
   showSaveModal: boolean = false;
-  showProfilePicModal: boolean = false;
-  showRemoveConfirmModal: boolean = false;
+  saveAction: 'profile' | 'password' | null = null;
+
+  isSaving: boolean = false;
+  showSuccessPopup: boolean = false;
 
   constructor(private router: Router) {}
 
   ngOnInit() {}
 
+  onProfileChange() {
+    this.profileChanged =
+      this.firstname !== this.originalProfile.firstname ||
+      this.lastname !== this.originalProfile.lastname ||
+      this.contactNumber !== this.originalProfile.contactNumber ||
+      this.address !== this.originalProfile.address;
+  }
+
+  confirmSave(action: 'profile' | 'password') {
+    this.saveAction = action;
+    this.showSaveModal = true;
+  }
+
+  closeSaveCard() {
+    this.showSaveModal = false;
+    this.saveAction = null;
+  }
+
+  confirmSaveAction() {
+    if (this.saveAction === 'profile') {
+      this.saveProfile();
+    } else if (this.saveAction === 'password') {
+      this.saveNewPassword();
+    }
+    this.closeSaveCard();
+  }
+
+  simulateSave(successCallback: () => void) {
+    this.isSaving = true;
+    setTimeout(() => {
+      this.isSaving = false;
+      this.showSuccessPopup = true;
+      successCallback();
+      // Auto dismiss success popup after 1 second
+      setTimeout(() => {
+        this.showSuccessPopup = false;
+      }, 1000);
+    }, 1500);
+  }
+
+  saveProfile() {
+    this.simulateSave(() => {
+      this.originalProfile = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        contactNumber: this.contactNumber,
+        address: this.address,
+      };
+      this.profileChanged = false;
+    });
+  }
+
   togglePassword(field: string): void {
-    switch (field) {
-      case 'current':
-        this.showCurrentPassword = !this.showCurrentPassword;
-        break;
-      case 'new':
-        this.showNewPassword = !this.showNewPassword;
-        break;
-      case 'confirm':
-        this.showConfirmPassword = !this.showConfirmPassword;
-        break;
+    if (field === 'new') this.showNewPassword = !this.showNewPassword;
+    else if (field === 'confirm') this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
+  startChangePassword() {
+    this.changePasswordStep = 1;
+    this.currentPassword = '';
+    this.verificationError = '';
+    this.isVerifying = false;
+  }
+
+  onCurrentPasswordInput() {
+    this.verificationError = '';
+  }
+
+  onProfileBlur(field: 'firstname' | 'lastname' | 'contactNumber' | 'address') {
+    if (!this.profileChanged) {
+      switch (field) {
+        case 'firstname':
+          if (this.firstname !== this.originalProfile.firstname) {
+            this.firstname = this.originalProfile.firstname;
+          }
+          break;
+        case 'lastname':
+          if (this.lastname !== this.originalProfile.lastname) {
+            this.lastname = this.originalProfile.lastname;
+          }
+          break;
+        case 'contactNumber':
+          if (this.contactNumber !== this.originalProfile.contactNumber) {
+            this.contactNumber = this.originalProfile.contactNumber;
+          }
+          break;
+        case 'address':
+          if (this.address !== this.originalProfile.address) {
+            this.address = this.originalProfile.address;
+          }
+          break;
+      }
+    }
+    this.onProfileChange();
+  }
+
+  onCurrentPasswordBlur() {
+    if (this.changePasswordStep === 1 && !this.isVerifying && this.currentPassword.length > 0) {
+      this.currentPassword = '';
+      this.verificationError = '';
+      this.changePasswordStep = 0;
     }
   }
 
-  toggleChangePasswordDropdown(): void {
-    this.changePasswordDropdownOpen = !this.changePasswordDropdownOpen;
+  verifyCurrentPassword() {
+    this.isVerifying = true;
+    this.verificationError = '';
 
-    if (!this.changePasswordDropdownOpen) {
-      this.newPassword = '';
-      this.confirmPassword = '';
-      this.isNewPasswordValid = true;
-      this.isConfirmPasswordValid = true;
-    }
+    setTimeout(() => {
+      this.isVerifying = false;
+      if (this.currentPassword === 'correct_password') {
+        this.changePasswordStep = 2;
+        this.newPassword = '';
+        this.confirmPassword = '';
+        this.isNewPasswordValid = true;
+        this.isConfirmPasswordValid = true;
+      } else {
+        this.verificationError = 'Incorrect current password.';
+      }
+    }, 1000);
   }
 
   validateNewPassword(): void {
@@ -74,57 +176,44 @@ export class ProfilePnsPage implements OnInit {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     this.isNewPasswordValid = regex.test(pwd);
 
-    if (this.confirmPassword) {
-      this.validateConfirmPassword();
-    }
+    if (this.confirmPassword) this.validateConfirmPassword();
   }
 
   validateConfirmPassword(): void {
     this.isConfirmPasswordValid = this.newPassword === this.confirmPassword;
   }
 
+  saveNewPassword() {
+    if (!this.isNewPasswordValid) {
+      alert('New password does not meet requirements.');
+      return;
+    }
+    if (!this.isConfirmPasswordValid) {
+      alert('Confirm password does not match new password.');
+      return;
+    }
+
+    this.simulateSave(() => {
+      this.resetPasswordChange();
+    });
+  }
+
+  resetPasswordChange() {
+    this.changePasswordStep = 0;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.verificationError = '';
+  }
+
   goToProfileMethod() {
     this.router.navigate(['/profile']);
   }
 
-  // Save modal controls
-  showSaveCard() {
-    this.showSaveModal = true;
-  }
+  // Profile Picture modal management
+  showProfilePicModal: boolean = false;
+  showRemoveConfirmModal: boolean = false;
 
-  closeSaveCard() {
-    this.showSaveModal = false;
-  }
-
-  confirmSave() {
-    if (this.changePasswordDropdownOpen) {
-      if (!this.isNewPasswordValid) {
-        alert('New password does not meet requirements.');
-        return;
-      }
-      if (!this.isConfirmPasswordValid) {
-        alert('Confirm password does not match new password.');
-        return;
-      }
-    }
-
-    this.closeSaveCard();
-
-    // TODO: Save profile info & passwords here
-
-    console.log('Saved data:', {
-      firstname: this.firstname,
-      lastname: this.lastname,
-      contactNumber: this.contactNumber,
-      address: this.address,
-      email: this.email,
-      profilePicture: this.profilePicture,
-      currentPassword: this.currentPassword,
-      newPassword: this.changePasswordDropdownOpen ? this.newPassword : null,
-    });
-  }
-
-  // Profile Picture modal controls
   openProfilePicModal() {
     this.showProfilePicModal = true;
   }
@@ -137,7 +226,7 @@ export class ProfilePnsPage implements OnInit {
     this.closeProfilePicModal();
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) {
-      fileInput.value = ''; // reset so same file can be picked again
+      fileInput.value = '';
       fileInput.click();
     }
   }
@@ -148,13 +237,12 @@ export class ProfilePnsPage implements OnInit {
       const file = input.files[0];
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profilePicture = e.target.result; // base64 image string
+        this.profilePicture = e.target.result;
       };
       reader.readAsDataURL(file);
     }
   }
 
-  // Remove confirmation modal controls
   openRemoveConfirmModal() {
     this.closeProfilePicModal();
     this.showRemoveConfirmModal = true;

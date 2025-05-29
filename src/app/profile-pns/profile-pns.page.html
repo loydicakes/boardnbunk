@@ -8,6 +8,7 @@
 
     <h4 class="title">Personal & Security</h4>
 
+    <!-- Profile Section -->
     <h4>Profile</h4>
     <div class="section">
       <div class="input-container profile-picture-container">
@@ -24,14 +25,19 @@
             alt="Profile Picture"
             class="profile-picture"
           />
-          <ion-icon name="create-outline" class="edit-icon"></ion-icon>
+          <ion-icon name="create-outline" class="edit-icon" style="background-color: transparent;"></ion-icon>
         </div>
       </div>
 
       <div class="input-container">
         <label>Firstname</label>
         <div class="input-box">
-          <input type="text" [(ngModel)]="firstname" />
+          <input
+            type="text"
+            [(ngModel)]="firstname"
+            (ngModelChange)="onProfileChange()"
+            (blur)="onProfileBlur('firstname')"
+          />
           <ion-icon name="create-outline" class="edit-icon"></ion-icon>
         </div>
       </div>
@@ -39,7 +45,12 @@
       <div class="input-container">
         <label>Lastname</label>
         <div class="input-box">
-          <input type="text" [(ngModel)]="lastname" />
+          <input
+            type="text"
+            [(ngModel)]="lastname"
+            (ngModelChange)="onProfileChange()"
+            (blur)="onProfileBlur('lastname')"
+          />
           <ion-icon name="create-outline" class="edit-icon"></ion-icon>
         </div>
       </div>
@@ -47,7 +58,12 @@
       <div class="input-container">
         <label>Contact Number</label>
         <div class="input-box">
-          <input type="tel" [(ngModel)]="contactNumber" />
+          <input
+            type="tel"
+            [(ngModel)]="contactNumber"
+            (ngModelChange)="onProfileChange()"
+            (blur)="onProfileBlur('contactNumber')"
+          />
           <ion-icon name="create-outline" class="edit-icon"></ion-icon>
         </div>
       </div>
@@ -55,7 +71,12 @@
       <div class="input-container">
         <label>Address</label>
         <div class="input-box">
-          <input type="text" [(ngModel)]="address" />
+          <input
+            type="text"
+            [(ngModel)]="address"
+            (ngModelChange)="onProfileChange()"
+            (blur)="onProfileBlur('address')"
+          />
           <ion-icon name="create-outline" class="edit-icon"></ion-icon>
         </div>
       </div>
@@ -66,41 +87,51 @@
           <input type="email" [(ngModel)]="email" readonly />
         </div>
       </div>
+
+      <!-- Save Profile button -->
+      <div style="text-align: center; margin-top: 20px;" *ngIf="profileChanged">
+        <ion-button class="save-button" (click)="confirmSave('profile')">Save Profile</ion-button>
+      </div>
     </div>
 
+    <!-- Security Section -->
     <h4>Security</h4>
     <div class="section">
+      <!-- Change Password button -->
+      <div *ngIf="changePasswordStep === 0" style="text-align: center;">
+        <ion-button class="save-button" (click)="startChangePassword()">Change Password</ion-button>
+      </div>
 
-      <div class="input-container">
-        <label>Current Password</label>
-        <div class="input-box">
+      <!-- Current Password Input + Verify button inside -->
+      <div *ngIf="changePasswordStep === 1" class="input-container" style="position: relative;">
+        <label>Enter Current Password</label>
+        <div class="input-box" style="position: relative;">
+          <!-- No eye icon here -->
           <input
-            [type]="showCurrentPassword ? 'text' : 'password'"
+            type="password"
             [(ngModel)]="currentPassword"
+            (ngModelChange)="onCurrentPasswordInput()"
+            (blur)="onCurrentPasswordBlur()"
             id="current-password"
           />
-          <ion-icon
-            *ngIf="currentPassword"
-            [name]="showCurrentPassword ? 'eye-outline' : 'eye-off-outline'"
-            class="toggle-icon"
-            (click)="togglePassword('current')"
-          ></ion-icon>
+
+          <ion-button
+            *ngIf="currentPassword.length > 0 && !isVerifying"
+            size="small"
+            fill="outline"
+            style="height: 17px; min-width: 30px; font-size: 7px;"
+            (click)="verifyCurrentPassword()"
+          >
+            Verify
+          </ion-button>
+
+          <ion-spinner *ngIf="isVerifying" style="position: absolute; right: 10px; top: 7px;" name="crescent"></ion-spinner>
         </div>
+        <small *ngIf="verificationError" style="color: red;">{{ verificationError }}</small>
       </div>
 
-      <div
-        class="input-container"
-        style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;"
-        (click)="toggleChangePasswordDropdown()"
-      >
-        <label style="margin: 0;">Change Password</label>
-        <ion-icon
-          [name]="changePasswordDropdownOpen ? 'chevron-up-outline' : 'chevron-down-outline'"
-          style="font-size: 20px;"
-        ></ion-icon>
-      </div>
-
-      <div *ngIf="changePasswordDropdownOpen">
+      <!-- New Password and Confirm Password Inputs -->
+      <div *ngIf="changePasswordStep === 2">
         <div class="input-container">
           <label>New Password</label>
           <div class="input-box">
@@ -148,16 +179,70 @@
             Passwords do not match
           </small>
         </div>
-      </div>
-    </div>
 
-    <div style="text-align: center; margin-top: 20px;">
-      <ion-button class="save-button" (click)="showSaveCard()">Save</ion-button>
+        <!-- Save Password button -->
+        <div style="text-align: center; margin-top: 20px;">
+          <ion-button
+            class="save-button"
+            [disabled]="!isNewPasswordValid || !isConfirmPasswordValid"
+            (click)="confirmSave('password')"
+          >
+            Save Password
+          </ion-button>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>
 
-<!-- Save Modal -->
+<!-- Loading spinner overlay (subtle transparent background, no blur) -->
+<div
+  *ngIf="isSaving"
+  tabindex="0"
+  style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+  "
+>
+  <ion-spinner name="crescent" style="width: 60px; height: 60px;"></ion-spinner>
+</div>
+
+<!-- Save success popup -->
+<div
+  class="overlay"
+  *ngIf="showSuccessPopup"
+  tabindex="0"
+  style="background-color: rgba(0, 0, 0, 0.15);"
+></div>
+<div
+  *ngIf="showSuccessPopup"
+  tabindex="0"
+  style="
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    max-width: 220px;
+    width: 80vw;
+    z-index: 1501;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+  "
+>
+  Saved Successfully
+</div>
+
+<!-- Save Confirmation Modal -->
 <div
   class="overlay"
   *ngIf="showSaveModal"
@@ -166,10 +251,9 @@
 ></div>
 <div class="logout-card centered" *ngIf="showSaveModal" tabindex="0">
   <div class="card-title">Save Changes?</div>
-  <div class="line-divider"></div>
 
   <div class="logout-buttons">
-    <ion-button fill="clear" class="logout-btn done-btn" (click)="confirmSave()">Done</ion-button>
+    <ion-button fill="clear" class="logout-btn done-btn" (click)="confirmSaveAction()">Done</ion-button>
     <ion-button fill="clear" class="logout-btn cancel-btn" (click)="closeSaveCard()">Cancel</ion-button>
   </div>
 </div>
@@ -183,7 +267,6 @@
 ></div>
 <div class="profile-pic-card centered" *ngIf="showProfilePicModal" tabindex="0">
   <div class="card-title">Change Profile Picture</div>
-  <div class="line-divider"></div>
 
   <div class="pic-options">
     <ion-button fill="solid" class="logout-btn done-btn" (click)="chooseNewPicture()">New</ion-button>
@@ -200,7 +283,6 @@
 ></div>
 <div class="logout-card centered" *ngIf="showRemoveConfirmModal" tabindex="0">
   <div class="card-title">Remove Profile?</div>
-  <div class="line-divider"></div>
 
   <div class="logout-buttons">
     <ion-button fill="clear" class="logout-btn done-btn" (click)="confirmRemovePicture()">Confirm</ion-button>
