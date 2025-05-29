@@ -15,9 +15,6 @@ export class ChatPage implements OnInit {
   newMessage: string = '';
   currentUser: User | null = null;
   userName: string = '';
-  userId: string = '';
-  currentUid: string = '';
-  currentAuthUid: string = '';
 
   constructor(
     private firestoreService: FirestoreService,
@@ -26,44 +23,49 @@ export class ChatPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.userId = params['userId'];
-      const chatWithName = params['userName'] || 'User';
-
-      const adminId = '07q1DtKQ4nS5gxzRc88KwN87yRJ3';
-      this.currentUid = `${adminId}_${this.userId}`;
-
-      this.firestoreService.getChatMessages().subscribe(messages => {
-        this.chatMessages = messages.filter(msg => msg.uid === this.currentUid);
-        console.log('[ADMIN] Loaded messages for UID:', this.currentUid, this.chatMessages);
-        setTimeout(() => this.scrollToBottom(), 100);
+      this.route.queryParams.subscribe(params => {
+        const userId = params['userId'];
+        const userName = params['userName'];
+        
+        console.log('[USER] Messages loaded:', this.chatMessages);
+        // Load chat messages for this userId here
       });
-    });
 
     this.afAuth.authState.subscribe(async user => {
       this.currentUser = user;
       if (user) {
-        this.currentAuthUid = user.uid;
         const allUsers = await this.firestoreService.getAllUsers();
         const current = allUsers.find(u => u.id === user.uid);
         this.userName = current ? `${current.firstname} ${current.lastname}` : user.email!;
       }
     });
+
+    this.firestoreService.getChatMessages().subscribe(messages => {
+      this.chatMessages = messages;
+      setTimeout(() => this.scrollToBottom(), 100);
+    });
   }
 
   async sendMessage() {
-    if (!this.newMessage.trim() || !this.userId || !this.currentUser) return;
+    if (!this.newMessage.trim() || !this.currentUser) return;
 
-    console.log('[ADMIN] Sending to UID:', `07q1DtKQ4nS5gxzRc88KwN87yRJ3_${this.userId}`);
+    // 👇 Get the userId and userName from query params
+    const userId = this.route.snapshot.queryParamMap.get('userId');
+    const userName = this.route.snapshot.queryParamMap.get('userName') || 'User';
+
+    if (!userId) return;
 
     await this.firestoreService.sendChatMessage(
-      this.userId,
-      this.userName,
+      userId,         // this will be joined with adminId inside the service
+      userName,
+      
       this.newMessage.trim()
+      
     );
-
     this.newMessage = '';
+    
   }
+
 
   scrollToBottom() {
     const content = document.querySelector('ion-content');

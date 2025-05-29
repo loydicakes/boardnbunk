@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirestoreService } from '../services/firestore.service';
+import { FirestoreService, ChatMessage } from '../services/firestore.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ChatMessage } from '../services/firestore.service';
 
 @Component({
   standalone: false,
@@ -10,7 +9,6 @@ import { ChatMessage } from '../services/firestore.service';
   styleUrls: ['./message.page.scss'],
 })
 export class MessagePage implements OnInit {
-  selectedChat: boolean = false;
   chatMessages: ChatMessage[] = [];
   messageText: string = '';
   adminId = '07q1DtKQ4nS5gxzRc88KwN87yRJ3';
@@ -29,51 +27,40 @@ export class MessagePage implements OnInit {
     this.userId = userData.uid;
     this.userName = userData.email || 'User';
     this.currentUid = `${this.adminId}_${this.userId}`;
+    console.log('[USER] userId:', this.userId);
+    console.log('[USER] currentUid:', this.currentUid);
 
     this.afAuth.authState.subscribe(user => {
-      if (user) this.currentAuthUid = user.uid;
+      if (user) {
+        this.currentAuthUid = user.uid;
+        this.loadChat(); // Load chat only after auth state is ready
+      }
     });
-    console.log('[USER] userId:', this.userId);
-    console.log('[USER] currentUid (filter key):', this.currentUid);
-    this.loadChat();
   }
 
   loadChat() {
-    this.afAuth.authState.subscribe(user => {
-      if (!user) return;
-      this.currentAuthUid = user.uid;
-
-      this.firestoreService.getChatMessages().subscribe((messages) => {
-        console.log('[USER] Filtering chatMessages for:', this.currentUid);
-        this.chatMessages = messages.filter((msg) => msg.uid === this.currentUid);
-        console.log('[USER] Loaded messages:', this.chatMessages);
-      });
+    this.firestoreService.getChatMessages().subscribe((messages) => {
+      this.chatMessages = messages.filter(msg => msg.uid === this.currentUid);
+      console.log('[USER] Messages loaded:', this.chatMessages);
     });
   }
 
   sendMessage() {
-    if (this.messageText.trim() !== '') {
-      console.log('[USER] Sending message with UID:', this.currentUid);
-      this.firestoreService
-        .sendChatMessage(this.userId, this.userName, this.messageText)
-        .then(() => {
-          this.messageText = '';
-        });
-    }
-  }
+    if (!this.messageText.trim()) return;
 
+    console.log('[USER] Sending message with UID:', this.currentUid);
+    this.firestoreService.sendChatMessage(
+      this.userId,
+      this.userName,
+      this.messageText.trim()
+    ).then(() => {
+      this.messageText = '';
+    });
+  }
 
   autoGrow(event: any) {
     const textarea = event.target;
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
-  }
-
-  openChat() {
-    this.selectedChat = true;
-  }
-
-  closeChat() {
-    this.selectedChat = false;
   }
 }
