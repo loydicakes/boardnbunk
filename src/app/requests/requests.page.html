@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Requests</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Requests</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list *ngIf="requests.length > 0; else noRequests">f
+    <ion-item-sliding *ngFor="let request of requests">
+      <ion-item (click)="openChat(request)">
+        <ion-label>
+          <h2>{{ request.name }}</h2>
+          <p>{{ request.datentime.toDate() | date:'medium' }} - Sent a request</p>
+        </ion-label>
+
+        <!-- DELETE button -->
+        <ion-button fill="clear" color="danger" slot="end" (click)="deleteRequest(request.id)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #noRequests>
+    <div class="empty-state">
+      <p>No requests available.</p>
+    </div>
+  </ng-template>
+</ion-content>

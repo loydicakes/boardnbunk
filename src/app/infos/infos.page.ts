@@ -1,3 +1,4 @@
+// infos.page.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService, Room } from '../services/firestore.service';
@@ -13,7 +14,7 @@ export class InfosPage implements OnInit {
   roomId: string | null = null;
   room: Room | null = null;
   loading = true;
-  requestSent = false; // Flag to track if user already sent a request
+  requestSent = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -96,10 +97,10 @@ export class InfosPage implements OnInit {
       }
 
       const now = new Date();
-      await this.firestoreService.addRequest(fullName, now);
-      console.log('Request submitted with name:', fullName);
+      await this.firestoreService.addRequest(fullName, now, user.uid);
+      console.log('Request submitted with name and UID:', fullName, user.uid);
 
-      this.requestSent = true; // Update flag so button disables and text changes
+      this.requestSent = true;
     } catch (error) {
       console.error('Failed to submit request:', error);
     }

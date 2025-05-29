@@ -27,11 +27,13 @@
           <span class="dashboard-value">{{ totalTenants }}</span>
         </div>
         <div class="vertical-divider"></div>
-        <div class="dashboard-item">
-          <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
-          <span class="dashboard-label">Request</span>
-          <span class="dashboard-value">{{ totalRequests }}</span>
-        </div>
+          <a routerLink="/requests" style="text-decoration: none; color: inherit;">
+            <div class="dashboard-item">
+              <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
+              <span class="dashboard-label">Request</span>
+              <span class="dashboard-value">{{ totalRequests }}</span>
+            </div>
+          </a>
       </div>
     </ion-card>
   </div>

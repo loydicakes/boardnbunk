@@ -1,57 +1,79 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from '../services/firestore.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ChatMessage } from '../services/firestore.service';
 
 @Component({
+  standalone: false,
   selector: 'app-message',
   templateUrl: './message.page.html',
   styleUrls: ['./message.page.scss'],
-  standalone: false,
 })
-export class MessagePage implements AfterViewInit {
-  selectedChat: string | null = null;
+export class MessagePage implements OnInit {
+  selectedChat: boolean = false;
+  chatMessages: ChatMessage[] = [];
   messageText: string = '';
+  adminId = '07q1DtKQ4nS5gxzRc88KwN87yRJ3';
+  userId: string = '';
+  userName: string = '';
+  currentUid: string = '';
+  currentAuthUid: string = '';
 
-  @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  constructor(
+    private firestoreService: FirestoreService,
+    private afAuth: AngularFireAuth
+  ) {}
 
-  openChat(name: string) {
-    this.selectedChat = name;
-    setTimeout(() => this.scrollToBottom(), 100); // Scroll to bottom on open
+  ngOnInit() {
+    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    this.userId = userData.uid;
+    this.userName = userData.email || 'User';
+    this.currentUid = `${this.adminId}_${this.userId}`;
+
+    this.afAuth.authState.subscribe(user => {
+      if (user) this.currentAuthUid = user.uid;
+    });
+    console.log('[USER] userId:', this.userId);
+    console.log('[USER] currentUid (filter key):', this.currentUid);
+    this.loadChat();
   }
 
-  closeChat() {
-    this.selectedChat = null;
+  loadChat() {
+    this.afAuth.authState.subscribe(user => {
+      if (!user) return;
+      this.currentAuthUid = user.uid;
+
+      this.firestoreService.getChatMessages().subscribe((messages) => {
+        console.log('[USER] Filtering chatMessages for:', this.currentUid);
+        this.chatMessages = messages.filter((msg) => msg.uid === this.currentUid);
+        console.log('[USER] Loaded messages:', this.chatMessages);
+      });
+    });
   }
+
+  sendMessage() {
+    if (this.messageText.trim() !== '') {
+      console.log('[USER] Sending message with UID:', this.currentUid);
+      this.firestoreService
+        .sendChatMessage(this.userId, this.userName, this.messageText)
+        .then(() => {
+          this.messageText = '';
+        });
+    }
+  }
+
 
   autoGrow(event: any) {
     const textarea = event.target;
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
-    setTimeout(() => this.scrollToBottom(), 100); // Keep scroll at bottom while typing
   }
 
-  sendMessage() {
-    if (this.messageText.trim().length === 0) {
-      return;
-    }
-    // In real app, you would push message to conversation here
-    // For demo, we just clear input
-    this.messageText = '';
-    setTimeout(() => this.scrollToBottom(), 100);
+  openChat() {
+    this.selectedChat = true;
   }
 
-  scrollToBottom() {
-    try {
-      if (this.messagesContainer && this.messagesContainer.nativeElement) {
-        this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
-      }
-    } catch (err) {
-      console.error('Failed to scroll to bottom', err);
-    }
-  }
-
-  ngAfterViewInit() {
-    // Scroll to bottom initially if chat is open
-    if (this.selectedChat) {
-      this.scrollToBottom();
-    }
+  closeChat() {
+    this.selectedChat = false;
   }
 }

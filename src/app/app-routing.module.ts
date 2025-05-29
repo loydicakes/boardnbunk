@@ -86,7 +86,15 @@ const routes: Routes = [
   {
     path: 'superadmin',
     loadChildren: () => import('./superadmin/superadmin.module').then( m => m.SuperadminPageModule)
+  },  {
+    path: 'requests',
+    loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule)
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+
 
 
 ];
