@@ -65,8 +65,6 @@ export class ChatPage implements OnInit {
     this.newMessage = '';
     
   }
-
-
   scrollToBottom() {
     const content = document.querySelector('ion-content');
     if (content) (content as any).scrollToBottom(300);
