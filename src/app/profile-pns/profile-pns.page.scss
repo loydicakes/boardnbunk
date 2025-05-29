@@ -43,7 +43,7 @@ h4 {
   border-radius: 5px;
   height: 80%;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   align-self: center;
   background-color: #ffffff;
 }
@@ -159,7 +159,8 @@ ion-button.save-button {
   z-index: 1001;
 }
 
-.logout-buttons,.pic-options  {
+.logout-buttons,
+.pic-options {
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
@@ -188,10 +189,4 @@ ion-button.save-button {
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
-}
-
-.line-divider {
-  height: 1px;
-  background-color: #ccc;
-  margin-bottom: 16px;
 }
