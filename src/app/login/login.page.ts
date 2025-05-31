@@ -74,8 +74,8 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  revealPassword() {
-    this.showPassword = true;
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
     setTimeout(() => this.showPassword = false, 1000);
   }
 

@@ -21,9 +21,16 @@
         align-items: center;
         vertical-align: middle;
 
+        .header-logo {
+            width: 70px;
+            object-fit: contain;
+            margin-right: 8px;
+        }
+
+
         h5{
             margin-left: 5px;
-            font-weight: lighter;
+            font-weight: bold;
             font-size: 1.2rem;
         }
     }
@@ -239,5 +246,4 @@
       color: #005a9a;
       font-size: 24px;
     }
-  
-  }
+}
