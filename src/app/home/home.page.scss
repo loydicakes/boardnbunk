@@ -1,98 +1,126 @@
 
-*{
-    padding: 0;
-    margin: 0;
-}
-ion-content{
-    .header{
-        position: relative;
-        top: 9%;
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 3px;
 
-        h1{
-            font-size: 23px;
-            font-weight: bold;
-            color: black;
-        }
-        p{
-            width: 70%;
-            font-size: 13px;
-            text-align: center;
-            color: black;
-        }
+.login-content {
+  --background: url('/assets/bg.jpg') no-repeat center center / cover;
+  position: relative;
+
+  .top-shape {
+    background: linear-gradient(to right, #005a9a, #007dc3);
+    height: 220px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .logo {
+      width: 160px;
+      border-radius: 50%;
+      padding: 10px;
+    }
+  }
+
+  .form-wrapper {
+    position: relative;
+    top: -40px;
+    z-index: 2;
+  }
+
+  .form-card {
+    background: rgba(255, 255, 255, 0.95);
+    margin: 0 24px;
+    padding: 32px 20px;
+    border-radius: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+    h2 {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 24px;
+      color: black;
     }
 
-    .form-cont{
-        position: relative;
-        top: 10%;
-        
-        ion-label{
-            font-size: 12px;
-            font-weight: bold;
-            color:black;
-        }
-        form{
-            padding: 0% 10%;
-            ion-input{
-                color: black;
-            }
-            ion-button{
-                font-size: 13px;
-                font-weight: bold;
-            }
-        }
-        .form-holder{
-            display: flex;
-            flex-direction: column;
-            ion-label{
-                margin-top: 10px;
-            }
-        }
+    ion-label {
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+      color: #333;
     }
-    .sign-up-with{
-        position: relative;
-        padding: 5%;
-        top: 10%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        p{
-            color: black;
-            font-size: 13px;
-            vertical-align: center;
-        }
-        hr{
-            background-color: lightgray;
-            width: 30%;
-        }
+
+    ion-item {
+      --background: #f4f4f4;
+      border-radius: 8px;
+      margin-top: 4px;
     }
-    .social-cont{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        position: relative;
-        top: 10%;
-        gap: 10px;
-        .soc-button{
-            background-color: transparent;
-        }
+
+    ion-input {
+      padding: 10px 8px;
+      font-size: 14px;
     }
-    .already{
-        color: black;
-        position: relative;
-        top: 12%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
+
+    .login-btn {
+      --background: linear-gradient(to right, #005a9a, #007dc3);
+      margin-top: 24px;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    .social-or {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 24px 0;
+
+      hr {
+        flex: 1;
+        height: 1px;
+        background: #ccc;
+        border: none;
+      }
+
+      p {
         font-size: 13px;
-        a{
-            color: lightgray;
-        }
+        color: #666;
+        padding: 0 10px;
+        white-space: nowrap;
+      }
     }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 10px;
+
+      .social-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+
+        &.facebook {
+          background: linear-gradient(to right, #005a9a, #007dc3);
+          color: white;
+        }
+
+        &.google {
+          background: linear-gradient(to right, #db4437, #e85c50);
+          color: white;
+        }
+      }
+    }
+
+    .signup-link {
+      margin-top: 18px;
+      font-size: 13px;
+      text-align: center;
+
+      a {
+        color: #005a9a;
+        text-decoration: underline;
+        margin-left: 4px;
+      }
+    }
+  }
 }
