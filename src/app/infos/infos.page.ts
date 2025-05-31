@@ -16,6 +16,7 @@ export class InfosPage implements OnInit {
   loading = true;
   requestSent = false;
 
+  
   constructor(
     private route: ActivatedRoute,
     private firestoreService: FirestoreService

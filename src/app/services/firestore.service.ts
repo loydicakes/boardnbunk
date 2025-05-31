@@ -208,13 +208,11 @@ export class FirestoreService {
   }
 
   // ✅ Updated to use adminId + userId
-  async sendChatMessage(userId: string, name: string, content: string) {
-    const adminId = '07q1DtKQ4nS5gxzRc88KwN87yRJ3';
+  async sendChatMessage(userId: string, name: string, content: string, uid: string) {
     const sender = await this.ngFireBase.currentUser;
 
     if (!userId || !sender) throw new Error('Missing sender or userId');
 
-    const uid = `${adminId}_${userId}`;
     const chatRef = collection(this.firestore, 'chat');
 
     return await addDoc(chatRef, {
@@ -230,8 +228,6 @@ export class FirestoreService {
     const userRef = doc(this.firestore, 'users', uid);  // ✅ 3 segments: 'users', userId
     return await setDoc(userRef, data, { merge: true });
   }
-
-
   async getUserProfile(uid: string): Promise<{ firstname: string; lastname: string; email: string; profilePicture?: string }> {
     const userDocRef = doc(this.firestore, 'users', uid);
     const userSnap = await getDoc(userDocRef);
@@ -247,8 +243,6 @@ export class FirestoreService {
       throw new Error('User document does not exist');
     }
   }
-
-
 
 
 }

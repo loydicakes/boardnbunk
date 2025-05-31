@@ -1,48 +1,28 @@
-<ion-content *ngIf="!loading && room; else loadingTpl" class="ion-padding">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<ion-content *ngIf="!loading && room; else loadingTpl">
   <div class="back-btn" routerLink="/homepage">
     <ion-icon name="arrow-back"></ion-icon>
   </div>
+  <div class="img-gradient-wrapper">
+    <ion-img [src]="isValidHttpUrl(room.image) ? room.image : 'assets/room/room1.jpg'"></ion-img>
+    <div class="image-gradient-overlay"></div>
+  </div>
 
-  <ion-img [src]="isValidHttpUrl(room.image) ? room.image : 'assets/Spoliarium.jpg'"></ion-img>
   <div class="infos">
     <div class="typenstars">
       <p class="type">{{ room.type }}</p>
-      <p class="rate">
-        <ion-icon name="star" size="small" color="warning"></ion-icon>4.5
-      </p>
     </div>
-    <h4>{{ room.name }}</h4>
-    <p class="loc">{{ room.location || 'Location not specified' }}</p>
-  </div>
-
-  <div class="info-hold">
-    <div class="information">
-      <ion-icon name="bed" size="large"></ion-icon>
-      <h5>{{ room.beds || 'N/A' }} Bed</h5>
-    </div>
-    <div class="information">
-      <ion-icon name="water" size="large"></ion-icon>
-      <h5>{{ room.baths || 'N/A' }} Bath</h5>
-    </div>
-    <div class="information">
-      <ion-icon name="home" size="large"></ion-icon>
-      <h5>{{ room.size || 'N/A' }} sqm</h5>
-    </div>
-  </div>
-
-  <div class="desc-owner">
-    <h4>Description</h4>
-    <p>{{ room.description || 'No description available.' }}</p>
-
-    <h4>Contact Owner</h4>
-    <div class="ownerprofile">
-      <img [src]="room.ownerImage || 'assets/john-doe.jpg'" alt="Owner" />
-      <div class="ownerinfo">
-        <h5>{{ room.ownerName || 'Owner Name' }}</h5>
-        <p><ion-icon name="call"></ion-icon> {{ room.ownerPhone || 'N/A' }}</p>
-        <p><ion-icon name="logo-facebook"></ion-icon> {{ room.ownerFacebook || 'N/A' }}</p>
-        <p><ion-icon name="mail"></ion-icon> {{ room.ownerEmail || 'N/A' }}</p>
-      </div>
+    <h4 class="room-name">{{ room.name }}</h4>
+    <p class="description-p">{{ room.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
+    <div class="rent-info">
+      <div class="total-rent">Total Rent</div>
+      <div class="rent-amount">₱{{ room.price }}</div>
+      <ion-button (click)="submitRequest()" [disabled]="requestSent">
+        {{ requestSent ? 'Request sent' : 'Send Request' }}
+      </ion-button>
     </div>
   </div>
 </ion-content>
@@ -51,7 +31,7 @@
   <ion-spinner name="crescent"></ion-spinner>
 </ng-template>
 
-<ion-footer class="footer" *ngIf="room">
+<!-- <ion-footer class="footer">
   <ion-toolbar>
     <ion-grid>
       <ion-row class="ion-align-items-center">
@@ -69,4 +49,4 @@
       </ion-row>
     </ion-grid>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

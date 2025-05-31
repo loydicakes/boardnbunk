@@ -1,3 +1,6 @@
+*{
+    font-family: 'Poppins', sans-serif;
+}
 ion-content{
     img{
         width: 100%;
@@ -5,7 +8,11 @@ ion-content{
         object-fit: cover;
     }
     .infos{
-        padding: 0 15px;
+        width: 100%;
+        position: fixed;
+        bottom: 50px;
+        z-index: 1000;
+        padding: 0 30px;
         display: flex;
         flex-direction: column;
         .typenstars{
@@ -14,9 +21,9 @@ ion-content{
 
             .type{
                 border-radius: 2px;
-                padding: 2px 10px;
-                background-color: rgb(181, 181, 181);
-                color: rgb(47, 47, 47);
+                padding: 1px 10px;
+                background-color: rgb(26, 143, 240);
+                color: whitesmoke;
                 font-size: 15px;
                 font-weight: bold;
             }
@@ -25,8 +32,22 @@ ion-content{
                 font-weight: bold;
             }
         }
+        .room-name{
+            font-size: 40px;
+            color: whitesmoke;
+        }
+        .description{
+            margin-top: 15px;
+            font-size: 20px;
+        }
+        .description-p{
+            font-weight: 400;
+            margin-top: 10px;
+            font-size: 15px;
+            color:#ffffff;
+        }
         h4{
-            color: #005a9a;
+            color: #00B4D8;
             margin: 0;
             padding: 0;
             font-weight: 600;
@@ -150,11 +171,40 @@ ion-content{
   
   .total-rent {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
+    color: rgb(44, 160, 255);
   }
   
   .rent-amount {
-    font-size: 14px;
-    color: gray;
+    font-weight: bold;
+    font-size: 15px;
+    color: whitesmoke;
   }
   
+.img-gradient-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  ion-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 400px; // You can adjust this
+    background: linear-gradient(to top, rgba(14, 14, 14, 0.9), transparent);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+ion-button{
+    margin-top:40px;
+}
