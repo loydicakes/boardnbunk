@@ -1,9 +1,10 @@
 // profile-pns.page.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ViewWillEnter } from '@ionic/angular';
 
 @Component({
-  standalone:false,
+  standalone: false,
   selector: 'app-profile-pns',
   templateUrl: './profile-pns.page.html',
   styleUrls: ['./profile-pns.page.scss'],
@@ -16,7 +17,12 @@ export class ProfilePnsPage implements OnInit {
   email = 'johndoe@gmail.com';
 
   profilePicture: string | null = null;
-  originalProfile = { firstname: this.firstname, lastname: this.lastname, contactNumber: this.contactNumber, address: this.address };
+  originalProfile = {
+    firstname: this.firstname,
+    lastname: this.lastname,
+    contactNumber: this.contactNumber,
+    address: this.address,
+  };
   profileChanged = false;
 
   currentPassword = '';
@@ -41,12 +47,31 @@ export class ProfilePnsPage implements OnInit {
   showRemoveConfirmModal = false;
 
   constructor(private router: Router) {}
+
   ngOnInit() {}
 
-  goToProfileMethod() { this.router.navigate(['/profile']); }
+  ionViewWillEnter() {
+    this.resetProfileInputs();
+  }
+
+  resetProfileInputs() {
+    this.firstname = this.originalProfile.firstname;
+    this.lastname = this.originalProfile.lastname;
+    this.contactNumber = this.originalProfile.contactNumber;
+    this.address = this.originalProfile.address;
+    this.profileChanged = false;
+  }
+
+  goToProfileMethod() {
+    this.router.navigate(['/profile']);
+  }
 
   onProfileChange() {
-    this.profileChanged = this.firstname !== this.originalProfile.firstname || this.lastname !== this.originalProfile.lastname || this.contactNumber !== this.originalProfile.contactNumber || this.address !== this.originalProfile.address;
+    this.profileChanged =
+      this.firstname !== this.originalProfile.firstname ||
+      this.lastname !== this.originalProfile.lastname ||
+      this.contactNumber !== this.originalProfile.contactNumber ||
+      this.address !== this.originalProfile.address;
   }
 
   onProfileBlur(field: keyof typeof this.originalProfile) {
@@ -54,9 +79,21 @@ export class ProfilePnsPage implements OnInit {
     this.onProfileChange();
   }
 
-  confirmSave(action: 'profile' | 'password') { this.saveAction = action; this.showSaveModal = true; }
-  closeSaveCard() { this.showSaveModal = false; this.saveAction = null; }
-  confirmSaveAction() { if (this.saveAction === 'profile') this.saveProfile(); else if (this.saveAction === 'password') this.saveNewPassword(); this.closeSaveCard(); }
+  confirmSave(action: 'profile' | 'password') {
+    this.saveAction = action;
+    this.showSaveModal = true;
+  }
+
+  closeSaveCard() {
+    this.showSaveModal = false;
+    this.saveAction = null;
+  }
+
+  confirmSaveAction() {
+    if (this.saveAction === 'profile') this.saveProfile();
+    else if (this.saveAction === 'password') this.saveNewPassword();
+    this.closeSaveCard();
+  }
 
   simulateSave(callback: () => void) {
     this.isSaving = true;
@@ -64,13 +101,18 @@ export class ProfilePnsPage implements OnInit {
       this.isSaving = false;
       this.showSuccessPopup = true;
       callback();
-      setTimeout(() => this.showSuccessPopup = false, 1000);
+      setTimeout(() => (this.showSuccessPopup = false), 1000);
     }, 1500);
   }
 
   saveProfile() {
     this.simulateSave(() => {
-      this.originalProfile = { firstname: this.firstname, lastname: this.lastname, contactNumber: this.contactNumber, address: this.address };
+      this.originalProfile = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        contactNumber: this.contactNumber,
+        address: this.address,
+      };
       this.profileChanged = false;
     });
   }
@@ -82,7 +124,9 @@ export class ProfilePnsPage implements OnInit {
     this.isVerifying = false;
   }
 
-  onCurrentPasswordInput() { this.verificationError = ''; }
+  onCurrentPasswordInput() {
+    this.verificationError = '';
+  }
 
   verifyCurrentPassword() {
     this.isVerifying = true;
@@ -107,11 +151,15 @@ export class ProfilePnsPage implements OnInit {
   }
 
   validateNewPassword() {
-    this.isNewPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(this.newPassword);
+    this.isNewPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+      this.newPassword
+    );
     if (this.confirmPassword) this.validateConfirmPassword();
   }
 
-  validateConfirmPassword() { this.isConfirmPasswordValid = this.newPassword === this.confirmPassword; }
+  validateConfirmPassword() {
+    this.isConfirmPasswordValid = this.newPassword === this.confirmPassword;
+  }
 
   saveNewPassword() {
     if (!this.isNewPasswordValid || !this.isConfirmPasswordValid) return;
@@ -126,8 +174,13 @@ export class ProfilePnsPage implements OnInit {
     this.verificationError = '';
   }
 
-  openProfilePicModal() { this.showProfilePicModal = true; }
-  closeProfilePicModal() { this.showProfilePicModal = false; }
+  openProfilePicModal() {
+    this.showProfilePicModal = true;
+  }
+
+  closeProfilePicModal() {
+    this.showProfilePicModal = false;
+  }
 
   chooseNewPicture() {
     this.closeProfilePicModal();
@@ -155,7 +208,9 @@ export class ProfilePnsPage implements OnInit {
     this.showRemoveConfirmModal = true;
   }
 
-  closeRemoveConfirmModal() { this.showRemoveConfirmModal = false; }
+  closeRemoveConfirmModal() {
+    this.showRemoveConfirmModal = false;
+  }
 
   confirmRemovePicture() {
     this.profilePicture = null;
