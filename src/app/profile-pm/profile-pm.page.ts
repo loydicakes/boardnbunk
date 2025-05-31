@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-profile-pm',
@@ -9,10 +11,16 @@ import { Router } from '@angular/router';
 })
 export class ProfilePmPage implements OnInit {
   selectedPayment: string = 'cash'; // default selection
+  cardNumber: string = '';
+  gcashNumber: string = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private firestoreService: FirestoreService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   goToProfileMethod() {
     this.router.navigate(['/profile']);
@@ -36,10 +44,28 @@ export class ProfilePmPage implements OnInit {
     }
   }
 
-  confirmSave() {
+  async confirmSave() {
     this.closeSaveCard();
-    // Add save logic here (e.g., show success toast, save to server, etc.)
-    console.log('Changes saved!');
-  }
 
+    const user = await this.afAuth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    let updateData: any = {
+      paymentMethod: this.selectedPayment
+    };
+
+    if (this.selectedPayment === 'card') {
+      updateData.cardNumber = this.cardNumber;
+    } else if (this.selectedPayment === 'gcash') {
+      updateData.gcashNumber = this.gcashNumber;
+    }
+
+    try {
+      await this.firestoreService.updateUserProfile(uid, updateData);
+      console.log('Payment method saved:', updateData);
+    } catch (err) {
+      console.error('Failed to save payment method:', err);
+    }
+  }
 }

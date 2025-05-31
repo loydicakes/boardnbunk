@@ -176,19 +176,33 @@ export class FirestoreService {
     });
   }
 
-  async addRequest(name: string, datentime: Date, userId: string, roomName: string, roomType: string) {
-    const requestData = {
+  async addRequest(
+    name: string,
+    datentime: Date,
+    userId: string,
+    roomName: string,
+    roomType: string,
+    paymentMethod: string,
+    cardNumber?: string,
+    gcashNumber?: string
+  ) {
+    const requestData: any = {
       name,
       datentime,
       userId,
       roomName,
-      roomType
+      roomType,
+      paymentMethod
     };
+
+    if (paymentMethod === 'card') {
+      requestData.cardNumber = cardNumber;
+    } else if (paymentMethod === 'gcash') {
+      requestData.gcashNumber = gcashNumber;
+    }
 
     await addDoc(collection(this.firestore, 'request'), requestData);
   }
-
-
 
   async hasUserRequested(fullName: string): Promise<boolean> {
     const requestsCol = collection(this.firestore, 'request');
