@@ -176,16 +176,19 @@ export class FirestoreService {
     });
   }
 
-  async addRequest(name: string, datentime: Date, uid: string) {
-    const requestRef = collection(this.firestore, 'request');
-    return await addDoc(requestRef, {
-      uid,
+  async addRequest(name: string, datentime: Date, userId: string, roomName: string, roomType: string) {
+    const requestData = {
       name,
-      datentime: Timestamp.fromDate(datentime),
-      lastmessage: '',
-      timestamp: ''
-    });
+      datentime,
+      userId,
+      roomName,
+      roomType
+    };
+
+    await addDoc(collection(this.firestore, 'request'), requestData);
   }
+
+
 
   async hasUserRequested(fullName: string): Promise<boolean> {
     const requestsCol = collection(this.firestore, 'request');
@@ -228,6 +231,7 @@ export class FirestoreService {
     const userRef = doc(this.firestore, 'users', uid);  // ✅ 3 segments: 'users', userId
     return await setDoc(userRef, data, { merge: true });
   }
+
   async getUserProfile(uid: string): Promise<{ firstname: string; lastname: string; email: string; profilePicture?: string }> {
     const userDocRef = doc(this.firestore, 'users', uid);
     const userSnap = await getDoc(userDocRef);
@@ -243,6 +247,20 @@ export class FirestoreService {
       throw new Error('User document does not exist');
     }
   }
+
+  async getCollection(path: string) {
+    const snapshot = await getDocs(collection(this.firestore, path));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  }
+
+  async addDocument(path: string, data: any) {
+    return await addDoc(collection(this.firestore, path), data);
+  }
+
+  async deleteDocument(path: string, id: string) {
+    return await deleteDoc(doc(this.firestore, path, id));
+  }
+
 
 
 }

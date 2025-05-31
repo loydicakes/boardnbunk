@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from '../services/firestore.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -7,59 +10,48 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landlord-tenants.page.scss'],
 })
 export class LandlordTenantsPage implements OnInit {
-
-  tenants = [
-    {
-      name: 'Maria Garcia',
-      image: 'assets/john-doe.jpg',
-      roomNumber: '101',
-      buildingNumber: 'A',
-      lastPaid: 'May 10, 2025',
-      nextDue: 'June 10, 2025',
-      attendedDate: 'March 1, 2024',
-      address: '123 Maple Street',
-      contact: '0917-123-4567'
-    },
-    {
-      name: 'John Reyes',
-      image: 'assets/john-doe.jpg',
-      roomNumber: '204',
-      buildingNumber: 'B',
-      lastPaid: 'April 15, 2025',
-      nextDue: 'May 15, 2025',
-      attendedDate: 'January 10, 2024',
-      address: '456 Oak Avenue',
-      contact: '0918-987-6543'
-    },
-  ];
-
-  approvalTenants = [
-    {
-      name: 'Anna Cruz',
-      image: 'assets/john-doe.jpg',
-      roomNumber: '305',
-      buildingNumber: 'C',
-      attendedDate: 'May 1, 2025',
-      address: '789 Pine Road',
-      contact: '0922-333-5555'
-    },
-    {
-      name: 'Mark Villanueva',
-      image: 'assets/john-doe.jpg',
-      roomNumber: '110',
-      buildingNumber: 'A',
-      attendedDate: 'May 3, 2025',
-      address: '246 Cedar Lane',
-      contact: '0933-444-6666'
-    }
-  ];
-
+  tenants: any[] = [];
+  approvalTenants: any[] = [];
   selectedTenant: any = null;
   approvalModalTenant: any = null;
 
-  constructor() { }
+  constructor(
+    private firestoreService: FirestoreService,
+    private afAuth: AngularFireAuth,
+    private router: Router
+  ) { }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    await this.loadApprovalRequests();
+    await this.loadCurrentTenants();
+  }
+
+  async loadApprovalRequests() {
+    const snapshot = await this.firestoreService.getCollection('request');
+    console.log('[Approval Snapshot]', snapshot); // debug log
+
+    this.approvalTenants = snapshot.map((doc: any) => ({
+      id: doc.id,
+      name: doc.name || 'No Name',
+      image: doc.image || 'assets/1.jpg',
+      roomName: doc.roomName || 'N/A',
+      roomType: doc.roomType || 'N/A',
+      datentime: doc.datentime || null
+    }));
+  }
+
+  async loadCurrentTenants() {
+    const tenants = await this.firestoreService.getCollection('tenants');
+    this.tenants = tenants.map((t: any) => ({
+      id: t.id,
+      name: t.name,
+      image: t.image || 'assets/img/default-user.png',
+      roomNumber: t.roomNumber,
+      buildingNumber: t.buildingNumber,
+      lastPaid: t.lastPaid,
+      nextDue: t.nextDue
+    }));
+  }
 
   openTenantModal(tenant: any) {
     this.selectedTenant = tenant;
@@ -78,5 +70,18 @@ export class LandlordTenantsPage implements OnInit {
     this.approvalModalTenant = null;
   }
 
-  // Approve, Decline, Remove functions are intentionally removed/disabled
+
+  async declineTenant(id: string) {
+    await this.firestoreService.deleteDocument('request', id);
+    this.approvalTenants = this.approvalTenants.filter(t => t.id !== id);
+  }
+
+  openChat(tenant: any) {
+    this.router.navigate(['/chat'], {
+      queryParams: {
+        userId: tenant.id,
+        userName: tenant.name
+      }
+    });
+  }
 }

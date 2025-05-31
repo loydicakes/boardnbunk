@@ -1,71 +1,70 @@
 <ion-content [fullscreen]="true">
   <div id="container">
-
-    <!-- Back Button (disabled) -->
     <div class="back-btn">
       <ion-icon name="arrow-back"></ion-icon>
     </div>
 
-    <!-- Title -->
     <h4 class="title">Tenants</h4>
 
-    <!-- Tenants Cards -->
     <div class="current-section">
       <h3>Current</h3>
-      <div class="tenant-card" *ngFor="let tenant of tenants" (click)="openTenantModal(tenant)">
-        <img [src]="tenant.image" class="tenant-img" />
-        <div class="tenant-content">
-          <strong>{{ tenant.name }}</strong>
-          <p>Room {{ tenant.roomNumber }}, Building {{ tenant.buildingNumber }}</p>
-          <div class="payment-dates">
-            <span>Last Paid: <br>{{ tenant.lastPaid }}</span>
-            <span>Next Due: <br>{{ tenant.nextDue }}</span>
+      <ng-container *ngIf="tenants.length > 0; else noTenants">
+        <div class="tenant-card" *ngFor="let tenant of tenants" (click)="openTenantModal(tenant)">
+          <img [src]="tenant.image" class="tenant-img" />
+          <div class="tenant-content">
+            <strong>{{ tenant.name }}</strong>
+            <p>Room {{ tenant.roomName }}, Building {{ tenant.roomType }}</p>
+            <div class="payment-dates">
+              <span>Last Paid: <br>{{ tenant.lastPaid }}</span>
+              <span>Next Due: <br>{{ tenant.nextDue }}</span>
+            </div>
           </div>
+          <ion-icon name="information-circle-outline" class="chat-icon"></ion-icon>
         </div>
-        <ion-icon name="information-circle-outline" class="chat-icon"></ion-icon>
-      </div>
+      </ng-container>
+      <ng-template #noTenants>
+        <p style="padding: 1rem; text-align: center; color: gray">No current tenants</p>
+      </ng-template>
 
       <h3>Approval</h3>
-      <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants" (click)="openApprovalModal(tenant, $event)">
-        <img [src]="tenant.image" class="tenant-img" />
-        <div class="tenant-content">
-          <strong>{{ tenant.name }}</strong>
-          <p>Room {{ tenant.roomNumber }}, Building {{ tenant.buildingNumber }}</p>
-          <div class="approval-buttons">
-            <button disabled>Decline</button>
-            <button disabled>Approve</button>
+      <ng-container *ngIf="approvalTenants.length > 0; else noApprovals">
+        <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants" (click)="openApprovalModal(tenant, $event)">
+          <img [src]="tenant.image" class="tenant-img" />
+          <div class="tenant-content">
+            <strong>{{ tenant.name }}</strong>
+            <p>Room: {{ tenant.roomName }} | Type: {{ tenant.roomType }}</p>
+            <div class="approval-buttons">
+              <button (click)="declineTenant(tenant.id)">Decline</button>
+              <button >Approve</button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #noApprovals>
+        <p style="padding: 1rem; text-align: center; color: gray">No approval requests</p>
+      </ng-template>
     </div>
 
-    <!-- Tenant Modal -->
     <div class="tenant-modal" *ngIf="selectedTenant" (click)="closeTenantModal()">
       <div class="modal-card" (click)="$event.stopPropagation()">
         <button class="modal-exit-btn" (click)="closeTenantModal()">×</button>
         <h2>{{ selectedTenant.name }}</h2>
         <p><strong>First Attended:</strong> {{ selectedTenant.attendedDate }}</p>
-        <p><strong>Address:</strong> {{ selectedTenant.address }}</p>
-        <p><strong>Contact:</strong> {{ selectedTenant.contact }}</p>
-        <p><strong>Room:</strong> Room {{ selectedTenant.roomNumber }}, Building {{ selectedTenant.buildingNumber }}</p>
+        <p><strong>Room:</strong> Room {{ selectedTenant.roomName }}, Building {{ selectedTenant.roomType }}</p>
         <button class="remove-tenant-btn" disabled>Remove tenant</button>
       </div>
     </div>
 
-    <!-- Approval Modal -->
     <div class="tenant-modal" *ngIf="approvalModalTenant" (click)="closeApprovalModal()">
       <div class="modal-card" (click)="$event.stopPropagation()">
         <button class="modal-exit-btn" (click)="closeApprovalModal()">×</button>
         <h2>{{ approvalModalTenant.name }}</h2>
-        <p><strong>Address:</strong> {{ approvalModalTenant.address }}</p>
-        <p><strong>Contact:</strong> {{ approvalModalTenant.contact }}</p>
-        <p><strong>Room:</strong> Room {{ approvalModalTenant.roomNumber }}, Building {{ approvalModalTenant.buildingNumber }}</p>
+        <p><strong>Room:</strong> Room {{ approvalModalTenant.roomName }}, Building {{ approvalModalTenant.roomType }}</p>
         <div class="modal-buttons">
-          <button disabled>Decline</button>
-          <button disabled>Approve</button>
+          <button (click)="declineTenant(approvalModalTenant.id)">Decline</button>
+          <button (click)="approveTenant(approvalModalTenant.id)">Approve</button>
         </div>
       </div>
     </div>
-
   </div>
 </ion-content>

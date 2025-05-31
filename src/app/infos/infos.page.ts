@@ -16,11 +16,11 @@ export class InfosPage implements OnInit {
   loading = true;
   requestSent = false;
 
-  
+
   constructor(
     private route: ActivatedRoute,
     private firestoreService: FirestoreService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -98,7 +98,15 @@ export class InfosPage implements OnInit {
       }
 
       const now = new Date();
-      await this.firestoreService.addRequest(fullName, now, user.uid);
+      await this.firestoreService.addRequest(
+        fullName,
+        now,
+        user.uid,
+        this.room?.name || '',
+        this.room?.type || ''
+      );
+
+
       console.log('Request submitted with name and UID:', fullName, user.uid);
 
       this.requestSent = true;
