@@ -1,6 +1,7 @@
 .login-content {
-  --background: 
+  --background: url('/assets/bg.jpg') no-repeat center center / cover;
   position: relative;
+    font-family: 'Poppins', sans-serif;
 
   .top-shape {
     background: linear-gradient(to right, #005a9a, #007dc3);
@@ -13,61 +14,19 @@
 
     .logo {
       width: 160px;
-      background: transparent;
       border-radius: 50%;
       padding: 10px;
     }
   }
 
-  .social-or {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 24px 0;
-
-  hr {
-    flex: 1;
-    height: 1px;
-    background: #ccc;
-    border: none;
-  }
-
-  p {
-    font-size: 13px;
-    color: #666;
-    padding: 0 10px;
-    white-space: nowrap;
-  }
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 10px;
-
-  .social-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 24px;
-
-    &.facebook {
-      background: linear-gradient(to right, #005a9a, #007dc3);
-      color: white;
-    }
-
-    &.google {
-      background: linear-gradient(to right, #db4437, #e85c50);
-      color: white;
-    }
-  }
-}
-  .form-card {
+  .form-wrapper {
     position: relative;
     top: -40px;
     z-index: 2;
-    background: white;
+  }
+
+  .form-card {
+    background: rgba(255, 255, 255,1);
     margin: 0 24px;
     padding: 32px 20px;
     border-radius: 24px;
@@ -99,25 +58,56 @@
       font-size: 14px;
     }
 
-    .forgot {
-      display: block;
-      text-align: right;
-      font-size: 12px;
-      color: gray;
-      margin-top: 6px;
-    }
-
-    .error-message {
-      font-size: 12px;
-      color: red;
-      margin-top: 4px;
-    }
-
     .login-btn {
       --background: linear-gradient(to right, #005a9a, #007dc3);
       margin-top: 24px;
       font-weight: bold;
       border-radius: 8px;
+    }
+
+    .social-or {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 24px 0;
+
+      hr {
+        flex: 1;
+        height: 1px;
+        background: #ccc;
+        border: none;
+      }
+
+      p {
+        font-size: 13px;
+        color: #666;
+        padding: 0 10px;
+        white-space: nowrap;
+      }
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 10px;
+
+      .social-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+
+        &.facebook {
+          background: linear-gradient(to right, #005a9a, #007dc3);
+          color: white;
+        }
+
+        &.google {
+          background: linear-gradient(to right, #db4437, #e85c50);
+          color: white;
+        }
+      }
     }
 
     .signup-link {
