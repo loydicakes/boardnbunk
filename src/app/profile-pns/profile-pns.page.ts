@@ -1,109 +1,78 @@
+// profile-pns.page.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone:false,
   selector: 'app-profile-pns',
   templateUrl: './profile-pns.page.html',
   styleUrls: ['./profile-pns.page.scss'],
-  standalone: false,
 })
 export class ProfilePnsPage implements OnInit {
-  firstname: string = 'John';
-  lastname: string = 'Doe';
-  contactNumber: string = '09559374537';
-  address: string = '123 Sample St';
-  email: string = 'johndoe@gmail.com';
-
-  originalProfile = {
-    firstname: this.firstname,
-    lastname: this.lastname,
-    contactNumber: this.contactNumber,
-    address: this.address,
-  };
-  profileChanged: boolean = false;
+  firstname = 'John';
+  lastname = 'Doe';
+  contactNumber = '09559374537';
+  address = '123 Sample St';
+  email = 'johndoe@gmail.com';
 
   profilePicture: string | null = null;
+  originalProfile = { firstname: this.firstname, lastname: this.lastname, contactNumber: this.contactNumber, address: this.address };
+  profileChanged = false;
 
-  currentPassword: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
+  currentPassword = '';
+  newPassword = '';
+  confirmPassword = '';
+  showNewPassword = false;
+  showConfirmPassword = false;
+  changePasswordStep = 0;
 
-  showNewPassword: boolean = false;
-  showConfirmPassword: boolean = false;
+  isNewPasswordValid = true;
+  isConfirmPasswordValid = true;
+  isVerifying = false;
+  verificationError = '';
 
-  changePasswordStep: number = 0;
-
-  isNewPasswordValid: boolean = true;
-  isConfirmPasswordValid: boolean = true;
-
-  isVerifying: boolean = false;
-  verificationError: string = '';
-
-  showSaveModal: boolean = false;
+  showSaveModal = false;
   saveAction: 'profile' | 'password' | null = null;
 
-  isSaving: boolean = false;
-  showSuccessPopup: boolean = false;
+  isSaving = false;
+  showSuccessPopup = false;
+
+  showProfilePicModal = false;
+  showRemoveConfirmModal = false;
 
   constructor(private router: Router) {}
-
   ngOnInit() {}
 
+  goToProfileMethod() { this.router.navigate(['/profile']); }
+
   onProfileChange() {
-    this.profileChanged =
-      this.firstname !== this.originalProfile.firstname ||
-      this.lastname !== this.originalProfile.lastname ||
-      this.contactNumber !== this.originalProfile.contactNumber ||
-      this.address !== this.originalProfile.address;
+    this.profileChanged = this.firstname !== this.originalProfile.firstname || this.lastname !== this.originalProfile.lastname || this.contactNumber !== this.originalProfile.contactNumber || this.address !== this.originalProfile.address;
   }
 
-  confirmSave(action: 'profile' | 'password') {
-    this.saveAction = action;
-    this.showSaveModal = true;
+  onProfileBlur(field: keyof typeof this.originalProfile) {
+    if (!this.profileChanged) this[field] = this.originalProfile[field];
+    this.onProfileChange();
   }
 
-  closeSaveCard() {
-    this.showSaveModal = false;
-    this.saveAction = null;
-  }
+  confirmSave(action: 'profile' | 'password') { this.saveAction = action; this.showSaveModal = true; }
+  closeSaveCard() { this.showSaveModal = false; this.saveAction = null; }
+  confirmSaveAction() { if (this.saveAction === 'profile') this.saveProfile(); else if (this.saveAction === 'password') this.saveNewPassword(); this.closeSaveCard(); }
 
-  confirmSaveAction() {
-    if (this.saveAction === 'profile') {
-      this.saveProfile();
-    } else if (this.saveAction === 'password') {
-      this.saveNewPassword();
-    }
-    this.closeSaveCard();
-  }
-
-  simulateSave(successCallback: () => void) {
+  simulateSave(callback: () => void) {
     this.isSaving = true;
     setTimeout(() => {
       this.isSaving = false;
       this.showSuccessPopup = true;
-      successCallback();
-      // Auto dismiss success popup after 1 second
-      setTimeout(() => {
-        this.showSuccessPopup = false;
-      }, 1000);
+      callback();
+      setTimeout(() => this.showSuccessPopup = false, 1000);
     }, 1500);
   }
 
   saveProfile() {
     this.simulateSave(() => {
-      this.originalProfile = {
-        firstname: this.firstname,
-        lastname: this.lastname,
-        contactNumber: this.contactNumber,
-        address: this.address,
-      };
+      this.originalProfile = { firstname: this.firstname, lastname: this.lastname, contactNumber: this.contactNumber, address: this.address };
       this.profileChanged = false;
     });
-  }
-
-  togglePassword(field: string): void {
-    if (field === 'new') this.showNewPassword = !this.showNewPassword;
-    else if (field === 'confirm') this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   startChangePassword() {
@@ -113,50 +82,11 @@ export class ProfilePnsPage implements OnInit {
     this.isVerifying = false;
   }
 
-  onCurrentPasswordInput() {
-    this.verificationError = '';
-  }
-
-  onProfileBlur(field: 'firstname' | 'lastname' | 'contactNumber' | 'address') {
-    if (!this.profileChanged) {
-      switch (field) {
-        case 'firstname':
-          if (this.firstname !== this.originalProfile.firstname) {
-            this.firstname = this.originalProfile.firstname;
-          }
-          break;
-        case 'lastname':
-          if (this.lastname !== this.originalProfile.lastname) {
-            this.lastname = this.originalProfile.lastname;
-          }
-          break;
-        case 'contactNumber':
-          if (this.contactNumber !== this.originalProfile.contactNumber) {
-            this.contactNumber = this.originalProfile.contactNumber;
-          }
-          break;
-        case 'address':
-          if (this.address !== this.originalProfile.address) {
-            this.address = this.originalProfile.address;
-          }
-          break;
-      }
-    }
-    this.onProfileChange();
-  }
-
-  onCurrentPasswordBlur() {
-    if (this.changePasswordStep === 1 && !this.isVerifying && this.currentPassword.length > 0) {
-      this.currentPassword = '';
-      this.verificationError = '';
-      this.changePasswordStep = 0;
-    }
-  }
+  onCurrentPasswordInput() { this.verificationError = ''; }
 
   verifyCurrentPassword() {
     this.isVerifying = true;
     this.verificationError = '';
-
     setTimeout(() => {
       this.isVerifying = false;
       if (this.currentPassword === 'correct_password') {
@@ -171,31 +101,21 @@ export class ProfilePnsPage implements OnInit {
     }, 1000);
   }
 
-  validateNewPassword(): void {
-    const pwd = this.newPassword;
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    this.isNewPasswordValid = regex.test(pwd);
+  togglePassword(field: 'new' | 'confirm') {
+    if (field === 'new') this.showNewPassword = !this.showNewPassword;
+    else this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
+  validateNewPassword() {
+    this.isNewPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(this.newPassword);
     if (this.confirmPassword) this.validateConfirmPassword();
   }
 
-  validateConfirmPassword(): void {
-    this.isConfirmPasswordValid = this.newPassword === this.confirmPassword;
-  }
+  validateConfirmPassword() { this.isConfirmPasswordValid = this.newPassword === this.confirmPassword; }
 
   saveNewPassword() {
-    if (!this.isNewPasswordValid) {
-      alert('New password does not meet requirements.');
-      return;
-    }
-    if (!this.isConfirmPasswordValid) {
-      alert('Confirm password does not match new password.');
-      return;
-    }
-
-    this.simulateSave(() => {
-      this.resetPasswordChange();
-    });
+    if (!this.isNewPasswordValid || !this.isConfirmPasswordValid) return;
+    this.simulateSave(() => this.resetPasswordChange());
   }
 
   resetPasswordChange() {
@@ -206,21 +126,8 @@ export class ProfilePnsPage implements OnInit {
     this.verificationError = '';
   }
 
-  goToProfileMethod() {
-    this.router.navigate(['/profile']);
-  }
-
-  // Profile Picture modal management
-  showProfilePicModal: boolean = false;
-  showRemoveConfirmModal: boolean = false;
-
-  openProfilePicModal() {
-    this.showProfilePicModal = true;
-  }
-
-  closeProfilePicModal() {
-    this.showProfilePicModal = false;
-  }
+  openProfilePicModal() { this.showProfilePicModal = true; }
+  closeProfilePicModal() { this.showProfilePicModal = false; }
 
   chooseNewPicture() {
     this.closeProfilePicModal();
@@ -248,9 +155,7 @@ export class ProfilePnsPage implements OnInit {
     this.showRemoveConfirmModal = true;
   }
 
-  closeRemoveConfirmModal() {
-    this.showRemoveConfirmModal = false;
-  }
+  closeRemoveConfirmModal() { this.showRemoveConfirmModal = false; }
 
   confirmRemovePicture() {
     this.profilePicture = null;
