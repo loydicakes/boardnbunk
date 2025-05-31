@@ -14,17 +14,21 @@ import { Firestore } from '@angular/fire/firestore';
 export class ProfilePage implements OnInit {
   displayName: string = '...';
 
-  constructor(private firestoreService:FirestoreService, private router: Router) { } 
+  constructor(
+    private firestoreService: FirestoreService,
+    private router: Router,
+    private firestore: Firestore
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadUserProfile();
+  }
 
-  //edit profile
-  showPhotoCard() {
-    const card = document.getElementById('photoCard');
-    const overlay = document.getElementById('photoOverlay');
-    if (card && overlay) {
-      card.style.display = 'block';
-      overlay.style.display = 'block';
+  async loadUserProfile() {
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      this.displayName = 'Not Logged In';
+      return;
     }
 
     const { uid } = JSON.parse(userData);
@@ -39,9 +43,7 @@ export class ProfilePage implements OnInit {
       this.displayName = 'Unknown User';
     }
   }
-  //end edit profile
 
-  //logout
 
   showLogoutCard() {
     const card = document.getElementById('logoutCard');
