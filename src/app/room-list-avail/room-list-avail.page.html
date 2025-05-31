@@ -1,42 +1,48 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <!-- Back Button -->
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/landlord-home"></ion-back-button>
-      </ion-buttons>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 
-      <!-- Title -->
-      <ion-title size="large">Available Rooms</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="main-page ion-padding">
 
+  <!-- Page Header -->
+  <div class="top-part">
+    <div class="header-part room-header">
+      <h5>Available Rooms</h5>
+    </div>
+  </div>
+
+  <!-- Room List -->
   <ng-container *ngIf="rooms.length > 0; else noRooms">
-    <ion-item *ngFor="let room of rooms">
-      <ion-thumbnail slot="start">
-        <img [src]="room.image">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ room.name }}</h2>
-        <p>₱{{ room.price }} - {{ room.type }}</p>
-        <p>Status: Available</p>
-      </ion-label>
+    <ion-card *ngFor="let room of rooms" class="room-card">
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img [src]="room.image" />
+        </ion-thumbnail>
 
-      <ion-button fill="clear" color="primary" slot="end" (click)="openEditModal(room)">
-        Edit
-      </ion-button>
+        <ion-label>
+          <h2>{{ room.name }}</h2>
+          <p>₱{{ room.price }} - {{ room.type }}</p>
+          <p>Status: Available</p>
+        </ion-label>
 
-      <ion-button fill="clear" color="danger" slot="end" (click)="deleteRoom(room.id)">
-        Delete
-      </ion-button>
-    </ion-item>
+        <div class="action-buttons">
+          <ion-button class="edit-btn" (click)="openEditModal(room)">
+            Edit
+          </ion-button>
+          <ion-button class="delete-btn" (click)="deleteRoom(room.id)">
+            Delete
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-card>
   </ng-container>
 
+  <!-- No Rooms -->
   <ng-template #noRooms>
-    <ion-item>
-      <ion-label>
-        <h2>No available rooms at the moment.</h2>
-      </ion-label>
-    </ion-item>
+    <ion-card>
+      <ion-item lines="none">
+        <ion-label>
+          <h2>No available rooms at the moment.</h2>
+        </ion-label>
+      </ion-item>
+    </ion-card>
   </ng-template>
 </ion-content>

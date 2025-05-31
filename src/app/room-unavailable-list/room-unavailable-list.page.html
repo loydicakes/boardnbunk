@@ -1,42 +1,43 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <!-- Back Button -->
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/landlord-home"></ion-back-button>
-      </ion-buttons>
+<ion-content [fullscreen]="true" class="main-page ion-padding">
 
-      <ion-title size="large">Unavailable Rooms with Tenants</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Page Header -->
+  <div class="top-part">
+    <div class="header-part room-header">
+      <h5>Rooms with Tenants</h5>
+    </div>
+  </div>
 
+  <!-- Room List -->
   <ng-container *ngIf="rooms.length > 0; else noRooms">
-    <ion-item *ngFor="let room of rooms">
-      <ion-thumbnail slot="start">
-        <img [src]="room.image">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ room.name }}</h2>
-        <p>₱{{ room.price }} - {{ room.type }}</p>
-        <p>Status: Unavailable</p>
-        <p>Tenants: {{ room.tenants.join(', ') }}</p>
-      </ion-label>
+    <div *ngFor="let room of rooms" class="room-card">
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img [src]="room.image" />
+        </ion-thumbnail>
 
-      <ion-button fill="clear" color="primary" slot="end" (click)="openEditModal(room)">
-        Edit
-      </ion-button>
+        <ion-label>
+          <h2>{{ room.name }}</h2>
+          <p>₱{{ room.price }} - {{ room.type }}</p>
+          <p>Status: <span style="color: red;">Unavailable</span></p>
+          <p>Tenants: {{ room.tenants.join(', ') }}</p>
+        </ion-label>
 
-      <ion-button fill="clear" color="danger" slot="end" (click)="deleteRoom(room.id)">
-        Delete
-      </ion-button>
-    </ion-item>
+        <div class="action-buttons">
+          <ion-button class="edit-btn" (click)="openEditModal(room)">Edit</ion-button>
+          <ion-button class="delete-btn" (click)="deleteRoom(room.id)">Delete</ion-button>
+        </div>
+      </ion-item>
+    </div>
   </ng-container>
 
+  <!-- No Rooms -->
   <ng-template #noRooms>
-    <ion-item>
-      <ion-label>
-        <h2>No unavailable rooms with tenants found.</h2>
-      </ion-label>
-    </ion-item>
+    <div class="room-card">
+      <ion-item lines="none">
+        <ion-label>
+          <p>No unavailable rooms with tenants found.</p>
+        </ion-label>
+      </ion-item>
+    </div>
   </ng-template>
 </ion-content>
