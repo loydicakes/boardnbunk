@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
 <ion-content class="login-content" [fullscreen]="true">
   <div class="top-shape">
     <img src="assets/logo.png" alt="Logo" class="logo" />
@@ -8,48 +10,66 @@
       <h2>Create Account</h2>
 
       <form [formGroup]="regForm" (ngSubmit)="signUp()" novalidate>
-        <ion-label>Firstname</ion-label>
+
+        <!-- Firstname -->
+        <div class="form-label-inline">
+          <ion-label>First Name</ion-label>
+        </div>
         <ion-item lines="none">
-          <ion-input formControlName="firstname" type="text" placeholder="Enter your firstname"></ion-input>
+          <ion-input formControlName="firstname" type="text" placeholder="Enter your First Name"></ion-input>
         </ion-item>
 
-        <ion-label>Lastname</ion-label>
+        <!-- Lastname -->
+        <div class="form-label-inline">
+          <ion-label>Last Name</ion-label>
+        </div>
         <ion-item lines="none">
-          <ion-input formControlName="lastname" type="text" placeholder="Enter your lastname"></ion-input>
+          <ion-input formControlName="lastname" type="text" placeholder="Enter your Last Name"></ion-input>
         </ion-item>
 
-        <ion-label>Email</ion-label>
+        <!-- Email -->
+        <div class="form-label-inline">
+          <ion-label>Email</ion-label>
+          <ion-text color="danger" *ngIf="regForm.get('email')?.touched && regForm.get('email')?.invalid">
+            <small *ngIf="regForm.get('email')?.hasError('required')">Required</small>
+            <small *ngIf="regForm.get('email')?.hasError('email')">Invalid email</small>
+          </ion-text>
+        </div>
         <ion-item lines="none">
           <ion-input formControlName="email" type="email" placeholder="Enter your email"></ion-input>
         </ion-item>
-        <ion-text color="danger" *ngIf="regForm.get('email')?.touched && regForm.get('email')?.invalid">
-          <small *ngIf="regForm.get('email')?.hasError('required')">Email is required</small>
-          <small *ngIf="regForm.get('email')?.hasError('email')">Invalid email</small>
-        </ion-text>
 
-        <ion-label>Password</ion-label>
+        <!-- Password -->
+        <div class="form-label-inline">
+          <ion-label>Password</ion-label>
+          <ion-text color="danger" *ngIf="regForm.get('password')?.touched && regForm.get('password')?.invalid">
+            <small *ngIf="regForm.get('password')?.hasError('required')">Required</small>
+            <small *ngIf="regForm.get('password')?.hasError('pattern')">Weak password</small>
+          </ion-text>
+        </div>
         <ion-item lines="none">
           <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter password" (ionInput)="checkPasswordInputs()"></ion-input>
           <ion-icon *ngIf="regForm.get('password')?.value" slot="end" name="eye" (click)="revealPassword('password')"></ion-icon>
         </ion-item>
-        <ion-text color="danger" *ngIf="regForm.get('password')?.touched && regForm.get('password')?.invalid">
-          <small *ngIf="regForm.get('password')?.hasError('required')">Password is required</small>
-          <small *ngIf="regForm.get('password')?.hasError('pattern')">Password must be strong</small>
-        </ion-text>
 
-        <ion-label>Confirm Password</ion-label>
+        <!-- Confirm Password -->
+        <div class="form-label-inline">
+          <ion-label>Confirm Password</ion-label>
+          <ion-text color="danger" *ngIf="regForm.get('confirmPassword')?.touched && regForm.get('confirmPassword')?.hasError('mismatch')">
+            <small>Passwords do not match</small>
+          </ion-text>
+        </div>
         <ion-item lines="none">
           <ion-input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirm password" (ionInput)="checkPasswordInputs()"></ion-input>
           <ion-icon *ngIf="regForm.get('confirmPassword')?.value" slot="end" name="eye" (click)="revealPassword('confirm')"></ion-icon>
         </ion-item>
-        <ion-text color="danger" *ngIf="regForm.get('confirmPassword')?.touched && regForm.get('confirmPassword')?.hasError('mismatch')">
-          <small>Passwords do not match</small>
-        </ion-text>
 
+        <!-- Submit -->
         <ion-button expand="block" type="submit" [disabled]="regForm.invalid" class="login-btn">
           Sign Up
         </ion-button>
 
+        <!-- Social Login -->
         <div class="social-or">
           <hr />
           <p>or continue with</p>
@@ -60,7 +80,6 @@
           <ion-button fill="clear" class="social-icon facebook" shape="round">
             <ion-icon name="logo-facebook" slot="icon-only"></ion-icon>
           </ion-button>
-
           <ion-button fill="clear" class="social-icon google" shape="round">
             <ion-icon name="logo-google" slot="icon-only"></ion-icon>
           </ion-button>
@@ -74,4 +93,3 @@
     </div>
   </div>
 </ion-content>
-

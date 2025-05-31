@@ -1,8 +1,7 @@
-
-
 .login-content {
   --background: url('/assets/bg.jpg') no-repeat center center / cover;
   position: relative;
+  font-family: Poppins;
 
   .top-shape {
     background: linear-gradient(to right, #005a9a, #007dc3);
@@ -27,7 +26,7 @@
   }
 
   .form-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
     margin: 0 24px;
     padding: 32px 20px;
     border-radius: 24px;
@@ -41,11 +40,23 @@
       color: black;
     }
 
-    ion-label {
-      font-size: 13px;
-      font-weight: 600;
+    .form-label-inline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-top: 12px;
-      color: #333;
+
+      ion-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      ion-text small {
+        font-size: 12px;
+        color: red;
+        font-weight: 500;
+      }
     }
 
     ion-item {

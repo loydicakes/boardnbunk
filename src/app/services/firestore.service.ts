@@ -275,6 +275,14 @@ export class FirestoreService {
     return await deleteDoc(doc(this.firestore, path, id));
   }
 
+  async updateUserPaymentMethod(uid: string, paymentInfo: {
+    paymentMethod: string;
+    cardNumber?: string;
+    gcashNumber?: string;
+  }) {
+    const userRef = doc(this.firestore, 'users', uid);
+    return await setDoc(userRef, paymentInfo, { merge: true });
+  }
 
 
 }

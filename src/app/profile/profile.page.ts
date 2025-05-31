@@ -1,3 +1,4 @@
+// profile.page.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
@@ -13,21 +14,17 @@ import { Firestore } from '@angular/fire/firestore';
 export class ProfilePage implements OnInit {
   displayName: string = '...';
 
-  constructor(
-    private firestoreService: FirestoreService,
-    private router: Router,
-    private firestore: Firestore
-  ) { }
+  constructor(private firestoreService:FirestoreService, private router: Router) { } 
 
-  ngOnInit() {
-    this.loadUserProfile();
-  }
+  ngOnInit() { }
 
-  async loadUserProfile() {
-    const userData = localStorage.getItem('user');
-    if (!userData) {
-      this.displayName = 'Not Logged In';
-      return;
+  //edit profile
+  showPhotoCard() {
+    const card = document.getElementById('photoCard');
+    const overlay = document.getElementById('photoOverlay');
+    if (card && overlay) {
+      card.style.display = 'block';
+      overlay.style.display = 'block';
     }
 
     const { uid } = JSON.parse(userData);
@@ -42,7 +39,9 @@ export class ProfilePage implements OnInit {
       this.displayName = 'Unknown User';
     }
   }
+  //end edit profile
 
+  //logout
 
   showLogoutCard() {
     const card = document.getElementById('logoutCard');
@@ -70,9 +69,6 @@ export class ProfilePage implements OnInit {
       console.error('Logout failed:', error);
     }
   }
-
-
-  //end logout
 
   goToPersonalSecurity() {
     this.router.navigate(['/profile-pns']);
