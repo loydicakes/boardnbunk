@@ -1,18 +1,12 @@
-<!-- room.page.html -->
 <ion-header>
   <ion-toolbar>
-    <!-- ✅ Back Button -->
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/landlord-home"></ion-back-button>
-    </ion-buttons>
-
     <ion-title>Add New Room</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <form [formGroup]="roomForm" (ngSubmit)="submitRoom()">
-
+    
     <ion-item>
       <ion-label position="stacked">Room Name</ion-label>
       <ion-input formControlName="name" required></ion-input>
@@ -33,7 +27,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Availability</ion-label>
+      <ion-label>Availability</ion-label>
       <ion-toggle formControlName="availability"></ion-toggle>
     </ion-item>
 

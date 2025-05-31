@@ -11,53 +11,42 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <ion-label>Email</ion-label>
         <ion-item lines="none">
-          <ion-input
-            formControlName="email"
-            type="email"
-            placeholder="Enter your email"
-          ></ion-input>
+          <ion-input formControlName="email" type="email" placeholder="Enter your email"></ion-input>
         </ion-item>
 
         <ion-label>Password</ion-label>
         <ion-item lines="none">
-          <ion-input
-            formControlName="password"
-            type="password"
-            placeholder="Enter your password"
-          ></ion-input>
+          <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+            placeholder="Enter your password"></ion-input>
+          <ion-icon *ngIf="loginForm.get('password')?.value" slot="end" [name]="showPassword ? 'eye-off' : 'eye'"
+            (click)="togglePasswordVisibility()"></ion-icon>
         </ion-item>
 
         <a class="forgot">Forgot Password?</a>
 
-        <ion-button
-          expand="block"
-          type="submit"
-          [disabled]="loginForm.invalid"
-          class="login-btn"
-        >
+        <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="login-btn">
           Log in
         </ion-button>
 
-<div class="social-or">
-  <hr />
-  <p>or continue with</p>
-  <hr />
-</div>
+        <div class="social-or">
+          <hr />
+          <p>or continue with</p>
+          <hr />
+        </div>
 
-<div class="social-buttons">
-  <ion-button fill="clear" class="social-icon facebook" shape="round">
-    <ion-icon name="logo-facebook" slot="icon-only"></ion-icon>
-  </ion-button>
+        <div class="social-buttons">
+          <ion-button fill="clear" class="social-icon facebook" shape="round">
+            <ion-icon name="logo-facebook" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" class="social-icon google" shape="round">
+            <ion-icon name="logo-google" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
 
-  <ion-button fill="clear" class="social-icon google" shape="round">
-    <ion-icon name="logo-google" slot="icon-only"></ion-icon>
-  </ion-button>
-</div>
-
-<p class="signup-link">
-  Don’t have an account?
-  <a routerLink="/home">Sign Up</a>
-</p>
+        <p class="signup-link">
+          Don’t have an account?
+          <a routerLink="/home">Sign Up</a>
+        </p>
 
       </form>
     </div>
