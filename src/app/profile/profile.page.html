@@ -17,13 +17,10 @@
     <div class="profile-section">
       <div class="photo-holder-container">
         <div class="photo-holder">
-          <img src="assets/john-doe.jpg" alt="profile picture" />
+          <img src="assets/no_photo.jpg" alt="profile picture" />
         </div>
-        <ion-button class="edit-button" fill="solid" size="small" (click)="showPhotoCard()">
-          <img src="assets/edit.png" alt="edit">
-        </ion-button>
       </div>
-      <div class="name-display">John Doe</div>
+      <div class="name-display">{{ displayName }}</div>
     </div>
 
 
@@ -49,34 +46,6 @@
         <ion-icon name="log-out-outline" slot="start" class="left-icon"></ion-icon>
         <span class="button-text">Log Out</span>
         <ion-icon name="chevron-forward-outline" slot="end" class="arrow-icon"></ion-icon>
-      </ion-button>
-    </div>
-  </div>
-
-  <!-- Overlay and Centered Card Modal -->
-  <div class="overlay" id="photoOverlay" (click)="closePhotoCard()"></div>
-  <div class="photo-card centered" id="photoCard">
-    <div class="card-title">Choose Profile Picture</div>
-    <div class="line-divider"></div>
-
-    <ion-button fill="clear" expand="block" class="photo-option-button">
-      <ion-icon name="camera" slot="start"></ion-icon>
-      <ion-label>Take Photo</ion-label>
-    </ion-button>
-
-    <ion-button fill="clear" expand="block" class="photo-option-button">
-      <ion-icon name="image" slot="start"></ion-icon>
-      <ion-label>Choose from Gallery</ion-label>
-    </ion-button>
-
-    <ion-button fill="clear" expand="block" class="photo-option-button">
-      <ion-icon name="trash" slot="start"></ion-icon>
-      <ion-label>Remove Current Photo</ion-label>
-    </ion-button>
-
-    <div style="text-align: center;">
-      <ion-button class="popup_cancel" (click)="closePhotoCard()">
-        Cancel
       </ion-button>
     </div>
   </div>

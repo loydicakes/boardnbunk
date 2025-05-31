@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
-import { FirestoreService } from '../services/firestore.service'; // Adjust the import path as necessary
+import { Router } from '@angular/router';
+import { FirestoreService } from '../services/firestore.service';
+import { doc, getDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-profile',
@@ -9,32 +11,38 @@ import { FirestoreService } from '../services/firestore.service'; // Adjust the 
   standalone: false,
 })
 export class ProfilePage implements OnInit {
+  displayName: string = '...';
 
-  constructor(private firestoreService:FirestoreService, private router: Router) { } 
+  constructor(
+    private firestoreService: FirestoreService,
+    private router: Router,
+    private firestore: Firestore
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadUserProfile();
+  }
 
-  //edit profile
-  showPhotoCard() {
-    const card = document.getElementById('photoCard');
-    const overlay = document.getElementById('photoOverlay');
-    if (card && overlay) {
-      card.style.display = 'block';
-      overlay.style.display = 'block';
+  async loadUserProfile() {
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      this.displayName = 'Not Logged In';
+      return;
+    }
+
+    const { uid } = JSON.parse(userData);
+
+    const userRef = doc(this.firestore, 'users', uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const user = userSnap.data();
+      this.displayName = `${user['firstname'] || 'User'} ${user['lastname'] || ''}`.trim();
+    } else {
+      this.displayName = 'Unknown User';
     }
   }
 
-  closePhotoCard() {
-    const card = document.getElementById('photoCard');
-    const overlay = document.getElementById('photoOverlay');
-    if (card && overlay) {
-      card.style.display = 'none';
-      overlay.style.display = 'none';
-    }
-  }
-  //end edit profile
-
-  //logout
 
   showLogoutCard() {
     const card = document.getElementById('logoutCard');
@@ -77,5 +85,4 @@ export class ProfilePage implements OnInit {
   goToSettingsMethod() {
     this.router.navigate(['/settings']);
   }
-  
 }
