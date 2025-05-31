@@ -208,21 +208,20 @@ export class FirestoreService {
   }
 
   // ✅ Updated to use adminId + userId
-  async sendChatMessage(userId: string, name: string, content: string) {
-    const adminId = '07q1DtKQ4nS5gxzRc88KwN87yRJ3';
-    const sender = await this.ngFireBase.currentUser;
+  async sendChatMessage(userId: string, name: string, content: string, uid: string) {
+  const sender = await this.ngFireBase.currentUser;
 
-    if (!userId || !sender) throw new Error('Missing sender or userId');
+  if (!userId || !sender) throw new Error('Missing sender or userId');
 
-    const uid = `${adminId}_${userId}`;
-    const chatRef = collection(this.firestore, 'chat');
+  const chatRef = collection(this.firestore, 'chat');
 
-    return await addDoc(chatRef, {
-      uid,
-      name,
-      senderUid: sender.uid,
-      content,
-      timestamp: Timestamp.now()
-    });
-  }
+  return await addDoc(chatRef, {
+    uid, // use the uid passed as argument
+    name,
+    senderUid: sender.uid,
+    content,
+    timestamp: Timestamp.now()
+  });
+}
+
 }
