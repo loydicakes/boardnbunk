@@ -1,28 +1,20 @@
-// profile-pns.page.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { FirestoreService } from '../services/firestore.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 
 @Component({
-  standalone: false,
   selector: 'app-profile-pns',
   templateUrl: './profile-pns.page.html',
   styleUrls: ['./profile-pns.page.scss'],
+  standalone: false
 })
 export class ProfilePnsPage implements OnInit {
-  firstname = 'John';
-  lastname = 'Doe';
-  contactNumber = '09559374537';
-  address = '123 Sample St';
-  email = 'johndoe@gmail.com';
-
+  firstname = '';
+  lastname = '';
+  email = '';
   profilePicture: string | null = null;
-  originalProfile = {
-    firstname: this.firstname,
-    lastname: this.lastname,
-    contactNumber: this.contactNumber,
-    address: this.address,
-  };
   profileChanged = false;
 
   currentPassword = '';
@@ -31,36 +23,63 @@ export class ProfilePnsPage implements OnInit {
   showNewPassword = false;
   showConfirmPassword = false;
   changePasswordStep = 0;
-
   isNewPasswordValid = true;
   isConfirmPasswordValid = true;
   isVerifying = false;
   verificationError = '';
 
   showSaveModal = false;
+  showSuccessPopup = false;
   saveAction: 'profile' | 'password' | null = null;
 
-  isSaving = false;
-  showSuccessPopup = false;
+  showStaticPicModal = false;
 
-  showProfilePicModal = false;
-  showRemoveConfirmModal = false;
+  staticPics: string[] = [
+    'assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg', 'assets/4.jpg',
+    'assets/5.jpg', 'assets/6.jpg', 'assets/7.jpg', 'assets/8.jpg', 'assets/9.jpg'
+  ];
 
-  constructor(private router: Router) {}
+  originalProfile = {
+    firstname: '',
+    lastname: ''
+  };
 
-  ngOnInit() {}
+  uid: string = '';
 
-  ionViewWillEnter() {
-    this.resetProfileInputs();
+  constructor(
+    private router: Router,
+    private firestoreService: FirestoreService,
+    private afAuth: AngularFireAuth
+  ) { }
+
+  ngOnInit() {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.loadActiveUserProfile(user.uid);
+      } else {
+        console.warn('User not logged in');
+      }
+    });
   }
 
-  resetProfileInputs() {
-    this.firstname = this.originalProfile.firstname;
-    this.lastname = this.originalProfile.lastname;
-    this.contactNumber = this.originalProfile.contactNumber;
-    this.address = this.originalProfile.address;
-    this.profileChanged = false;
+  async loadActiveUserProfile(uid: string) {
+    try {
+      const userDoc = await this.firestoreService.getUserProfile(uid);
+
+      this.firstname = userDoc.firstname || '';
+      this.lastname = userDoc.lastname || '';
+      this.email = userDoc.email || '';
+      this.profilePicture = userDoc.profilePicture || null;
+
+      this.originalProfile = {
+        firstname: this.firstname,
+        lastname: this.lastname
+      };
+    } catch (err) {
+      console.error('Failed to load active user profile', err);
+    }
   }
+
 
   goToProfileMethod() {
     this.router.navigate(['/profile']);
@@ -69,12 +88,10 @@ export class ProfilePnsPage implements OnInit {
   onProfileChange() {
     this.profileChanged =
       this.firstname !== this.originalProfile.firstname ||
-      this.lastname !== this.originalProfile.lastname ||
-      this.contactNumber !== this.originalProfile.contactNumber ||
-      this.address !== this.originalProfile.address;
+      this.lastname !== this.originalProfile.lastname;
   }
 
-  onProfileBlur(field: keyof typeof this.originalProfile) {
+  onProfileBlur(field: 'firstname' | 'lastname') {
     if (!this.profileChanged) this[field] = this.originalProfile[field];
     this.onProfileChange();
   }
@@ -96,26 +113,36 @@ export class ProfilePnsPage implements OnInit {
   }
 
   simulateSave(callback: () => void) {
-    this.isSaving = true;
     setTimeout(() => {
-      this.isSaving = false;
       this.showSuccessPopup = true;
       callback();
       setTimeout(() => (this.showSuccessPopup = false), 1000);
     }, 1500);
   }
 
-  saveProfile() {
-    this.simulateSave(() => {
-      this.originalProfile = {
+  async saveProfile() {
+    try {
+      const user = await this.afAuth.currentUser;
+      if (!user) throw new Error('User not logged in');
+
+      await this.firestoreService.updateUserProfile(user.uid, {
         firstname: this.firstname,
         lastname: this.lastname,
-        contactNumber: this.contactNumber,
-        address: this.address,
-      };
-      this.profileChanged = false;
-    });
+        profilePicture: this.profilePicture || ''
+      });
+
+      this.simulateSave(() => {
+        this.originalProfile = {
+          firstname: this.firstname,
+          lastname: this.lastname
+        };
+        this.profileChanged = false;
+      });
+    } catch (err) {
+      console.error('Failed to save profile', err);
+    }
   }
+
 
   startChangePassword() {
     this.changePasswordStep = 1;
@@ -128,21 +155,27 @@ export class ProfilePnsPage implements OnInit {
     this.verificationError = '';
   }
 
-  verifyCurrentPassword() {
+  async verifyCurrentPassword() {
     this.isVerifying = true;
     this.verificationError = '';
-    setTimeout(() => {
+
+    try {
+      const user = await this.afAuth.currentUser;
+      if (!user || !user.email) throw new Error('No user logged in');
+      const credential = await this.afAuth.signInWithEmailAndPassword(user.email, this.currentPassword);
+
       this.isVerifying = false;
-      if (this.currentPassword === 'correct_password') {
+      if (credential.user) {
         this.changePasswordStep = 2;
         this.newPassword = '';
         this.confirmPassword = '';
         this.isNewPasswordValid = true;
         this.isConfirmPasswordValid = true;
-      } else {
-        this.verificationError = 'Incorrect current password.';
       }
-    }, 1000);
+    } catch (error) {
+      this.isVerifying = false;
+      this.verificationError = 'Incorrect current password.';
+    }
   }
 
   togglePassword(field: 'new' | 'confirm') {
@@ -151,9 +184,7 @@ export class ProfilePnsPage implements OnInit {
   }
 
   validateNewPassword() {
-    this.isNewPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
-      this.newPassword
-    );
+    this.isNewPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(this.newPassword);
     if (this.confirmPassword) this.validateConfirmPassword();
   }
 
@@ -161,9 +192,17 @@ export class ProfilePnsPage implements OnInit {
     this.isConfirmPasswordValid = this.newPassword === this.confirmPassword;
   }
 
-  saveNewPassword() {
+  async saveNewPassword() {
     if (!this.isNewPasswordValid || !this.isConfirmPasswordValid) return;
-    this.simulateSave(() => this.resetPasswordChange());
+
+    try {
+      const user = await this.afAuth.currentUser;
+      if (!user) throw new Error('No user found');
+      await user.updatePassword(this.newPassword);
+      this.simulateSave(() => this.resetPasswordChange());
+    } catch (err) {
+      console.error('Error updating password', err);
+    }
   }
 
   resetPasswordChange() {
@@ -174,46 +213,17 @@ export class ProfilePnsPage implements OnInit {
     this.verificationError = '';
   }
 
-  openProfilePicModal() {
-    this.showProfilePicModal = true;
+  openStaticPicModal() {
+    this.showStaticPicModal = true;
   }
 
-  closeProfilePicModal() {
-    this.showProfilePicModal = false;
+  closeStaticPicModal() {
+    this.showStaticPicModal = false;
   }
 
-  chooseNewPicture() {
-    this.closeProfilePicModal();
-    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
-      fileInput.click();
-    }
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.profilePicture = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  openRemoveConfirmModal() {
-    this.closeProfilePicModal();
-    this.showRemoveConfirmModal = true;
-  }
-
-  closeRemoveConfirmModal() {
-    this.showRemoveConfirmModal = false;
-  }
-
-  confirmRemovePicture() {
-    this.profilePicture = null;
-    this.closeRemoveConfirmModal();
+  selectStaticPicture(pic: string) {
+    this.profilePicture = pic;
+    this.profileChanged = true;
+    this.closeStaticPicModal();
   }
 }

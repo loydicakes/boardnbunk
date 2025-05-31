@@ -37,7 +37,7 @@ export interface ChatMessage {
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
-  constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) {}
+  constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) { }
 
   async registerUser(email: string, password: string, firstname: string, lastname: string) {
     const userCredential = await this.ngFireBase.createUserWithEmailAndPassword(email, password);
@@ -225,4 +225,30 @@ export class FirestoreService {
       timestamp: Timestamp.now()
     });
   }
+
+  async updateUserProfile(uid: string, data: { firstname: string; lastname: string; profilePicture?: string }) {
+    const userRef = doc(this.firestore, 'users', uid);  // ✅ 3 segments: 'users', userId
+    return await setDoc(userRef, data, { merge: true });
+  }
+
+
+  async getUserProfile(uid: string): Promise<{ firstname: string; lastname: string; email: string; profilePicture?: string }> {
+    const userDocRef = doc(this.firestore, 'users', uid);
+    const userSnap = await getDoc(userDocRef);
+
+    if (userSnap.exists()) {
+      return userSnap.data() as {
+        firstname: string;
+        lastname: string;
+        email: string;
+        profilePicture?: string;
+      };
+    } else {
+      throw new Error('User document does not exist');
+    }
+  }
+
+
+
+
 }

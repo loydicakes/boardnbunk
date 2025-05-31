@@ -41,7 +41,6 @@ h4 {
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 5px;
-  height: 80%;
   width: 100%;
   max-width: 500px;
   align-self: center;
@@ -51,27 +50,27 @@ h4 {
 .input-container {
   margin-bottom: 10px;
 }
+
 .input-container label {
   font-size: 10px;
 }
 
-/* Profile Picture container with rectangular box and edit icon */
 .profile-picture-container {
   label {
     display: block;
     margin-bottom: 6px;
   }
+
   .profile-picture-box {
     position: relative;
     width: 100%;
     max-width: 320px;
-    height: 180px;
+    aspect-ratio: 1 / 1;
     border: 2px solid #133dab;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
     background-color: #e0e0e0;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,6 +95,7 @@ h4 {
       z-index: 10;
       transition: background 0.3s ease;
     }
+
     ion-icon.edit-icon:hover {
       background: rgba(255, 255, 255, 1);
     }
@@ -145,7 +145,8 @@ ion-button.save-button {
 
 /* Centered modals */
 .logout-card.centered,
-.profile-pic-card.centered {
+.profile-pic-card.centered,
+.static-pic-modal.centered {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -189,4 +190,51 @@ ion-button.save-button {
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
+}
+
+/* Success popup */
+.success-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #133dab;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  z-index: 1002;
+  font-weight: bold;
+}
+
+/* Static Profile Pic Modal */
+.static-pic-modal .close-icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+.static-pic-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.static-pic-grid img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.static-pic-grid img:hover {
+  transform: scale(1.05);
+  border-color: #133dab;
 }
