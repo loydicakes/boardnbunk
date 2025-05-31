@@ -1,6 +1,7 @@
+// profile.page.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
-import { FirestoreService } from '../services/firestore.service'; // Adjust the import path as necessary
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,6 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() { }
 
-  //edit profile
   showPhotoCard() {
     const card = document.getElementById('photoCard');
     const overlay = document.getElementById('photoOverlay');
@@ -32,9 +32,6 @@ export class ProfilePage implements OnInit {
       overlay.style.display = 'none';
     }
   }
-  //end edit profile
-
-  //logout
 
   showLogoutCard() {
     const card = document.getElementById('logoutCard');
@@ -62,9 +59,6 @@ export class ProfilePage implements OnInit {
       console.error('Logout failed:', error);
     }
   }
-
-
-  //end logout
 
   goToPersonalSecurity() {
     this.router.navigate(['/profile-pns']);

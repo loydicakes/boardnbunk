@@ -1,3 +1,4 @@
+
 // infos.page.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +16,6 @@ export class InfosPage implements OnInit {
   room: Room | null = null;
   loading = true;
   requestSent = false;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -71,56 +71,55 @@ export class InfosPage implements OnInit {
       this.requestSent = false;
     }
   }
-async submitRequest() {
-  try {
-    const user = await this.firestoreService.ngFireBase.currentUser;
-    if (!user) {
-      console.error('No logged in user');
-      return;
+
+  async submitRequest() {
+    try {
+      const user = await this.firestoreService.ngFireBase.currentUser;
+      if (!user) {
+        console.error('No logged in user');
+        return;
+      }
+
+      const usersCollection = collection(this.firestoreService['firestore'], 'users');
+      const userDocRef = doc(usersCollection, user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (!userSnap.exists()) {
+        console.error('User document not found');
+        return;
+      }
+
+      const userData = userSnap.data() as {
+        firstname?: string;
+        lastname?: string;
+        paymentMethod?: string;
+        cardNumber?: string;
+        gcashNumber?: string;
+      };
+
+      const fullName = `${userData.firstname || ''} ${userData.lastname || ''}`.trim();
+      if (!fullName) {
+        console.error('User name fields are empty');
+        return;
+      }
+
+      const now = new Date();
+
+      await this.firestoreService.addRequest(
+        fullName,
+        now,
+        user.uid,
+        this.room?.name || '',
+        this.room?.type || '',
+        userData.paymentMethod || 'cash',
+        userData.cardNumber,
+        userData.gcashNumber
+      );
+
+      console.log('Request submitted with payment method from user profile.');
+      this.requestSent = true;
+    } catch (error) {
+      console.error('Failed to submit request:', error);
     }
-
-    const usersCollection = collection(this.firestoreService['firestore'], 'users');
-    const userDocRef = doc(usersCollection, user.uid);
-    const userSnap = await getDoc(userDocRef);
-
-    if (!userSnap.exists()) {
-      console.error('User document not found');
-      return;
-    }
-
-    const userData = userSnap.data() as {
-      firstname?: string;
-      lastname?: string;
-      paymentMethod?: string;
-      cardNumber?: string;
-      gcashNumber?: string;
-    };
-
-    const fullName = `${userData.firstname || ''} ${userData.lastname || ''}`.trim();
-    if (!fullName) {
-      console.error('User name fields are empty');
-      return;
-    }
-
-    const now = new Date();
-
-    // Pass payment method and related fields to the request
-    await this.firestoreService.addRequest(
-      fullName,
-      now,
-      user.uid,
-      this.room?.name || '',
-      this.room?.type || '',
-      userData.paymentMethod || 'cash',
-      userData.cardNumber,
-      userData.gcashNumber
-    );
-
-    console.log('Request submitted with payment method from user profile.');
-    this.requestSent = true;
-  } catch (error) {
-    console.error('Failed to submit request:', error);
   }
-}
-
 }

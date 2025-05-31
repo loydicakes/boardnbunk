@@ -10,9 +10,9 @@ import { FirestoreService } from '../services/firestore.service';
   standalone: false,
 })
 export class ProfilePmPage implements OnInit {
-  selectedPayment: string = 'cash'; // default selection
-  cardNumber: string = '';
-  gcashNumber: string = '';
+    paymentMethod: string = 'cash';
+    cardNumber: string = '';
+    gcashNumber: string = '';
 
   constructor(
     private router: Router,
@@ -52,12 +52,12 @@ export class ProfilePmPage implements OnInit {
 
     const uid = user.uid;
     let updateData: any = {
-      paymentMethod: this.selectedPayment
+      paymentMethod: this.paymentMethod
     };
 
-    if (this.selectedPayment === 'card') {
+    if (this.paymentMethod === 'card') {
       updateData.cardNumber = this.cardNumber;
-    } else if (this.selectedPayment === 'gcash') {
+    } else if (this.paymentMethod === 'gcash') {
       updateData.gcashNumber = this.gcashNumber;
     }
 
@@ -68,4 +68,22 @@ export class ProfilePmPage implements OnInit {
       console.error('Failed to save payment method:', err);
     }
   }
+  async savePaymentMethod() {
+    const user = await this.firestoreService.ngFireBase.currentUser;
+    if (!user) return;
+
+    const data = {
+      paymentMethod: this.paymentMethod, // e.g., 'card' or 'gcash'
+      cardNumber: this.paymentMethod === 'card' ? this.cardNumber : undefined,
+      gcashNumber: this.paymentMethod === 'gcash' ? this.gcashNumber : undefined,
+    };
+
+    try {
+      await this.firestoreService.updateUserPaymentMethod(user.uid, data);
+      console.log('Payment method updated successfully');
+    } catch (error) {
+      console.error('Failed to update payment method:', error);
+    }
+  }
+
 }
