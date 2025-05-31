@@ -27,18 +27,19 @@ export class LandlordTenantsPage implements OnInit {
   }
 
   async loadApprovalRequests() {
-    const snapshot = await this.firestoreService.getCollection('request');
-    console.log('[Approval Snapshot]', snapshot); // debug log
+  const snapshot = await this.firestoreService.getCollection('request');
+  console.log('[Approval Snapshot]', snapshot); // debug log
 
-    this.approvalTenants = snapshot.map((doc: any) => ({
-      id: doc.id,
-      name: doc.name || 'No Name',
-      image: doc.image || 'assets/1.jpg',
-      roomName: doc.roomName || 'N/A',
-      roomType: doc.roomType || 'N/A',
-      datentime: doc.datentime || null
-    }));
-  }
+  this.approvalTenants = snapshot.map((doc: any) => ({
+    id: doc.id,
+    name: doc.name || 'No Name',
+    image: doc.image || 'assets/1.jpg',
+    roomName: doc.roomName || 'N/A',
+    roomType: doc.roomType || 'N/A',
+    datentime: doc.datentime || null,
+    paymentMethod: doc.paymentMethod || 'Not Set' // ✅ Added this line
+  }));
+}
 
   async loadCurrentTenants() {
     const tenants = await this.firestoreService.getCollection('tenants');

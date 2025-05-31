@@ -14,6 +14,7 @@
           <div class="tenant-content">
             <strong>{{ tenant.name }}</strong>
             <p>Room {{ tenant.roomName }}, Building {{ tenant.roomType }}</p>
+            <p><strong>Payment Method:</strong> {{ tenant.paymentMethod }}</p>
             <div class="payment-dates">
               <span>Last Paid: <br>{{ tenant.lastPaid }}</span>
               <span>Next Due: <br>{{ tenant.nextDue }}</span>
@@ -27,19 +28,20 @@
       </ng-template>
 
       <h3>Approval</h3>
-      <ng-container *ngIf="approvalTenants.length > 0; else noApprovals">
-        <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants" (click)="openApprovalModal(tenant, $event)">
-          <img [src]="tenant.image" class="tenant-img" />
-          <div class="tenant-content">
-            <strong>{{ tenant.name }}</strong>
-            <p>Room: {{ tenant.roomName }} | Type: {{ tenant.roomType }}</p>
-            <div class="approval-buttons">
-              <button (click)="declineTenant(tenant.id)">Decline</button>
-              <button >Approve</button>
+        <ng-container *ngIf="approvalTenants.length > 0; else noApprovals">
+          <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants" (click)="openApprovalModal(tenant, $event)">
+            <img [src]="tenant.image" class="tenant-img" />
+            <div class="tenant-content">
+              <strong>{{ tenant.name }}</strong>
+              <p>Room: {{ tenant.roomName }} | Type: {{ tenant.roomType }}</p>
+              <p><strong>Payment Method:</strong> {{ tenant.paymentMethod }}</p>
+              <div class="approval-buttons">
+                <button (click)="declineTenant(tenant.id)">Decline</button>
+                <button>Approve</button>
+              </div>
             </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
       <ng-template #noApprovals>
         <p style="padding: 1rem; text-align: center; color: gray">No approval requests</p>
       </ng-template>
@@ -51,6 +53,7 @@
         <h2>{{ selectedTenant.name }}</h2>
         <p><strong>First Attended:</strong> {{ selectedTenant.attendedDate }}</p>
         <p><strong>Room:</strong> Room {{ selectedTenant.roomName }}, Building {{ selectedTenant.roomType }}</p>
+        <p><strong>Method:</strong> {{ selectedTenant.paymentMethod || 'N/A' }}</p>
         <button class="remove-tenant-btn" disabled>Remove tenant</button>
       </div>
     </div>
@@ -60,6 +63,7 @@
         <button class="modal-exit-btn" (click)="closeApprovalModal()">×</button>
         <h2>{{ approvalModalTenant.name }}</h2>
         <p><strong>Room:</strong> Room {{ approvalModalTenant.roomName }}, Building {{ approvalModalTenant.roomType }}</p>
+        <p><strong>Payment Method:</strong> {{ approvalModalTenant.paymentMethod || 'N/A' }}</p>
         <div class="modal-buttons">
           <button (click)="declineTenant(approvalModalTenant.id)">Decline</button>
           <button (click)="approveTenant(approvalModalTenant.id)">Approve</button>

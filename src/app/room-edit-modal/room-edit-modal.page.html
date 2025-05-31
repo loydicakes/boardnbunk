@@ -34,6 +34,10 @@
       <ion-input formControlName="tenants"></ion-input>
       <ion-button size="small" slot="end" (click)="openTenantSelector()">Add Tenant</ion-button>
     </ion-item>
+    <ion-text color="danger" *ngIf="editForm.get('tenants')?.touched && editForm.get('tenants')?.hasError('required')">
+      <p class="ion-padding-start">Tenants are required when unavailable</p>
+    </ion-text>
+
 
     <ion-button expand="block" type="submit" [disabled]="editForm.invalid">Update</ion-button>
   </form>

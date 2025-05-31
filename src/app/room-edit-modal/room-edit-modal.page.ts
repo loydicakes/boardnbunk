@@ -40,12 +40,14 @@ export class RoomEditModalPage implements OnInit {
         tenants: tenantsStr
       });
 
-      this.editForm.get('availability')?.valueChanges.subscribe((available) => {
-        if (available) {
-          this.editForm.get('tenants')?.setValue('None');
+        this.editForm.get('availability')?.valueChanges.subscribe(value => {
+        const tenantsControl = this.editForm.get('tenants');
+        if (value === false) {
+          tenantsControl?.setValidators([Validators.required]);
         } else {
-          this.editForm.get('tenants')?.setValue('');
+          tenantsControl?.clearValidators();
         }
+        tenantsControl?.updateValueAndValidity();
       });
     }
 

@@ -284,5 +284,15 @@ export class FirestoreService {
     return await setDoc(userRef, paymentInfo, { merge: true });
   }
 
+  async getDocument(path: string, id: string) {
+  const docRef = doc(this.firestore, path, id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
+}
+
 
 }
