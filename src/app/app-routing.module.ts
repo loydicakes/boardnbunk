@@ -86,9 +86,14 @@ const routes: Routes = [
   {
     path: 'requests',
     loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule)
-  },  {
+  },
+  {
     path: 'current-rent',
     loadChildren: () => import('./current-rent/current-rent.module').then( m => m.CurrentRentPageModule)
+  },
+  {
+    path: 'reviews',
+    loadChildren: () => import('./reviews/reviews.module').then( m => m.ReviewsPageModule)
   },
 
 ];

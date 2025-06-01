@@ -35,6 +35,16 @@ export interface ChatMessage {
   timestamp: any;
 }
 
+export interface Review {
+  id: string;
+  roomId: string;
+  userId: string;
+  username: string;
+  reviewText: string;
+  timestamp: any;
+}
+
+
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
   constructor(public ngFireBase: AngularFireAuth, private firestore: Firestore) { }
@@ -301,6 +311,36 @@ export class FirestoreService {
 async updateDocument(path: string, id: string, data: any) {
   const docRef = doc(this.firestore, path, id);
   return await setDoc(docRef, data, { merge: true });
+}
+
+async getReviewsForRoom(roomId: string): Promise<Review[]> {
+  const reviewsRef = collection(this.firestore, 'reviews');
+  const q = query(reviewsRef, where('roomId', '==', roomId));
+  const querySnapshot = await getDocs(q);
+
+  const reviews: Review[] = querySnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...(doc.data() as Omit<Review, 'id'>)
+  }));
+
+  return reviews.sort((a, b) => {
+    const aTime = a.timestamp?.toDate?.() ?? new Date(0);
+    const bTime = b.timestamp?.toDate?.() ?? new Date(0);
+    return bTime.getTime() - aTime.getTime();
+  });
+}
+
+
+
+async submitReview(roomId: string, userId: string, reviewText: string, username: string) {
+  const reviewsRef = collection(this.firestore, 'reviews');
+  await addDoc(reviewsRef, {
+    roomId,
+    userId,
+    username,
+    reviewText,
+    timestamp: Timestamp.now(),
+  });
 }
 
 

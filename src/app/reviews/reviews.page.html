@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Reviews</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="reviews-container">
+    <h4 class="review-header">Reviews</h4>
+    <div *ngIf="reviews.length === 0" class="no-reviews">No reviews available</div>
+
+    <div class="review-item" *ngFor="let review of reviews">
+      <div class="review-header-row">
+        <div class="user-pic"></div>
+        <div class="user-info">
+          <strong>{{ review.username }}</strong>
+        </div>
+        <div class="review-time">{{ review.timestamp?.toDate() | date:'short' }}</div>
+      </div>
+      <div class="review-body">
+        {{ review.reviewText }}
+      </div>
+      <ion-item-divider></ion-item-divider>
+    </div>
+  </div>
+</ion-content>
+
+<div class="review-box">
+  <label class="review-label">Make a review</label>
+  <ion-textarea
+    auto-grow="true"
+    [(ngModel)]="newReview"
+    placeholder="Write your thoughts..."
+    class="review-input"
+  ></ion-textarea>
+  <ion-button expand="block" class="submit-button" *ngIf="newReview.trim()" (click)="submitReview()">Submit</ion-button>
+</div>

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService, Room } from '../services/firestore.service';
 import { collection, doc, getDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -19,7 +20,8 @@ export class InfosPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private router: Router
   ) { }
 
   async ngOnInit() {
@@ -120,6 +122,12 @@ export class InfosPage implements OnInit {
       this.requestSent = true;
     } catch (error) {
       console.error('Failed to submit request:', error);
+    }
+  }
+
+    goToReviews() {
+    if (this.roomId) {
+      this.router.navigate(['/reviews', this.roomId]);
     }
   }
 }
