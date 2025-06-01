@@ -13,6 +13,8 @@ export class HomepagePage implements OnInit {
   filteredRooms: Room[] = [];
   selectedType: string = '';
   searchTerm: string = '';
+  currentUserId: string = '';
+  favoriteIds: Set<string> = new Set();
 
   constructor(private router: Router, private firestoreService: FirestoreService) {}
 
@@ -20,15 +22,23 @@ export class HomepagePage implements OnInit {
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
-      console.log('User is logged in:', parsedUser.email);
+      this.currentUserId = parsedUser.uid;
     } else {
-      console.log('No user session found.');
       this.router.navigate(['/login']);
       return;
     }
 
     this.rooms = (await this.firestoreService.getAvailableRooms()) || [];
-    this.filteredRooms = [...this.rooms];
+    await this.loadUserFavorites();
+    this.filteredRooms = this.rooms.map(room => ({
+      ...room,
+      isFavorite: this.favoriteIds.has(room.id)
+    }));
+  }
+
+  async loadUserFavorites() {
+    const favorites = await this.firestoreService.getUserFavorites(this.currentUserId);
+    this.favoriteIds = new Set(favorites.map(fav => fav.id));
   }
 
   filterRooms(type: string) {
@@ -37,12 +47,36 @@ export class HomepagePage implements OnInit {
   }
 
   applyFilters() {
-    this.filteredRooms = this.rooms.filter((room) => {
-      const matchesType = this.selectedType ? room.type === this.selectedType : true;
-      const matchesSearch = this.searchTerm
-        ? room.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-        : true;
-      return matchesType && matchesSearch;
-    });
+    this.filteredRooms = this.rooms
+      .filter(room => {
+        const matchesType = this.selectedType ? room.type === this.selectedType : true;
+        const matchesSearch = this.searchTerm
+          ? room.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+          : true;
+        return matchesType && matchesSearch;
+      })
+      .map(room => ({
+        ...room,
+        isFavorite: this.favoriteIds.has(room.id)
+      }));
+  }
+
+  async toggleFavorite(room: any) {
+    if (!this.currentUserId) return;
+
+    if (room.isFavorite) {
+      await this.firestoreService.removeRoomFromUserFavorites(this.currentUserId, room.id);
+      this.favoriteIds.delete(room.id);
+    } else {
+      await this.firestoreService.addRoomToUserFavorites(this.currentUserId, {
+        id: room.id,
+        name: room.name,
+        type: room.type,
+        price: room.price
+      });
+      this.favoriteIds.add(room.id);
+    }
+
+    room.isFavorite = !room.isFavorite;
   }
 }

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from '../services/firestore.service';
+import { Router } from '@angular/router';
 import {
   trigger,
   transition,
@@ -7,10 +9,10 @@ import {
 } from '@angular/animations';
 
 @Component({
+  standalone: false,
   selector: 'app-faves',
   templateUrl: './faves.page.html',
   styleUrls: ['./faves.page.scss'],
-  standalone: false,
   animations: [
     trigger('fadeSlideAnimation', [
       transition('* => *', [
@@ -20,48 +22,44 @@ import {
     ]),
   ],
 })
-export class FavesPage {
+export class FavesPage implements OnInit {
   categories = ['All', 'Solo', 'Couple', 'Small Fam', 'BedSpace'];
   selectedCategory = 'All';
+  rooms: any[] = [];
+  selectedRoom: any = null;
+  showMessageBox = false;
+  currentUserId: string = '';
 
-  rooms = [
-    {
-      name: 'BNB S23',
-      type: 'Solo',
-      location: '2nd floor, Blg. A',
-      price: 10000,
-      rating: 4.5,
+  constructor(
+    private firestoreService: FirestoreService,
+    private router: Router
+  ) {}
+
+  async ngOnInit() {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const parsedUser = JSON.parse(user);
+    this.currentUserId = parsedUser.uid;
+
+    await this.loadFavorites();
+  }
+
+  async loadFavorites() {
+    const favorites = await this.firestoreService.getUserFavorites(this.currentUserId);
+
+    this.rooms = favorites.map(fav => ({
+      ...fav,
+      rating: 4 + Math.random(), // optional: remove or replace with real rating
       favorited: true,
-      imageUrl: 'assets/imgs/solo.jpg', // Update this to your local path
-    },
-    {
-      name: 'BNB C75',
-      type: 'Couple',
-      location: '7th floor, Blg. B',
-      price: 12000,
-      rating: 4.8,
-      favorited: true,
-      imageUrl: 'assets/imgs/couple.jpeg', // Update this to your local path
-    },
-    {
-      name: 'BNB SF20',
-      type: 'Small Fam',
-      location: '2nd Floor, Blg. C',
-      price: 15000,
-      rating: 4.3,
-      favorited: true,
-      imageUrl: 'assets/imgs/small.jpeg', // Update this to your local path
-    },
-    {
-      name: 'BNB BS1',
-      type: 'BedSpace',
-      location: '1st Floor, Blg. D',
-      price: 9000,
-      rating: 4.1,
-      favorited: true,
-      imageUrl: 'assets/imgs/bed.jpg', // Update this to your local path
-    },
-  ];
+      imageUrl: fav.image || 'https://via.placeholder.com/100',
+      location: fav.location || 'Unknown floor', // optional: if not stored
+    }));
+  }
+
 
   get filteredRooms() {
     if (this.selectedCategory === 'All') {
@@ -69,9 +67,6 @@ export class FavesPage {
     }
     return this.rooms.filter(room => room.type === this.selectedCategory);
   }
-
-  selectedRoom: any = null;
-  showMessageBox = false;
 
   selectCategory(category: string) {
     this.selectedCategory = category;
@@ -87,9 +82,11 @@ export class FavesPage {
     this.selectedRoom = null;
   }
 
-  remove() {
-    this.rooms = this.rooms.filter(r => r !== this.selectedRoom);
-    this.showMessageBox = false;
-    this.selectedRoom = null;
+  async remove() {
+    if (this.currentUserId && this.selectedRoom?.id) {
+      await this.firestoreService.removeRoomFromUserFavorites(this.currentUserId, this.selectedRoom.id);
+      this.rooms = this.rooms.filter(r => r.id !== this.selectedRoom.id);
+    }
+    this.cancel();
   }
 }

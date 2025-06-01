@@ -247,3 +247,30 @@
       font-size: 24px;
     }
 }
+.card-wrapper {
+  position: relative;
+}
+
+.heart-btn {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  z-index: 10;
+  background: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  --box-shadow: none;
+  --padding-start: 0;
+  --padding-end: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+ion-icon {
+  font-size: 20px;
+  color: #f783ac; // light pink (or try #fbb6ce for even softer)
+}
+}
+
+

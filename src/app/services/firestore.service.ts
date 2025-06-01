@@ -13,7 +13,7 @@ import {
   setDoc,
   Timestamp,
   collectionData,
-  orderBy,
+  orderBy,updateDoc, arrayUnion
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -303,5 +303,31 @@ async updateDocument(path: string, id: string, data: any) {
   return await setDoc(docRef, data, { merge: true });
 }
 
+// Get user's favorite rooms
+async getUserFavorites(userId: string): Promise<any[]> {
+  const userRef = doc(this.firestore, `users/${userId}`);
+  const userSnap = await getDoc(userRef);
+  const data = userSnap.exists() ? userSnap.data() : {};
+  return data['favorites'] || [];
+}
+
+// Add a room to user's favorites
+async addRoomToUserFavorites(userId: string, room: { id: string; name: string; type: string; price: number; image?: string }) {
+  const userRef = doc(this.firestore, `users/${userId}`);
+  await updateDoc(userRef, {
+    favorites: arrayUnion(room),
+  });
+}
+
+
+// Remove a room from user's favorites by filtering it manually
+async removeRoomFromUserFavorites(userId: string, roomId: string) {
+  const userRef = doc(this.firestore, `users/${userId}`);
+  const favorites = await this.getUserFavorites(userId);
+  const updatedFavorites = favorites.filter((fav) => fav.id !== roomId);
+  await updateDoc(userRef, {
+    favorites: updatedFavorites,
+  });
+}
 
 }

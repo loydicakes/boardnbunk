@@ -1,11 +1,12 @@
 <ion-content [fullscreen]="true">
+  <!-- Header -->
   <div class="custom-header">
     <div class="header-container">
       <h2>Favorites</h2>
     </div>
   </div>
 
-  <!-- Categories -->
+  <!-- Category Filter -->
   <div class="filter-bar">
     <div
       class="filter-shape"
@@ -17,53 +18,68 @@
     </div>
   </div>
 
-  <!-- Information -->
+  <!-- Favorite Room Cards -->
   <div class="room-wrapper" [@fadeSlideAnimation]="selectedCategory">
     <div class="room-card" *ngFor="let room of filteredRooms">
+      <!-- Image + Heart -->
       <div class="image-section">
-        <img [src]="room.imageUrl || 'https://via.placeholder.com/100'" alt="{{ room.name }}" class="room-image" />
+        <img
+          [src]="room.imageUrl || room.image || 'https://via.placeholder.com/100'"
+          alt="{{ room.name }}"
+          class="room-image"
+        />
         <div class="heart-btn" (click)="toggleFavorite(room)">
           <ion-icon [name]="room.favorited ? 'heart' : 'heart-outline'"></ion-icon>
         </div>
       </div>
+
+      <!-- Info -->
       <div class="info-section">
         <div class="type-review-row">
-          <div class="room-type">{{ room.type }}</div>
+          <div class="room-type">{{ room.type || 'N/A' }}</div>
           <div class="review">
             <ion-icon name="star"></ion-icon>
-            <span class="review-text">{{ room.rating }}</span>
+            <span class="review-text">{{ room.rating | number: '1.1-1' }}</span>
           </div>
         </div>
+
         <div class="title-rating">
           <h3>{{ room.name }}</h3>
         </div>
+
         <div class="location">
           <ion-icon name="location"></ion-icon>
-          {{ room.location }}
+          {{ room.location || 'Unknown location' }}
         </div>
+
         <div class="price">
-          ₱{{ room.price.toLocaleString() }} <span>/month</span>
+          ₱{{ room.price | number }} <span>/month</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Message Box -->
+  <!-- Remove Confirmation Dialog -->
   <div class="overlay-container" *ngIf="showMessageBox">
     <div class="overlay" (click)="cancel()"></div>
+
     <div class="message-box">
       <div class="message-header">
         <h3>Remove from Favorites?</h3>
       </div>
-      
-      
+
       <div class="room-card message-card">
         <div class="image-section">
-          <img [src]="selectedRoom?.imageUrl || 'https://via.placeholder.com/100'" alt="{{ selectedRoom?.name }}" class="room-image" />
+          <img
+            [src]="selectedRoom?.imageUrl || selectedRoom?.image || 'https://via.placeholder.com/100'"
+            alt="{{ selectedRoom?.name }}"
+            class="room-image"
+          />
           <div class="heart-btn">
-            <ion-icon [name]="selectedRoom?.favorited ? 'heart' : 'heart-outline'"></ion-icon>
+            <ion-icon name="heart-outline"></ion-icon>
           </div>
         </div>
+
         <div class="info-section">
           <div class="type-review-row">
             <div class="room-type">{{ selectedRoom?.type }}</div>
@@ -72,19 +88,17 @@
               <span class="review-text">{{ selectedRoom?.rating }}</span>
             </div>
           </div>
+
           <div class="title-rating">
             <h3>{{ selectedRoom?.name }}</h3>
           </div>
-          <div class="location">
-            <ion-icon name="location"></ion-icon>
-            {{ selectedRoom?.location }}
-          </div>
+
           <div class="price">
-            ₱{{ selectedRoom?.price.toLocaleString() }} <span>/month</span>
+            ₱{{ selectedRoom?.price | number }} <span>/month</span>
           </div>
         </div>
       </div>
-      
+
       <div class="message-actions">
         <button class="cancel-btn" (click)="cancel()">Cancel</button>
         <button class="remove-btn" (click)="remove()">Remove</button>
@@ -92,12 +106,24 @@
     </div>
   </div>
 </ion-content>
+
+<!-- Tab Bar -->
 <ion-footer class="custom-tab-bar">
   <div class="tab-container">
-    <ion-button fill="clear" routerLink="/homepage"><ion-icon name="home" class="tab-icon" color="medium"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/faves"><ion-icon name="heart" class="tab-icon" color="dark"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/message"><ion-icon name="mail" class="tab-icon" color="medium"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/profile"><ion-icon name="person" class="tab-icon" color="medium"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/settings"><ion-icon name="settings" class="tab-icon" color="medium"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/homepage">
+      <ion-icon name="home" class="tab-icon" color="medium"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" routerLink="/faves">
+      <ion-icon name="heart" class="tab-icon" color="dark"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" routerLink="/message">
+      <ion-icon name="mail" class="tab-icon" color="medium"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" routerLink="/profile">
+      <ion-icon name="person" class="tab-icon" color="medium"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" routerLink="/settings">
+      <ion-icon name="settings" class="tab-icon" color="medium"></ion-icon>
+    </ion-button>
   </div>
 </ion-footer>
