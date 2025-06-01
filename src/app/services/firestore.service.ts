@@ -264,8 +264,12 @@ export class FirestoreService {
 
   async getCollection(path: string) {
     const snapshot = await getDocs(collection(this.firestore, path));
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...(doc.data() as any) // ✅ Include all fields, including 'tenants'
+    }));
   }
+
 
   async addDocument(path: string, data: any) {
     return await addDoc(collection(this.firestore, path), data);
@@ -294,5 +298,9 @@ export class FirestoreService {
   }
 }
 
+async updateDocument(path: string, id: string, data: any) {
+  const docRef = doc(this.firestore, path, id);
+  return await setDoc(docRef, data, { merge: true });
+}
 
 }

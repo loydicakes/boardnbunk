@@ -13,11 +13,18 @@
           <img [src]="tenant.image" class="tenant-img" />
           <div class="tenant-content">
             <strong>{{ tenant.name }}</strong>
-            <p>Room {{ tenant.roomName }}, Building {{ tenant.roomType }}</p>
-            <p><strong>Payment Method:</strong> {{ tenant.paymentMethod }}</p>
+            <p>Room: {{ tenant.roomName }}, Building {{ tenant.roomType }}</p>
+            <p><strong>RoomType:</strong> {{ tenant.paymentMethod }}</p>
             <div class="payment-dates">
-              <span>Last Paid: <br>{{ tenant.lastPaid }}</span>
-              <span>Next Due: <br>{{ tenant.nextDue }}</span>
+              <span>
+                Last Paid: <br>
+                {{ tenant.lastPaid ? (tenant.lastPaid.toDate() | date:'mediumDate') : 'Not yet paid' }}
+              </span>
+              <span>
+                Next Due: <br>
+                {{ tenant.nextDue ? (tenant.nextDue.toDate() | date:'mediumDate') : 'Not yet set' }}
+              </span>
+
             </div>
           </div>
           <ion-icon name="information-circle-outline" class="chat-icon"></ion-icon>
