@@ -303,4 +303,5 @@ async updateDocument(path: string, id: string, data: any) {
   return await setDoc(docRef, data, { merge: true });
 }
 
+
 }

@@ -1,13 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>current-rent</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="rent-content" [fullscreen]="true">
+  <div class="glass-bg">
+    <img class="bg-lotus" src="assets/logo.png"/>
+    <h1 class="headline">Here is<br />your current Rent</h1>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">current-rent</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="card-content" *ngIf="currentTenant; else notTenant">
+      <div class="rent-info">
+        <p><strong>Room:</strong> {{ currentTenant.roomName }}</p>
+        <p><strong>Type:</strong> {{ currentTenant.roomType }}</p>
+        <p><strong>Approved:</strong> {{ currentTenant.approvedDate?.toDate() | date:'mediumDate' }}</p>
+        <p><strong>Last Paid:</strong>
+          {{ currentTenant.lastPaid ? (currentTenant.lastPaid.toDate() | date:'mediumDate') : 'Not yet paid' }}
+        </p>
+        <p><strong>Next Due:</strong>
+          {{ currentTenant.nextDue ? (currentTenant.nextDue.toDate() | date:'mediumDate') : 'Not yet set' }}
+        </p>
+        <p><strong>Method:</strong> {{ currentTenant.paymentMethod }}</p>
+      </div>
+
+      <div class="action-buttons">
+        <ion-button expand="block" class="glass-button dark" (click)="console.log('Training…')">Get Trained</ion-button>
+        <ion-button expand="block" class="glass-button light" (click)="payNow()">Pay Now →</ion-button>
+      </div>
+    </div>
+
+    <ng-template #notTenant>
+      <p style="text-align: center; color: white;">You are not currently assigned to a room.</p>
+    </ng-template>
+  </div>
 </ion-content>
