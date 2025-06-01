@@ -36,10 +36,6 @@ const routes: Routes = [
     loadChildren: () => import('./notifs/notifs.module').then( m => m.NotifsPageModule)
   },
   {
-    path: 'message',
-    loadChildren: () => import('./message/message.module').then( m => m.MessagePageModule)
-  },
-  {
     path: 'homepage',
     loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepagePageModule)
   },
@@ -90,7 +86,11 @@ const routes: Routes = [
   {
     path: 'requests',
     loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule)
+  },  {
+    path: 'current-rent',
+    loadChildren: () => import('./current-rent/current-rent.module').then( m => m.CurrentRentPageModule)
   },
+
 ];
 
 @NgModule({
