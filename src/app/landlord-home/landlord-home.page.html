@@ -1,107 +1,114 @@
-<ion-content [fullscreen]="true" class="main-page ion-padding">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+<ion-content [fullscreen]="true" class="main-page">
+  <div class="main-container">
 
-  <!-- Header with Logo + Notification -->
-  <div class="top-part">
-    <div class="header-part">
-      <img src="assets/logob.png" alt="">
-      <h5>Board n' Bunk</h5>
+    <!-- Header with Logo + Notification -->
+    <div class="top-part">
+      <div class="header-part">
+        <img src="assets/logob.png" alt="">
+        <h5>Board n' Bunk</h5>
+      </div>
+      <ion-button fill="clear" class="notif-button" routerLink="/notifications">
+        <ion-icon name="notifications" slot="icon-only"></ion-icon>
+      </ion-button>
     </div>
-    <ion-button fill="clear" class="notif-button" routerLink="/notifications">
-      <ion-icon name="notifications" slot="icon-only"></ion-icon>
-    </ion-button>
-  </div>
 
-  <!-- Dashboard -->
-  <div class="dashboard-section">
-    <h3>Dashboard</h3>
-    <ion-card class="dashboard-card">
-      <div class="dashboard-grid">
-        <div class="dashboard-item">
-          <ion-icon name="home-outline" class="dashboard-icon"></ion-icon>
-          <span class="dashboard-label">Room</span>
-          <span class="dashboard-value">{{ rentedRooms }}/{{ totalRooms }}</span>
-        </div>
-        <div class="vertical-divider"></div>
-        <div class="dashboard-item">
-          <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
-          <span class="dashboard-label">Tenant</span>
-          <span class="dashboard-value">{{ totalTenants }}</span>
-        </div>
-        <div class="vertical-divider"></div>
-        <a routerLink="/requests" style="text-decoration: none; color: inherit;">
+    <!-- Dashboard -->
+    <div class="dashboard-section">
+      <h3>Dashboard</h3>
+      <ion-card class="dashboard-card">
+        <div class="dashboard-grid">
           <div class="dashboard-item">
-            <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
-            <span class="dashboard-label">Request</span>
-            <span class="dashboard-value">{{ totalRequests }}</span>
+            <ion-icon name="home-outline" class="dashboard-icon"></ion-icon>
+            <span class="dashboard-label">Room</span>
+            <span class="dashboard-value">{{ rentedRooms }}/{{ totalRooms }}</span>
           </div>
-        </a>
-      </div>
-    </ion-card>
-  </div>
-
-  <!-- Activity Feed -->
-  <div class="activity-section">
-    <h3>Activity</h3>
-
-    <div class="activity-card">
-      <img src="assets/john-doe.jpg" class="activity-img" />
-      <div class="activity-content">
-        <strong>Maria Garcia</strong>
-        <p>Has paid the rent</p>
-      </div>
-    </div>
-
-    <div class="activity-card">
-      <img src="assets/john-doe.jpg" class="activity-img" />
-      <div class="activity-content">
-        <strong>John Reyes</strong>
-        <p class="overdue">Overdue payment for April</p>
-      </div>
-    </div>
-
-    <div class="activity-card">
-      <img src="assets/john-doe.jpg" class="activity-img" />
-      <div class="activity-content">
-        <strong>Ana Santos</strong>
-        <p>Moved into Room 302</p>
-      </div>
-    </div>
-
-    <div class="see-more-wrapper">
-      <a routerLink="/activity" class="see-more-link">See More</a>
-    </div>
-  </div>
-
-  <!-- Room Actions -->
-  <div class="explore-part">
-    <h3>Rooms</h3>
-    <div class="explore-img-container">
-      <ion-card class="action-card available-rooms" routerLink="/room-list-avail">
-        <div class="card-overlay">
-          <h2>Available Rooms</h2>
-        </div>
-      </ion-card>
-      <ion-card class="action-card rented-rooms" routerLink="/room-unavailable-list">
-        <div class="card-overlay">
-          <h2>Rented Rooms</h2>
-        </div>
-      </ion-card>
-      <ion-card class="action-card add-room" routerLink="/room">
-        <div class="card-overlay">
-          <h2>Add Room</h2>
+          <div class="vertical-divider"></div>
+          <div class="dashboard-item">
+            <ion-icon name="person-outline" class="dashboard-icon"></ion-icon>
+            <span class="dashboard-label">Tenant</span>
+            <span class="dashboard-value">{{ totalTenants }}</span>
+          </div>
+          <div class="vertical-divider"></div>
+          <a routerLink="/requests" style="text-decoration: none; color: inherit;">
+            <div class="dashboard-item">
+              <ion-icon name="mail-unread-outline" class="dashboard-icon"></ion-icon>
+              <span class="dashboard-label">Request</span>
+              <span class="dashboard-value">{{ totalRequests }}</span>
+            </div>
+          </a>
         </div>
       </ion-card>
     </div>
-  </div>
 
+    <!-- Activity Feed -->
+    <div class="activity-section">
+      <h3>Activity</h3>
+
+      <div class="activity-card">
+        <img src="assets/john-doe.jpg" class="activity-img" />
+        <div class="activity-content">
+          <strong>Maria Garcia</strong>
+          <p>Has paid the rent</p>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <img src="assets/john-doe.jpg" class="activity-img" />
+        <div class="activity-content">
+          <strong>John Reyes</strong>
+          <p class="overdue">Overdue payment for April</p>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <img src="assets/john-doe.jpg" class="activity-img" />
+        <div class="activity-content">
+          <strong>Ana Santos</strong>
+          <p>Moved into Room 302</p>
+        </div>
+      </div>
+
+      <div class="see-more-wrapper">
+        <a routerLink="/activity" class="see-more-link">See More</a>
+      </div>
+    </div>
+
+    <!-- Room Actions -->
+    <div class="explore-part">
+      <h3>Rooms</h3>
+      <div class="explore-img-container">
+        <ion-card class="action-card available-rooms" routerLink="/room-list-avail">
+          <div class="card-overlay">
+            <h2>Available Rooms</h2>
+          </div>
+        </ion-card>
+        <ion-card class="action-card rented-rooms" routerLink="/room-unavailable-list">
+          <div class="card-overlay">
+            <h2>Rented Rooms</h2>
+          </div>
+        </ion-card>
+        <ion-card class="action-card add-room" routerLink="/room">
+          <div class="card-overlay">
+            <h2>Add Room</h2>
+          </div>
+        </ion-card>
+      </div>
+    </div>
+
+  </div>
 </ion-content>
 
-<!-- Bottom Tab Bar -->
 <ion-footer class="custom-tab-bar">
   <div class="tab-container">
-    <ion-button fill="clear" routerLink="/landlord-home"><ion-icon name="home" class="tab-icon" color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/message"><ion-icon name="chatbubbles" class="tab-icon" color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/landlord-tenants"><ion-icon name="people-circle" class="tab-icon" color="light"></ion-icon></ion-button>
-    <ion-button fill="clear" routerLink="/landlord-profile"><ion-icon name="person" class="tab-icon" color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/landlord-home">
+      <ion-icon name="home" class="tab-icon" color="light"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" routerLink="/message">
+      <ion-icon name="chatbubbles" class="tab-icon" color="light"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" routerLink="/landlord-tenants">
+      <ion-icon name="people-circle" class="tab-icon" color="light"></ion-icon>
+    </ion-button>
   </div>
 </ion-footer>

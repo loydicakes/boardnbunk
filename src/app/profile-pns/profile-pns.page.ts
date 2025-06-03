@@ -82,7 +82,7 @@ export class ProfilePnsPage implements OnInit {
 
 
   goToProfileMethod() {
-    this.router.navigate(['/landlord-profile']);
+    this.router.navigate(['/profile']);
   }
 
   onProfileChange() {
