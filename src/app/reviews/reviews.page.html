@@ -24,30 +24,18 @@
   </div>
 
   <!-- Input Card with Animation -->
-  <div
-    class="review-input-card"
-    *ngIf="showReviewBox"
-    [@slideUpDown]>
+  <div class="review-input-card" *ngIf="showReviewBox" [@slideUpDown]>
     <div class="review-label-row">
       <label class="review-label">Make a review</label>
       <span class="char-count">{{ newReview.length }} / 200</span>
     </div>
 
     <div class="review-textarea-wrapper">
-      <ion-textarea
-        [(ngModel)]="newReview"
-        placeholder="Write your thoughts..."
-        class="review-input-textarea"
-        maxlength="200"
-        [autoGrow]="false"
-      ></ion-textarea>
+      <ion-textarea [(ngModel)]="newReview" placeholder="Write your thoughts..." class="review-input-textarea"
+        maxlength="200" [autoGrow]="false"></ion-textarea>
 
-      <ion-icon
-        *ngIf="newReview.trim()"
-        name="send"
-        class="send-icon"
-        (click)="submitReview(); showReviewBox = false"
-      ></ion-icon>
+      <ion-icon *ngIf="newReview.trim()" name="send" class="send-icon"
+        (click)="submitReview(); showReviewBox = false"></ion-icon>
     </div>
   </div>
 </div>
