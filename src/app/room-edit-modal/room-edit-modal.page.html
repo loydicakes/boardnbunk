@@ -17,8 +17,12 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Type</ion-label>
-      <ion-input formControlName="type"></ion-input>
+      <ion-label position="stacked">Room Type</ion-label>
+      <ion-select formControlName="type" interface="popover" placeholder="Select Type">
+        <ion-select-option value="solo">Solo</ion-select-option>
+        <ion-select-option value="studio">Studio Type</ion-select-option>
+        <ion-select-option value="bedspacer">Bed Spacer</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
