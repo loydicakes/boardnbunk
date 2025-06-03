@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Firestore, doc, updateDoc, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, doc, updateDoc, collection, getDocs, addDoc } from '@angular/fire/firestore';
 
 @Component({
   standalone: false,
@@ -106,25 +106,56 @@ export class RoomEditModalPage implements OnInit {
   }
 
   async submitEdit() {
-    const formValue = this.editForm.value;
-    const tenantsArray = formValue.availability
-      ? []
-      : formValue.tenants
-        ? formValue.tenants.split(',').map((t: string) => t.trim())
-        : [];
+  const formValue = this.editForm.value;
+  const tenantsArray = formValue.availability
+    ? []
+    : formValue.tenants
+      ? formValue.tenants.split(',').map((t: string) => t.trim())
+      : [];
 
-    const updatedRoom = {
-      name: formValue.name,
-      type: formValue.type,
-      price: formValue.price,
-      availability: formValue.availability,
-      tenants: tenantsArray
-    };
+  const updatedRoom = {
+    name: formValue.name,
+    type: formValue.type,
+    price: formValue.price,
+    availability: formValue.availability,
+    tenants: tenantsArray
+  };
 
-    const roomDoc = doc(this.firestore, 'room', this.room.id);
-    await updateDoc(roomDoc, updatedRoom);
-    this.modalCtrl.dismiss(true);
+  // ✅ Update the room document
+  const roomDoc = doc(this.firestore, 'room', this.room.id);
+  await updateDoc(roomDoc, updatedRoom);
+
+  // ✅ If room is unavailable, save tenant(s) to the 'tenants' collection
+  if (!formValue.availability && tenantsArray.length > 0) {
+    const tenantsCol = collection(this.firestore, 'tenants');
+
+    for (const tenantName of tenantsArray) {
+      const matchedUser = this.usersList.find(
+        (u) => `${u.firstname} ${u.lastname}` === tenantName
+      );
+
+      if (matchedUser) {
+        const tenantData = {
+          name: tenantName,
+          roomName: formValue.name,
+          roomType: formValue.type,
+          userId: matchedUser.id,
+          image: 'assets/1.jpg', // Optional: Set room image or user image
+          approvedDate: new Date(),
+          lastPaid: new Date(),
+          nextDue: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+          paymentMethod: 'gcash', // You can dynamically fetch this
+          paymentStatus: true
+        };
+
+        await addDoc(tenantsCol, tenantData);
+      }
+    }
   }
+
+  this.modalCtrl.dismiss(true);
+}
+
 
   dismiss() {
     this.modalCtrl.dismiss();

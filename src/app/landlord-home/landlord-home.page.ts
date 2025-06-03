@@ -23,8 +23,7 @@ export class LandlordHomePage implements OnInit {
     this.availableRooms = allRooms.filter(room => room.availability === true).length;
 
     // Count total tenants across all rooms
-    this.totalTenants = allRooms.reduce((count, room) => count + (room.tenants?.length || 0), 0);
-    
+    this.totalTenants = await this.firestoreService.getTenantCount();
     this.totalRequests = await this.firestoreService.getRequestCount();
   }
 }

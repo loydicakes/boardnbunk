@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService, Room } from '../services/firestore.service';
-
+import { ModalController } from '@ionic/angular';
+import { NotificationModalComponent } from '../notification-modal/notification-modal.component';
 @Component({
   standalone: false,
   selector: 'app-homepage',
@@ -16,7 +17,11 @@ export class HomepagePage implements OnInit {
   currentUserId: string = '';
   favoriteIds: Set<string> = new Set();
 
-  constructor(private router: Router, private firestoreService: FirestoreService) {}
+  constructor(
+    private router: Router,
+    private firestoreService: FirestoreService,
+    private modalCtrl: ModalController
+  ) {}
 
   async ngOnInit() {
     const user = localStorage.getItem('user');
@@ -79,4 +84,21 @@ export class HomepagePage implements OnInit {
 
     room.isFavorite = !room.isFavorite;
   }
+
+  async openNotifications() {
+    if (!this.currentUserId) return;
+
+    const userDoc = await this.firestoreService.getDocument('users', this.currentUserId);
+    const notifications = userDoc?.['notifications'] || [];
+
+    const modal = await this.modalCtrl.create({
+      component: NotificationModalComponent,
+      componentProps: {
+        notifications: notifications
+      }
+    });
+
+    await modal.present();
+  }
+
 }
