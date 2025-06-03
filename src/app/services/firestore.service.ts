@@ -370,4 +370,10 @@ async removeRoomFromUserFavorites(userId: string, roomId: string) {
   });
 }
 
+async getTenantCount(): Promise<number> {
+  const tenantsCol = collection(this.firestore, 'tenants');
+  const snapshot = await getDocs(tenantsCol);
+  return snapshot.size;
+}
+
 }
