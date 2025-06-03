@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #F6F6F6;
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 .profile-section {
@@ -22,7 +23,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: var(--ion-border-color);
   position: relative;
 }
 
@@ -43,8 +44,8 @@
   --padding-start: 0;
   --padding-end: 0;
   --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  --background: #000000;
-  --color: white;
+  --background: var(--ion-text-color);
+  --color: var(--ion-background-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,13 +70,12 @@
   gap: 0;
 }
 
-
 .action-button-row {
   --padding-start: 30px;
   --padding-end: 30px;
   --background: transparent;
   --box-shadow: none;
-  --color: #000;
+  --color: var(--ion-text-color);
   justify-content: flex-start;
   text-align: left;
   display: flex;
@@ -92,35 +92,27 @@
 .button-text {
   flex: 1;
   text-align: left;
+  text-transform: none;
 }
 
 .arrow-icon {
-  color: #888;
+  color: var(--ion-subdued-text);
 }
 
 .divider {
   margin-left: 15px;
   margin-right: 25px;
   height: 1px;
-  background-color: #ccc;
-}
-
-.button-text {
-  flex: 1;
-  text-align: left;
-  text-transform: none;
-  /* Prevent all caps */
+  background-color: var(--ion-border-color);
 }
 
 .action-buttons ion-icon {
   font-size: 30px;
 }
 
-//////rental here
-
 .rental-icon {
   font-size: 36px;
-  color: #000;
+  color: var(--ion-text-color);
   margin-bottom: 4px;
 }
 
@@ -135,16 +127,16 @@
   display: flex;
   flex-direction: column;
   height: 40vh;
-  /* Or whatever max height you want this section to fill */
 }
 
 .rental-card {
   width: 95%;
   flex: 1;
-  border: 1px solid #133DAB;
+  border: 1px solid #0054e9;
   border-radius: 8px;
   padding: 16px;
-  background-color: #fff;
+  background-color: var(--ion-card-background);
+  color: var(--ion-text-color);
 }
 
 .rental-location {
@@ -155,7 +147,8 @@
   margin-left: -5px;
 }
 
-.rental-info-row {
+.rental-info-row,
+.rental-contact-row {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
@@ -168,16 +161,6 @@
   font-size: 16px;
 }
 
-.rental-contact-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  font-size: 16px;
-}
-
-//end rental
-
-// profile popup
 .overlay {
   position: fixed;
   top: 0;
@@ -190,14 +173,16 @@
   display: none;
 }
 
-.photo-card.centered {
+.photo-card.centered,
+.logout-card.centered {
   position: fixed;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 360px;
-  background: #fff;
+  background: var(--ion-card-background);
+  color: var(--ion-text-color);
   border-radius: 18px;
   box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
   z-index: 100;
@@ -211,7 +196,6 @@
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.9);
   }
-
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -221,64 +205,47 @@
 .photo-option-button {
   justify-content: flex-start;
   --background: transparent;
-  --color: #000;
+  --color: var(--ion-text-color);
   --padding-start: 16px;
   --padding-end: 16px;
   text-align: left;
   font-size: 16px;
   display: flex;
   align-items: center;
-  text-align: left;
 
   ion-icon {
     margin-right: 12px;
     font-size: 25px;
+    color: var(--ion-text-color);
   }
 
   ion-label {
     text-align: left;
     flex: 1;
     text-transform: none;
+    color: var(--ion-text-color);
   }
 }
-
 
 .card-title {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
+  color: var(--ion-text-color);
 }
 
 .line-divider {
   height: 1px;
-  background-color: #ccc;
+  background-color: var(--ion-border-color);
   margin-bottom: 16px;
 }
 
 ion-button.popup_cancel {
   --border-radius: 15px;
-  --background: #133DAB;
+  --background: #0054e9;
   width: 80%;
   margin: 0 auto;
-}
-//end popup
-
-//logout popup
-.logout-card.centered {
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 360px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  padding: 20px 16px;
-  display: none;
-  animation: fadeInScale 0.25s ease;
 }
 
 .logout-buttons {
@@ -295,18 +262,15 @@ ion-button.popup_cancel {
 
 .done-btn {
   --background: transparent;
-  --color: #000;
-  border: 3px solid #f6f6f6;
+  --color: var(--ion-text-color);
+  border: 3px solid var(--ion-border-color);
   border-radius: 12px;
 }
 
 .cancel-btn {
-  --background: #133DAB;
+  --background: #0054e9;
   --color: #ffffff;
 }
-//end logout
-
-//settings
 
 .settings-button {
   margin-top: 20px;
@@ -316,19 +280,21 @@ ion-button.popup_cancel {
   right: 0;
 }
 
+.settings-button ion-icon {
+  color: var(--ion-text-color) !important;
+}
+
+.circle-settings-button ion-icon {
+  color: var(--ion-text-color) !important;
+  font-size: 36px;
+}
+
 .circle-settings-button {
-  --background: #F6F6F6;
-  --color: #000000;
-  width: 50px;
-  height: 50px;
+  --background: var(--ion-background-color);
+  --color: var(--ion-text-color);
+  width: 75px;
+  height: 75px;
 }
-
-.circle-settings-button img {
-  width: 100%;
-  height: 100%;
-  object-fit:cover;
-}
-
 
 .custom-tab-bar {
   background: transparent;
@@ -348,7 +314,7 @@ ion-button.popup_cancel {
     height: 60px;
 
     .tab-icon {
-      color:#0054e9;
+      color: #ffffff;
       font-size: 24px;
     }
   }

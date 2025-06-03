@@ -4,13 +4,15 @@
     <!-- Title -->
     <h4 class="title">Settings</h4>
 
-    <div style="margin-top: 20px;" class="setting-card">
+     <!-- Dark Mode Toggle -->
+    <div class="setting-card">
       <div class="left-content">
         <ion-icon name="moon" class="icon"></ion-icon>
         <span>Dark Mode</span>
       </div>
-      <ion-toggle slot="end"></ion-toggle>
+      <ion-toggle [checked]="isDarkMode" (ionChange)="toggleDarkMode($event)"></ion-toggle>
     </div>
+
 
     <div class="setting-card">
       <div class="left-content">

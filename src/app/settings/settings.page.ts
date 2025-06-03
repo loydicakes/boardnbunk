@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-settings',
@@ -7,14 +6,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./settings.page.scss'],
   standalone: false,
 })
-export class SettingsPage implements OnInit {
-
-  constructor(private router: Router) { }
+export class SettingsPage {
+  isDarkMode = false;
 
   ngOnInit() {
+    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
+    document.body.classList.toggle('dark', this.isDarkMode);
   }
 
-  goToProfileMethod() {
-    this.router.navigate(['/profile']);
+  toggleDarkMode(event: any) {
+    const enabled = event.detail.checked;
+    document.body.classList.toggle('dark', enabled);
+    localStorage.setItem('darkMode', String(enabled));
   }
 }

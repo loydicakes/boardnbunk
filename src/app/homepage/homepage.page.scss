@@ -5,7 +5,7 @@
 }
 
 .main-page {
-  --background: #F2F0EF;
+  --background: var(--ion-background-color);
   --border-radius: 0;
 }
 
@@ -34,6 +34,7 @@
       font-size: 1.2rem;
       margin: 0;
       flex-grow: 1;
+      color: var(--ion-text-color);
     }
 
     .notif-button {
@@ -44,14 +45,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      --background: #ffffff;
+      --background: var(--ion-card-background);
       --border-radius: 50%;
       --padding-start: 0;
       --padding-end: 0;
 
       ion-icon {
         font-size: 22px;
-        color: #0054e9;
+        color: var(--ion-primary-color, #0054e9);
       }
     }
   }
@@ -67,7 +68,8 @@
       font-size: 18px;
       border: 0;
       border-radius: 10px;
-      box-sizing: border-box;
+      background: var(--ion-card-background);
+      color: var(--ion-text-color);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       outline: none;
     }
@@ -78,7 +80,7 @@
       top: 50%;
       transform: translateY(-50%);
       font-size: 24px;
-      color: #666;
+      color: var(--ion-text-color);
     }
   }
 }
@@ -92,13 +94,13 @@
 
   h3 {
     font-weight: bold;
+    color: var(--ion-text-color);
   }
 
   .img-container {
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     display: flex;
-    width: auto;
     flex-wrap: nowrap;
     gap: 20px;
     padding-bottom: 20px;
@@ -122,6 +124,7 @@
 
   h3 {
     font-weight: bold;
+    color: var(--ion-text-color);
   }
 
   .button-container {
@@ -150,6 +153,7 @@
 
   h3 {
     font-weight: bold;
+    color: var(--ion-text-color);
   }
 
   .explore-img-container {
@@ -181,6 +185,7 @@
           font-size: 1.1rem;
           font-weight: 600;
           margin: 0;
+          color: var(--ion-text-color);
         }
 
         .hotel-header-fav {
@@ -195,12 +200,14 @@
 
           span {
             font-size: 0.9rem;
+            color: var(--ion-text-color);
           }
         }
       }
 
       p {
         padding: 0 2%;
+        color: var(--ion-text-color);
       }
 
       span {
@@ -218,13 +225,14 @@
       .price {
         font-size: 0.95rem;
         margin-top: 4px;
+        color: var(--ion-text-color);
       }
 
       .favorite-button {
         position: absolute;
         top: 10px;
         right: 10px;
-        background: white;
+        background: var(--ion-card-background);
         border-radius: 50%;
         --padding: 6px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -246,7 +254,7 @@
   top: 2px;
   right: 10px;
   z-index: 10;
-  background: white;
+  background: var(--ion-card-background);
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -270,7 +278,7 @@
   bottom: 8px;
 
   .tab-container {
-    background: #0054e9;
+    background: var(--ion-primary-color, #0054e9);
     border-radius: 15px;
     padding: 10px 20px;
     display: flex;
@@ -281,7 +289,7 @@
     height: 60px;
 
     .tab-icon {
-      color:#0054e9;
+      color: #ffffff;
       font-size: 24px;
     }
   }

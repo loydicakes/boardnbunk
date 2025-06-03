@@ -2,15 +2,17 @@
   display: flex;
   flex-direction: column;
   padding: 20px 30px 0px 30px;
-  background-color: #f6f6f6;
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+  height: 100%;
 }
 
 .back-btn {
   margin-top: 10px;
   position: absolute;
   left: 16px;
-  background: white;
-  border: black 1px solid;
+  background: var(--ion-card-background);
+  border: 1px solid var(--ion-border-color);
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -21,7 +23,7 @@
 
   ion-icon {
     font-size: 20px;
-    color: #0d0d19;
+    color: var(--ion-text-color);
     width: 20px;
     height: 20px;
   }
@@ -30,21 +32,24 @@
 .title {
   text-align: center;
   font-weight: bold;
+  color: var(--ion-text-color);
 }
 
 h4 {
   font-weight: bold;
+  color: var(--ion-text-color);
 }
 
 .section {
-  border: 0.1px solid black;
+  border: 0.1px solid var(--ion-border-color);
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 5px;
   width: 100%;
   max-width: 500px;
   align-self: center;
-  background-color: #ffffff;
+  background-color: var(--ion-card-background);
+  color: var(--ion-text-color);
 }
 
 .input-container {
@@ -53,12 +58,14 @@ h4 {
 
 .input-container label {
   font-size: 10px;
+  color: var(--ion-text-color);
 }
 
 .profile-picture-container {
   label {
     display: block;
     margin-bottom: 6px;
+    color: var(--ion-text-color);
   }
 
   .profile-picture-box {
@@ -66,7 +73,7 @@ h4 {
     width: 100%;
     max-width: 320px;
     aspect-ratio: 1 / 1;
-    border: 2px solid #133dab;
+    border: 2px solid #0054e9;
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
@@ -87,7 +94,7 @@ h4 {
       top: 8px;
       right: 8px;
       font-size: 24px;
-      color: #133dab;
+      color: #0054e9;
       background: rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       padding: 4px;
@@ -105,9 +112,11 @@ h4 {
 .input-box {
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
+  border: 1px solid var(--ion-border-color);
   border-radius: 5px;
   padding: 5px;
+  background-color: var(--ion-card-background);
+  color: var(--ion-text-color);
 }
 
 .input-box input {
@@ -116,6 +125,8 @@ h4 {
   outline: none;
   padding: 5px;
   font-size: 13px;
+  background-color: transparent;
+  color: var(--ion-text-color);
 }
 
 .edit-icon,
@@ -126,7 +137,7 @@ h4 {
 
 ion-button.save-button {
   --border-radius: 15px;
-  --background: #133dab;
+  --background: #0054e9;
   width: 90%;
   margin: 0 auto;
 }
@@ -151,13 +162,14 @@ ion-button.save-button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background: var(--ion-card-background);
   max-width: 360px;
   width: 90vw;
   border-radius: 18px;
   box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
   padding: 20px 16px;
   z-index: 1001;
+  color: var(--ion-text-color);
 }
 
 .logout-buttons,
@@ -175,13 +187,13 @@ ion-button.save-button {
 
 .done-btn {
   --background: transparent;
-  --color: #000;
-  border: 3px solid #f6f6f6;
+  --color: var(--ion-text-color);
+  border: 3px solid var(--ion-border-color);
   border-radius: 12px;
 }
 
 .cancel-btn {
-  --background: #133dab;
+  --background: #0054e9;
   --color: #ffffff;
 }
 
@@ -190,6 +202,7 @@ ion-button.save-button {
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
+  color: var(--ion-text-color);
 }
 
 /* Success popup */
@@ -198,7 +211,7 @@ ion-button.save-button {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #133dab;
+  background-color: #0054e9;
   color: white;
   padding: 10px 20px;
   border-radius: 10px;
@@ -214,6 +227,7 @@ ion-button.save-button {
   font-size: 24px;
   cursor: pointer;
   z-index: 1002;
+  color: var(--ion-text-color);
 }
 
 .static-pic-grid {
@@ -236,5 +250,5 @@ ion-button.save-button {
 
 .static-pic-grid img:hover {
   transform: scale(1.05);
-  border-color: #133dab;
+  border-color: #0054e9;
 }
