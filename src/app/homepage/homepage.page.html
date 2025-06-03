@@ -70,7 +70,7 @@
 
 
           <!-- ✅ Room image -->
-          <ion-img [src]="room.image || 'assets/placeholder.jpg'"></ion-img>
+          <ion-img [src]="room.image || 'assets/placeholder.jpg'" [routerLink]="['/infos', room.id]"></ion-img>
 
           <!-- Room content -->
           <ion-card-content class="ion-padding">
