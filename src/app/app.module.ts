@@ -17,10 +17,11 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire/compat'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { NotificationModalComponent } from './notification-modal/notification-modal.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent,],
+  declarations: [AppComponent,NotificationModalComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, AngularFireModule,
     AngularFireAuthModule,AngularFireModule.initializeApp(environment.firebaseConfig)
   ],

@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 <ion-content [fullscreen]="true" class="main-page ion-padding">
 
-  <ion-button size="small" class="notif-button">
+  <ion-button size="small" class="notif-button" (click)="openNotifications()">
     <ion-icon name="notifications" slot="icon-only"></ion-icon>
   </ion-button>
 
@@ -68,13 +68,7 @@
             <ion-icon [name]="room.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
           </ion-button>
 
-
-          <!-- ✅ Room image -->
-<<<<<<< HEAD
           <ion-img [src]="room.image || 'assets/placeholder.jpg'" [routerLink]="['/infos', room.id]"></ion-img>
-=======
-          <ion-img [src]="room.image || 'assets/placeholder.jpg'" [routerLink]="['/infos', room.id]"></ion-img>
->>>>>>> a02cf1eaaa5ce0d555094b112058a7a3b6beb073
 
           <!-- Room content -->
           <ion-card-content class="ion-padding">
