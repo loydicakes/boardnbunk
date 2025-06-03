@@ -1,4 +1,4 @@
-<ion-content class="rent-content" [fullscreen]="true">
+<ion-content class="rent-content" scroll-y="true">
   <div class="glass-bg">
     <img class="bg-lotus" src="assets/logo.png"/>
     <h1 class="headline">Here is<br />your current Rent</h1>
@@ -28,3 +28,19 @@
     </ng-template>
   </div>
 </ion-content>
+<ion-footer class="custom-tab-bar">
+  <div class="tab-container">
+    <ion-button fill="clear" routerLink="/homepage"
+      ><ion-icon name="home" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/faves"
+      ><ion-icon name="heart" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/current-rent"
+      ><ion-icon name="mail" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/profile"
+      ><ion-icon name="person" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+  </div>
+</ion-footer>

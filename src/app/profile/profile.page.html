@@ -1,11 +1,6 @@
 <ion-content [fullscreen]="true">
   <div id="container">
 
-    <!-- Back Button -->
-    <div class="back-btn" routerLink="/homepage">
-      <ion-icon name="arrow-back"></ion-icon>
-    </div>
-
     <!-- Settings Button -->
     <ion-buttons class="settings-button" slot="end">
       <ion-button class="circle-settings-button" (click)="goToSettingsMethod()">
@@ -63,3 +58,21 @@
   </div>
 
 </ion-content>
+
+<ion-footer class="custom-tab-bar">
+  <div class="tab-container">
+    <ion-button fill="clear" routerLink="/homepage"
+      ><ion-icon name="home" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/faves"
+      ><ion-icon name="heart" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/current-rent"
+      ><ion-icon name="mail" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+    <ion-button fill="clear" routerLink="/profile"
+      ><ion-icon name="person" class="tab-icon" color="light"></ion-icon
+    ></ion-button>
+  </div>
+</ion-footer>
+
