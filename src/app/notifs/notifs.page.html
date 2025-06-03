@@ -1,23 +1,28 @@
 <ion-content>
   <div class="custom-header">
     <div class="header-container">
-      <div class="back-btn">
+      <div class="back-btn" routerLink="/homepage">
         <ion-icon name="arrow-back"></ion-icon>
       </div>
       <h2>Notifications</h2>
     </div>
   </div>
 
-    <div *ngFor="let notification of notifications" 
-         class="notification" 
-         [ngClass]="{'unread': !notification.read}">
+  <ng-container *ngIf="notifications.length > 0; else noNotifs">
+    <div *ngFor="let notification of notifications"
+         class="notification"
+         [ngClass]="{ 'unread': !notification.read }">
       <div class="icon-circle">
         <ion-icon name="notifications"></ion-icon>
       </div>
       <div class="text-content">
-        <h3>{{ notification.title }}</h3>
-        <p>{{ notification.message }}</p>
+        <h3>{{ notification.message }}</h3>
+        <p>{{ notification.timestamp | date:'short' }}</p>
       </div>
-      <div class="time">{{ notification.time }}</div>
     </div>
+  </ng-container>
+
+  <ng-template #noNotifs>
+    <div class="ion-padding">No notifications found.</div>
+  </ng-template>
 </ion-content>

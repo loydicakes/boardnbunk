@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from '../services/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notifs',
@@ -6,21 +8,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notifs.page.scss'],
   standalone: false,
 })
-export class NotifsPage {
-  notifications = [
-    {
-      title: 'Room Booked Successfully',
-      message: 'Your booking for the C1 Room is confirmed. You are officially a tenant of BNB!',
-      time: '5:00 pm',
-      read: false,
-    },
-    {
-      title: 'Payment Confirmed',
-      message: 'Your payment of $250 has been successfully processed.',
-      time: '4:52 pm',
-      read: true,
-    },
-  ];
+export class NotifsPage implements OnInit {
+  notifications: any[] = [];
+  currentUserId: string = ''; // ✅ You forgot this
+  constructor(
+    private firestoreService: FirestoreService,
+    private router: Router // ✅ You also forgot to inject this
+  ) {}
 
+  async ngOnInit() {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const parsedUser = JSON.parse(user);
+    this.currentUserId = parsedUser.uid;
+
+    const userDoc = await this.firestoreService.getDocument('users', this.currentUserId);
+    this.notifications = userDoc?.['notifications'] || [];
+  }
 }
-
