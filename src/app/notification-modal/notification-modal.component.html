@@ -1,3 +1,18 @@
-<p>
-  notification-modal works!
-</p>
+<ion-content class="notif-modal">
+  <div class="modal-header">
+    <h2>{{ notification?.title }}</h2>
+    <ion-button fill="clear" class="close-btn" (click)="dismiss()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div class="modal-body">
+    <p class="message">{{ notification?.message }}</p>
+    <p class="timestamp">{{ notification?.time }}</p>
+  </div>
+
+  <div class="modal-actions">
+    <ion-button expand="block" color="medium" (click)="markAsRead()">Mark as Read</ion-button>
+    <ion-button expand="block" color="danger" (click)="delete()">Delete</ion-button>
+  </div>
+</ion-content>
