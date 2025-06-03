@@ -1,333 +1,283 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
 }
 
 .main-page {
-    --background: #F2F0EF;
-    --border-radius: 0;
+  --background: #f2f0ef;
+  padding-bottom: 80px; // space for tab bar
 }
 
+/* Top Header */
 .top-part {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    margin-top: 28px;
-    gap: 30px;
-    padding: 0 2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 10px;
+  padding: 0 2%;
+  position: relative;
 
-    .header-part {
+  .header-part {
     display: flex;
     align-items: center;
-    vertical-align: middle;
+    gap: 10px;
 
-  img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;         // ensures it fills the box without distortion
-    border-radius: 12px;       // optional, makes it a bit round
-    transition: transform 0.3s ease;
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
 
-    &:hover {
-      transform: scale(1.05);  // slight zoom on hover
+    h5 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 0;
     }
   }
 
-  h5 {
-    margin-left: 5px;
+  .notif-button {
+    background: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --padding-start: 0;
+    --padding-end: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      color: #0054e9;
+      font-size: 20px;
+    }
+  }
+}
+
+/* Dashboard Section */
+.dashboard-section {
+  padding: 0 2%;
+  margin-top: 35px;
+
+  h3 {
     font-weight: bold;
-    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
-}
 
-    .custom-search-wrapper {
-        position: relative;
-        width: 100%;
-    }
+  .dashboard-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px 10px;
+  }
 
-    .custom-search-input {
-        width: 100%;
-        height: 60px;
-        padding: 0 45px 0 15px;
-        /* leave space for icon */
-        font-size: 18px;
-        border: 0px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        /* shadow added */
-        outline: none;
-        /* optional: remove blue outline */
-    }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    align-items: center;
+    text-align: center;
+  }
 
-    .search-icon {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 24px;
-        color: #666;
-    }
-
-}
-
-.notif-button {
-    position: absolute;
-    right: 5%;
-    top: 3%;
-}
-
-//rooms
-
-.explore-part {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-left: 2%;
-  margin-top: 0px;
-  margin-bottom: 100px;
-}
-
-.explore-part h3 {
-  font-weight: bold;
-}
-
-.explore-img-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Common card style */
-.action-card {
-  width: 100%;
-  max-width: 400px;
-  height: 100px;
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.action-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Overlay with blur and dark tint */
-.card-overlay {
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-overlay h2 {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
-  text-align: center;
-  margin: 0;
-}
-
-/* Add Room*/
-.add-room {
-  background: #0054e9;
-}
-
-.available-rooms {
-  background-image: url('/assets/room/room1.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.rented-rooms {
-  background-image: url('/assets/room/room1.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-//rooms end
-
-
-//tab
-.custom-tab-bar {
-    background: transparent;
-    --ion-safe-area-bottom: 0;
-    position: fixed;
-    bottom: 8px;
-
-
-    .tab-container {
-        background: #0054e9;
-        border-radius: 15px;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        position: relative;
-        margin: 0 auto 20px auto;
-        width: 90%;
-        height: 60px;
-    }
-
-    .tab-icon {
-        color: #005a9a;
-        font-size: 24px;
-    }
-
-}
-//end tab
-
-//activity
-
-.activity-section {
+  .dashboard-item {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding-left: 2%;
-    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+
+    .dashboard-icon {
+      font-size: 28px;
+      color: #0054e9;
+    }
+
+    .dashboard-label {
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    .dashboard-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #000;
+    }
+  }
+
+  .vertical-divider {
+    width: 1px;
+    background-color: #ccc;
+    height: 50px;
+  }
 }
 
-.activity-section h3 {
+/* Activity Feed */
+.activity-section {
+  padding: 20px 2% 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h3 {
     font-weight: bold;
-}
+    margin-bottom: 10px;
+  }
 
-.activity-card {
+  .activity-card {
     display: flex;
     align-items: center;
     background: white;
     padding: 12px 16px;
-    margin-right: 2%;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     gap: 15px;
-}
+  }
 
-.activity-img {
+  .activity-img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-}
+  }
 
-.activity-content {
+  .activity-content {
     display: flex;
     flex-direction: column;
-}
 
-.activity-content strong {
-    font-size: 1rem;
-    margin-bottom: 2px;
-}
+    strong {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
 
-.activity-content p {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 0;
-}
+    p {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 0;
+    }
 
-.alert-icon {
-    font-size: 50px;
-    --color: #e53935;
-}
+    .overdue {
+      color: #e53935;
+      font-weight: 500;
+    }
+  }
 
-.overdue {
-    color: #e53935;
+  .see-more-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+    padding-right: 4px;
+  }
+
+  .see-more-link {
+    color: #3880ff;
+    font-size: 14px;
+    text-decoration: none;
     font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
-.see-more-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 8px;
-  padding-right: 4px;
-}
-
-.see-more-link {
-  color: #3880ff;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.see-more-link:hover {
-  text-decoration: underline;
-}
-//end activity
-
-//dashborad
-
-.dashboard-section {
-  padding-left: 2%;
-  margin-top: 30px;
-}
-
-.dashboard-section h3 {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.dashboard-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px 10px;
-  margin-right: 2%;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr 1px 1fr;
-  align-items: center;
-  text-align: center;
-}
-
-.dashboard-item {
+/* Rooms Action Section */
+.explore-part {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 0;
+  gap: 15px;
+  padding: 0 2%;
+  margin-top: 20px;
+
+  h3 {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .explore-img-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .action-card {
+    width: 100%;
+    height: 100px;
+    max-width: 400px;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    &.available-rooms {
+      background-image: url('/assets/room/room1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    &.rented-rooms {
+      background-image: url('/assets/room/room1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    &.add-room {
+      background: #0054e9;
+    }
+
+    .card-overlay {
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h2 {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+      }
+    }
+  }
 }
 
-.vertical-divider {
-  width: 1px;
-  background-color: #ccc;
-  height: 60px;
-  margin: 0 10px;
-}
+/* Bottom Tab Bar */
+.custom-tab-bar {
+  background: transparent;
+  --ion-safe-area-bottom: 0;
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  right: 0;
 
-.dashboard-icon {
-  font-size: 28px;
-  color: #0054e9;
-}
+  .tab-container {
+    background: #0054e9;
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    width: 90%;
+    height: 60px;
 
-.dashboard-label {
-  font-size: 0.9rem;
-  color: #444;
-}
-
-.dashboard-value {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #000;
-}
-
-.vertical-divider {
-  width: 1px;
-  background-color: #ccc;
-  height: 50px;
+    .tab-icon {
+      color: #fff;
+      font-size: 24px;
+    }
+  }
 }

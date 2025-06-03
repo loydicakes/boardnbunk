@@ -1,11 +1,6 @@
 <ion-content [fullscreen]="true">
   <div id="container">
 
-    <!-- Back Button -->
-    <div class="back-btn" routerLink="/landlord-home">
-      <ion-icon name="arrow-back"></ion-icon>
-    </div>
-
     <!-- Settings Button -->
     <ion-buttons class="settings-button" slot="end">
       <ion-button class="circle-settings-button" (click)="goToSettingsMethod()">
@@ -100,5 +95,15 @@
       <ion-button fill="clear" class="logout-btn cancel-btn" (click)="closeLogoutCard()">Cancel</ion-button>
     </div>
   </div>
-
 </ion-content>
+
+<!-- Bottom Tab Bar -->
+<ion-footer class="custom-tab-bar">
+  <div class="tab-container">
+    <ion-button fill="clear" routerLink="/landlord-home"><ion-icon name="home" class="tab-icon" color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/message"><ion-icon name="chatbubbles" class="tab-icon" color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/landlord-tenants"><ion-icon name="people-circle" class="tab-icon" color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/landlord-profile"><ion-icon name="person" class="tab-icon" color="light"></ion-icon></ion-button>
+  </div>
+</ion-footer>
+

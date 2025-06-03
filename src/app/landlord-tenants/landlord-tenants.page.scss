@@ -183,3 +183,30 @@ ion-content {
     filter: brightness(0.95);
   }
 }
+
+/* Bottom Tab Bar */
+.custom-tab-bar {
+  background: transparent;
+  --ion-safe-area-bottom: 0;
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+
+  .tab-container {
+    background: #0054e9;
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    width: 90%;
+    height: 60px;
+
+    .tab-icon {
+      color: #fff;
+      font-size: 24px;
+    }
+  }
+}
