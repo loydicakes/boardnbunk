@@ -1,12 +1,12 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
-
 @Component({
-  standalone: false,
   selector: 'app-notification-modal',
   templateUrl: './notification-modal.component.html',
   styleUrls: ['./notification-modal.component.scss'],
+  standalone: false,
 })
 export class NotificationModalComponent implements OnInit {
   notifications: any[] = [];
