@@ -6,28 +6,6 @@
     height: 100%;
   }
   
-  .back-btn {
-    margin-top: 10px;
-    position: absolute;
-    left: 16px;
-    background: white;
-    border: black 1px solid;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  
-    ion-icon {
-      font-size: 20px;
-      color: #0D0D19;
-      width: 20px;
-      height: 20px;
-    }
-  }
-  
   .title {
     text-align: center;
     font-weight: bold;
