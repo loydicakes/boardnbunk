@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
 ion-content {
     --overflow: auto;
   }
@@ -20,26 +26,6 @@ ion-content {
         font-weight: bold;
       }
   
-      .back-btn {
-        position: absolute;
-        left: 16px;
-        background: white;
-        border: black 1px solid;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-  
-        ion-icon {
-          font-size: 20px;
-          color: #0D0D19;
-          width: 20px;
-          height: 20px;
-        }
-      }
     }
   }
   
@@ -89,7 +75,7 @@ ion-content {
   }
   
   .room-card {
-    background: #005a9a;
+    background: #0054e9;
     border-radius: 16px;
     padding: 12px;
     margin-bottom: 16px;
@@ -111,6 +97,7 @@ ion-content {
       height: 100%;
       object-fit: cover;
       display: block;
+      background: white;
     }
   
     .heart-btn {
@@ -258,18 +245,17 @@ ion-content {
   }
   
   .remove-btn {
-    background-color: #005a9a;
+    background-color: #0054e9;
     color: white;
   }
   
   .remove-btn:hover {
-    background-color: #0f2d8b;
-  }
+    background-color: #0054e9;
   
   /* Message box specific styling overrides for the room card */
   .message-card {
     width: 100% !important;
-    background: #005a9a;
+    background: #0054e9;
     border-radius: 12px;
     margin: 0;
     padding: 12px;
@@ -549,17 +535,16 @@ ion-content {
   }
   
   .remove-btn {
-    background-color: #005a9a;
+    background-color: #0042b4;
     color: white;
   }
   
   .remove-btn:hover {
-    background-color: #0f2d8b;
+    background-color:  #0042b4;
   }
-  
   .message-card {
     width: 100% !important;
-    background: #005a9a;
+    background: #0042b4;
     border-radius: 12px;
     margin: 0;
     padding: 12px;
@@ -577,30 +562,28 @@ ion-content {
     padding-left: 0;
   }
   
-  .custom-tab-bar {
-    background: transparent;
-    --ion-safe-area-bottom: 0;
-    position: fixed;
-    bottom: 8px;
+}
 
+.custom-tab-bar {
+  background: transparent;
+  --ion-safe-area-bottom: 0;
+  position: fixed;
+  bottom: 8px;
 
-    .tab-container {
-      background: gray;
-      border-radius: 40px;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      position: relative;
-      margin: 0 auto 20px auto;
-      width: 90%;
-      height: 60px;
-    }
-  
+  .tab-container {
+    background: #0054e9;
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    width: 90%;
+    height: 60px;
+
     .tab-icon {
-      color: #005a9a;
+      color:#0054e9;
       font-size: 24px;
     }
-  
   }
-  
+}

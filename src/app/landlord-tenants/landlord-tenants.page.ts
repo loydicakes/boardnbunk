@@ -131,8 +131,6 @@ export class LandlordTenantsPage implements OnInit {
     this.approvalTenants = this.approvalTenants.filter(t => t.id !== id);
     this.closeApprovalModal();
   }
-
-
   
   openChat(tenant: any) {
     this.router.navigate(['/chat'], {

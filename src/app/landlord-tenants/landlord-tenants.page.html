@@ -1,8 +1,5 @@
 <ion-content [fullscreen]="true">
   <div id="container">
-    <div class="back-btn">
-      <ion-icon name="arrow-back"></ion-icon>
-    </div>
 
     <h4 class="title">Tenants</h4>
 
@@ -13,69 +10,61 @@
           <img [src]="tenant.image" class="tenant-img" />
           <div class="tenant-content">
             <strong>{{ tenant.name }}</strong>
-            <p>Room: {{ tenant.roomName }}, Building {{ tenant.roomType }}</p>
-            <p><strong>RoomType:</strong> {{ tenant.paymentMethod }}</p>
+
+            <div class="badge-column">
+              <div class="badge-group">
+                <label>Room:</label>
+                <span class="badge room-tag">{{ tenant.roomName }}</span>
+              </div>
+              <div class="badge-group">
+                <label>Room Type:</label>
+                <span class="badge type-tag">{{ tenant.roomType }}</span>
+              </div>
+              <div class="badge-group">
+                <label>Payment Method:</label>
+                <span class="badge method-tag">{{ tenant.paymentMethod }}</span>
+              </div>
+            </div>
+
             <div class="payment-dates">
               <span>
-                Last Paid: <br>
+                <label>Last Paid</label><br />
                 {{ tenant.lastPaid ? (tenant.lastPaid.toDate() | date:'mediumDate') : 'Not yet paid' }}
               </span>
               <span>
-                Next Due: <br>
+                <label>Next Due</label><br />
                 {{ tenant.nextDue ? (tenant.nextDue.toDate() | date:'mediumDate') : 'Not yet set' }}
               </span>
-
             </div>
           </div>
-          <ion-icon name="information-circle-outline" class="chat-icon"></ion-icon>
         </div>
+
       </ng-container>
       <ng-template #noTenants>
-        <p style="padding: 1rem; text-align: center; color: gray">No current tenants</p>
+        <p class="empty-msg">No current tenants</p>
       </ng-template>
 
       <h3>Approval</h3>
-        <ng-container *ngIf="approvalTenants.length > 0; else noApprovals">
-          <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants" (click)="openApprovalModal(tenant, $event)">
-            <img [src]="tenant.image" class="tenant-img" />
-            <div class="tenant-content">
-              <strong>{{ tenant.name }}</strong>
-              <p>Room: {{ tenant.roomName }} | Type: {{ tenant.roomType }}</p>
-              <p><strong>Payment Method:</strong> {{ tenant.paymentMethod }}</p>
-              <div class="approval-buttons">
-                <button (click)="declineTenant(tenant.id)">Decline</button>
-                <button>Approve</button>
-              </div>
+      <ng-container *ngIf="approvalTenants.length > 0; else noApprovals">
+        <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants"
+          (click)="openApprovalModal(tenant, $event)">
+          <img [src]="tenant.image" class="tenant-img" />
+          <div class="tenant-content">
+            <strong>{{ tenant.name }}</strong>
+            <p><strong>Room:</strong> {{ tenant.roomName }}</p>
+            <p><strong>Room Type:</strong> {{ tenant.roomType }}</p>
+            <p><strong>Payment Method:</strong> {{ tenant.paymentMethod }}</p>
+            <div class="approval-buttons">
+              <button (click)="declineTenant(tenant.id)">Decline</button>
+              <button (click)="approveTenant(tenant.id)">Approve</button>
             </div>
           </div>
-        </ng-container>
+        </div>
+      </ng-container>
       <ng-template #noApprovals>
-        <p style="padding: 1rem; text-align: center; color: gray">No approval requests</p>
+        <p class="empty-msg">No approval requests</p>
       </ng-template>
     </div>
 
-    <div class="tenant-modal" *ngIf="selectedTenant" (click)="closeTenantModal()">
-      <div class="modal-card" (click)="$event.stopPropagation()">
-        <button class="modal-exit-btn" (click)="closeTenantModal()">×</button>
-        <h2>{{ selectedTenant.name }}</h2>
-        <p><strong>First Attended:</strong> {{ selectedTenant.attendedDate }}</p>
-        <p><strong>Room:</strong> Room {{ selectedTenant.roomName }}, Building {{ selectedTenant.roomType }}</p>
-        <p><strong>Method:</strong> {{ selectedTenant.paymentMethod || 'N/A' }}</p>
-        <button class="remove-tenant-btn" disabled>Remove tenant</button>
-      </div>
-    </div>
-
-    <div class="tenant-modal" *ngIf="approvalModalTenant" (click)="closeApprovalModal()">
-      <div class="modal-card" (click)="$event.stopPropagation()">
-        <button class="modal-exit-btn" (click)="closeApprovalModal()">×</button>
-        <h2>{{ approvalModalTenant.name }}</h2>
-        <p><strong>Room:</strong> Room {{ approvalModalTenant.roomName }}, Building {{ approvalModalTenant.roomType }}</p>
-        <p><strong>Payment Method:</strong> {{ approvalModalTenant.paymentMethod || 'N/A' }}</p>
-        <div class="modal-buttons">
-          <button (click)="declineTenant(approvalModalTenant.id)">Decline</button>
-          <button (click)="approveTenant(approvalModalTenant.id)">Approve</button>
-        </div>
-      </div>
-    </div>
   </div>
 </ion-content>

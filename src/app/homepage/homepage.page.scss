@@ -1,252 +1,242 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
-.main-page{
-    --background: #F2F0EF;
-    --border-radius: 0;
+
+.main-page {
+  --background: #F2F0EF;
+  --border-radius: 0;
 }
-.top-part{
+
+.top-part {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin-top: 28px;
+  gap: 30px;
+  padding: 0 2%;
+
+  .header-part {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+
+    .header-logo {
+      width: 70px;
+      object-fit: contain;
+      margin-right: 8px;
+    }
+
+    h5 {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .notif-button {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      --background: #ffffff;
+      --border-radius: 50%;
+      --padding-start: 0;
+      --padding-end: 0;
+
+      ion-icon {
+        font-size: 22px;
+        color: #0054e9;
+      }
+    }
+  }
+
+  .custom-search-wrapper {
     position: relative;
-    margin-top: 28px;
-    gap:30px;
-    padding: 0 2%;
+    width: 100%;
 
-    .header-part{
-        display: flex;
-        align-items: center;
-        vertical-align: middle;
-
-        .header-logo {
-            width: 70px;
-            object-fit: contain;
-            margin-right: 8px;
-        }
-
-
-        h5{
-            margin-left: 5px;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+    .custom-search-input {
+      width: 100%;
+      height: 60px;
+      padding: 0 45px 0 15px;
+      font-size: 18px;
+      border: 0;
+      border-radius: 10px;
+      box-sizing: border-box;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      outline: none;
     }
 
-    .custom-search-wrapper {
-        position: relative;
-        width: 100%;
-      }
-      
-      .custom-search-input {
-        width: 100%;
-        height: 60px;
-        padding: 0 45px 0 15px; /* leave space for icon */
-        font-size: 18px;
-        border: 0px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* shadow added */
-        outline: none; /* optional: remove blue outline */
-      }
-      
-      .search-icon {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 24px;
-        color: #666;
-      }
-      
-}
-
-.notif-button{
-    position: absolute;
-    right: 5%;
-    top: 3%;
-}
-
-.categ-part{
-    margin-top: 50px;
-    padding-left: 2%;
-    display: flex;
-    flex-direction: column;
-    gap:15px;
-
-    h3{
-        font-weight: bold;
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: #666;
     }
-
-    .button-container{
-        ion-button{
-            width: 140px;
-            text-wrap: nowrap;
-            height: 50px;
-            --border-radius: 15px;
-            margin-bottom: 20px;
-        }
-        -webkit-overflow-scrolling: touch;
-        display: flex;
-        width: auto;
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        gap: 10px;
-    }
+  }
 }
 
 .featured-rooms-part {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 2%;
+  margin-top: 40px;
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .img-container {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding-left: 2%;
-    margin-top: 40px;
+    width: auto;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding-bottom: 20px;
 
-    h3 {
-        font-weight: bold;
+    img {
+      width: 300px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-
-    .img-container {
-        overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
-        display: flex;
-        width: auto;
-        flex-wrap: nowrap;
-        gap: 20px;
-        padding-bottom: 20px;  // Adjusted the gap to ensure better spacing between larger images
-
-        img {
-            width: 300px;    // Increased the width of the images
-            height: 350px;   // Increased the height of the images
-            object-fit: cover;  // Ensure the entire image is visible without cropping
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-    }
+  }
 }
 
-.explore-part{
+.categ-part {
+  margin-top: 50px;
+  padding-left: 2%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .button-container {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding-left: 2%;
-    margin-top: 40px;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
 
-    h3{
-        font-weight: bold;
+    ion-button {
+      width: 140px;
+      height: 35px;
+      white-space: nowrap;
+      --border-radius: 15px;
+      margin-bottom: 20px;
     }
-
-    .explore-img-container{
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
-
-        .hotel-card {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow:none;
-            
-            ion-img {
-                width: 400px;
-                height: 250px;
-                object-fit: cover;
-            }
-          
-            .hotel-header {
-                margin-top: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 2%;
-            
-    
-              .hotel-header-fav{
-                display: flex;
-              }
-              h2 {
-                font-size: 1.1rem;
-                font-weight: 600;
-                margin: 0;
-              }
-          
-              .star-icon {
-                color: #fbbf24; // Tailwind's yellow-400
-                font-size: 1rem;
-                margin-left: 0.25rem;
-              }
-          
-              span {
-                font-size: 0.9rem;
-              }
-            }
-            p{
-                padding: 0 2%;
-            }
-            span{
-                color: #267ba0;
-                font-weight: 600;
-                text-decoration: underline;
-            }
-            .info {
-                font-size: 0.85rem;
-                color: #666;
-                margin: 2px 0;
-
-            }
-          
-            .price {
-                font-size: 0.95rem;
-                margin-top: 4px;
-            }
-          
-            .favorite-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background: white;
-                border-radius: 50%;
-                --padding-start: 6px;
-                --padding-end: 6px;
-                --padding-top: 6px;
-                --padding-bottom: 6px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            }
-          }
-    }
-      
+  }
 }
-#last{
-    margin-bottom: 10px;
-}
-  .custom-tab-bar {
-    background: transparent;
-    --ion-safe-area-bottom: 0;
-    position: fixed;
-    bottom: 8px;
 
+.explore-part {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 2%;
+  margin-top: 40px;
 
-    .tab-container {
-      background:#0054e9;
-      border-radius: 15px;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+  h3 {
+    font-weight: bold;
+  }
+
+  .explore-img-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    .hotel-card {
       position: relative;
-      margin: 0 auto 20px auto;
-      width: 90%;
-      height: 60px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: none;
+
+      ion-img {
+        width: 400px;
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .hotel-header {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2%;
+
+        h2 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .hotel-header-fav {
+          display: flex;
+          align-items: center;
+
+          .star-icon {
+            color: #fbbf24;
+            font-size: 1rem;
+            margin-left: 0.25rem;
+          }
+
+          span {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      p {
+        padding: 0 2%;
+      }
+
+      span {
+        color: #267ba0;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+
+      .info {
+        font-size: 0.85rem;
+        color: #666;
+        margin: 2px 0;
+      }
+
+      .price {
+        font-size: 0.95rem;
+        margin-top: 4px;
+      }
+
+      .favorite-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: white;
+        border-radius: 50%;
+        --padding: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
     }
-  
-    .tab-icon {
-      color: #005a9a;
-      font-size: 24px;
-    }
+  }
 }
+
+#last {
+  margin-bottom: 10px;
+}
+
 .card-wrapper {
   position: relative;
 }
@@ -267,10 +257,32 @@
   align-items: center;
   justify-content: center;
 
-ion-icon {
-  font-size: 20px;
-  color: #f783ac; // light pink (or try #fbb6ce for even softer)
-}
+  ion-icon {
+    font-size: 20px;
+    color: #f783ac;
+  }
 }
 
+.custom-tab-bar {
+  background: transparent;
+  --ion-safe-area-bottom: 0;
+  position: fixed;
+  bottom: 8px;
 
+  .tab-container {
+    background: #0054e9;
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    width: 90%;
+    height: 60px;
+
+    .tab-icon {
+      color:#0054e9;
+      font-size: 24px;
+    }
+  }
+}
