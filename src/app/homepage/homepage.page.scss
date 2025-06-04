@@ -169,9 +169,12 @@
       box-shadow: none;
 
       ion-img {
+        margin:0;
+        padding: 0;
         width: 400px;
         height: 250px;
         object-fit: cover;
+
       }
 
       .hotel-header {
@@ -251,13 +254,11 @@
 
 .heart-btn {
   position: absolute;
-  top: 2px;
+  top: 3px;
   right: 10px;
   z-index: 10;
   background: var(--ion-card-background);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
   --box-shadow: none;
   --padding-start: 0;
   --padding-end: 0;
