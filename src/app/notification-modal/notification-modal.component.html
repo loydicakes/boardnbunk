@@ -1,28 +1,41 @@
-
-<ion-content>
-  <div class="custom-header">
-    <div class="header-container">
-      <div class="back-btn" routerLink="/homepage">
-        <ion-icon name="arrow-back"></ion-icon>
-      </div>
-      <h2>Notifications</h2>
-    </div>
+<ion-content class="notifications-content" [fullscreen]="true">
+  <div class="top-shape"> 
+    <h1 class="center-text">Notifications</h1>
   </div>
 
-  <ng-container *ngIf="notifications.length > 0; else noNotifs">
-    <div *ngFor="let notification of notifications"
-         class="notification"
-         [ngClass]="{ 'unread': !notification.read }">
-      <div class="icon-circle">
-        <ion-icon name="notifications"></ion-icon>
+  <div class="notifications-wrapper">
+    <div class="notification-card">
+      <div class="noti-icon">
+        <ion-icon name="mail-unread-outline"></ion-icon>
       </div>
-      <div class="text-content">
-        <h3>{{ notification.message }}</h3>
-        <p>{{ notification.timestamp | date:'short' }}</p>
+      <div class="noti-text">
+        <h3>Request Approved</h3>
+        <p>Your request has been approved. You may now proceed to payment.</p>
+        <small>2 hours ago</small>
       </div>
     </div>
-  </ng-container>
 
-  <ng-template #noNotifs>
-    <div class="ion-padding">No notifications found.</div>
-  </ng-template>
+    <div class="notification-card">
+      <div class="noti-icon">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+      <div class="noti-text">
+        <h3>Payment Reminder</h3>
+        <p>Your next rent is due on July 5. Don’t forget!</p>
+        <small>1 day ago</small>
+      </div>
+    </div>
+
+    <div class="notification-card">
+      <div class="noti-icon">
+        <ion-icon name="bed-outline"></ion-icon>
+      </div>
+      <div class="noti-text">
+        <h3>New Room Added</h3>
+        <p>A new studio-type room is now available near your location.</p>
+        <small>3 days ago</small>
+      </div>
+    </div>
+    </div>
+</ion-content>
+

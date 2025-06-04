@@ -1,79 +1,69 @@
 <ion-content [fullscreen]="true">
-  <div id="container">
-
-    <!-- Back Button -->
-    <div class="back-btn" (click)="goToProfileMethod()">
-      <ion-icon name="arrow-back"></ion-icon>
-    </div>
-
+  <div class="payment-container">
     <!-- Title -->
-    <h4 class="title">Payment Options</h4>
+    <h2 class="payment-title">Choose Payment Option</h2>
 
-    <!-- Cash title -->
-    <h4>Cash</h4>
-    <div class="section" [class.selected]="paymentMethod === 'cash'">
-      <input type="radio" name="payment" id="cash" [(ngModel)]="paymentMethod" value="cash" class="radio-top" />
-      <label for="cash"><img src="assets/dollar.png" class="icon">Cash</label>
-    </div>
-
-    <!-- Credit Card title -->
-    <h4>Credit & Debit Card</h4>
-    <div class="section" [class.selected]="paymentMethod === 'card'">
-      <input type="radio" name="payment" id="card" [(ngModel)]="paymentMethod" value="card" class="radio-top" />
-      <label for="card"><img src="assets/credit.png" class="icon">Mastercard</label>
-
-      <div class="card-fields">
-        <div class="input-container">
-          <input type="number" placeholder="Card Number*" [(ngModel)]="cardNumber" />
+    <!-- Payment Options -->
+    <div class="payment-option-list">
+      <!-- Debit/Credit Card -->
+      <div class="payment-option" [class.selected]="paymentMethod === 'card'" (click)="paymentMethod='card'">
+        <div class="option-left">
+          <ion-icon name="card-outline"></ion-icon>
+          <span>Debit / Credit Card</span>
         </div>
-        <div class="card-info">
-          <div class="input-container">
-            <input type="text" placeholder="MM*" />
-          </div>
-          <div class="input-container">
-            <input type="text" placeholder="YY*" />
-          </div>
-          <div class="input-container">
-            <input type="text" placeholder="CVC/CVV*" />
-          </div>
+        <ion-icon name="checkmark-circle" *ngIf="paymentMethod==='card'"></ion-icon>
+      </div>
+      <!-- Online Payment (GCash) -->
+      <div class="payment-option" [class.selected]="paymentMethod === 'gcash'" (click)="paymentMethod='gcash'">
+        <div class="option-left">
+          <img src="assets/paypal.png" class="option-img" alt="GCash" />
+          <span>GCash</span>
         </div>
-        <div class="input-container">
-          <input type="text" placeholder="First Name*" />
+        <ion-icon name="checkmark-circle" *ngIf="paymentMethod==='gcash'"></ion-icon>
+      </div>
+      <!-- Cash -->
+      <div class="payment-option" [class.selected]="paymentMethod === 'cash'" (click)="paymentMethod='cash'">
+        <div class="option-left">
+          <img src="assets/dollar.png" class="option-img" alt="Cash" />
+          <span>Cash</span>
         </div>
-        <div class="input-container">
-          <input type="text" placeholder="Last Name*" />
-        </div>
+        <ion-icon name="checkmark-circle" *ngIf="paymentMethod==='cash'"></ion-icon>
       </div>
     </div>
 
-    <!-- Online Payment title -->
-    <h4>Online Payment</h4>
-    <div class="section" [class.selected]="paymentMethod === 'gcash'">
-      <input type="radio" name="payment" id="gcash" [(ngModel)]="paymentMethod" value="gcash" class="radio-top" />
-      <label for="gcash"><img src="assets/paypal.png" class="icon">GCash</label>
-
-      <div class="input-container">
-        <input type="number" placeholder="Enter your mobile number" [(ngModel)]="gcashNumber" />
+    <!-- Card Fields (show only if selected) -->
+    <form *ngIf="paymentMethod === 'card'" class="card-fields-modern">
+      <input type="number" placeholder="Card Number" [(ngModel)]="cardNumber" name="cardNumber" />
+      <div class="card-info">
+        <input type="text" maxlength="2" placeholder="MM" name="mm" />
+        <input type="text" maxlength="2" placeholder="YY" name="yy" />
+        <input type="text" maxlength="4" placeholder="CVV" name="cvv" />
       </div>
+      <input type="text" placeholder="First Name" name="firstName" />
+      <input type="text" placeholder="Last Name" name="lastName" />
+    </form>
+
+    <!-- GCash Fields (show only if selected) -->
+    <div *ngIf="paymentMethod === 'gcash'" class="gcash-fields-modern">
+      <input type="number" placeholder="Enter your mobile number" [(ngModel)]="gcashNumber" name="gcashNumber" />
     </div>
 
     <!-- Save Button -->
-    <div style="text-align: center; margin-top: 32px;">
-      <ion-button class="save-button" (click)="showSaveCard()">
+    <div class="pay-save-btn">
+      <ion-button expand="block" class="save-button" (click)="showSaveCard()">
         Save
       </ion-button>
     </div>
   </div>
-</ion-content>
 
-<!-- Save Changes Confirmation Modal -->
-<div class="overlay" id="saveOverlay" (click)="closeSaveCard()"></div>
-<div class="logout-card centered" id="saveCard">
-  <div class="card-title">Save Changes?</div>
-  <div class="line-divider"></div>
-
-  <div class="logout-buttons">
-    <ion-button fill="clear" class="logout-btn done-btn" (click)="confirmSave()">Done</ion-button>
-    <ion-button fill="clear" class="logout-btn cancel-btn" (click)="closeSaveCard()">Cancel</ion-button>
+  <!-- Save Changes Confirmation Modal -->
+  <div class="overlay" id="saveOverlay" (click)="closeSaveCard()"></div>
+  <div class="logout-card centered" id="saveCard">
+    <div class="card-title">Save Changes?</div>
+    <div class="line-divider"></div>
+    <div class="logout-buttons">
+      <ion-button fill="clear" class="logout-btn done-btn" (click)="confirmSave()">Done</ion-button>
+      <ion-button fill="clear" class="logout-btn cancel-btn" (click)="closeSaveCard()">Cancel</ion-button>
+    </div>
   </div>
-</div>
+</ion-content>
