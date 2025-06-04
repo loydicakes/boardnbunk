@@ -1,5 +1,5 @@
 .notifications-content {
-  --background: #f4f4f4;
+  --background: var(--ion-background-color);
   font-family: 'Poppins', sans-serif;
 
   .top-shape {
@@ -8,9 +8,10 @@
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
     position: relative;
+
     .center-text {
       text-align: center;
-      color: white;
+      color: #fff; // Always white for contrast
       font-size: 26px;
       font-weight: 600;
       line-height: 100px; // vertically center text in 100px height
@@ -26,7 +27,7 @@
     .notification-card {
       display: flex;
       align-items: flex-start;
-      background: #fff;
+      background: var(--ion-card-background);
       padding: 16px;
       border-radius: 16px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
@@ -35,7 +36,7 @@
 
       .noti-icon {
         font-size: 24px;
-        color: #005a9a;
+        color: #005a9a; // Consider using a variable if you want dynamic theme: var(--ion-primary-color)
         margin-top: 4px;
       }
 
@@ -44,18 +45,22 @@
           font-size: 16px;
           font-weight: 600;
           margin: 0;
-          color: #222;
+          color: var(--ion-text-color);
         }
 
         p {
           font-size: 14px;
           margin: 4px 0;
-          color: #555;
+          color: var(--ion-text-color);
+          opacity: 0.84;
         }
 
         small {
           font-size: 12px;
           color: #999;
+          // Or use var(--ion-text-color) with lower opacity for dark mode consistency:
+          // color: var(--ion-text-color);
+          // opacity: 0.7;
         }
       }
     }
