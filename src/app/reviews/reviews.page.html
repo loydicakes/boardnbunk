@@ -1,6 +1,10 @@
 <ion-content [fullscreen]="true" class="review-content" (click)="handleOutsideClick($event)">
+  <div class="top-shape">
+    <h1 class="center-text">Reviews</h1>
+  </div>
+
+  <!-- Reviews Container -->
   <div class="reviews-container">
-    <h4 class="review-header">Reviews</h4>
     <div *ngIf="reviews.length === 0" class="no-reviews">No reviews available</div>
 
     <div class="review-card" *ngFor="let review of reviews">
@@ -18,12 +22,10 @@
 
 <!-- Bottom Bar -->
 <div class="review-bottom-bar" (click)="$event.stopPropagation()">
-  <!-- Write Button -->
   <div class="write-review-container" *ngIf="!showReviewBox">
     <ion-button expand="block" (click)="showReviewBox = true">Write a Review</ion-button>
   </div>
 
-  <!-- Input Card with Animation -->
   <div class="review-input-card" *ngIf="showReviewBox" [@slideUpDown]>
     <div class="review-label-row">
       <label class="review-label">Make a review</label>

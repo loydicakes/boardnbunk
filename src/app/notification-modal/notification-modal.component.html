@@ -1,18 +1,40 @@
-<ion-content class="notif-modal">
-  <div class="modal-header">
-    <h2>{{ notification?.title }}</h2>
-    <ion-button fill="clear" class="close-btn" (click)="dismiss()">
-      <ion-icon name="close-outline"></ion-icon>
-    </ion-button>
+<ion-content class="notifications-content" [fullscreen]="true">
+  <div class="top-shape"> 
+    <h1 class="center-text">Notifications</h1>
   </div>
 
-  <div class="modal-body">
-    <p class="message">{{ notification?.message }}</p>
-    <p class="timestamp">{{ notification?.time }}</p>
-  </div>
+  <div class="notifications-wrapper">
+    <div class="notification-card">
+      <div class="noti-icon">
+        <ion-icon name="mail-unread-outline"></ion-icon>
+      </div>
+      <div class="noti-text">
+        <h3>Request Approved</h3>
+        <p>Your request has been approved. You may now proceed to payment.</p>
+        <small>2 hours ago</small>
+      </div>
+    </div>
 
-  <div class="modal-actions">
-    <ion-button expand="block" color="medium" (click)="markAsRead()">Mark as Read</ion-button>
-    <ion-button expand="block" color="danger" (click)="delete()">Delete</ion-button>
-  </div>
+    <div class="notification-card">
+      <div class="noti-icon">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+      <div class="noti-text">
+        <h3>Payment Reminder</h3>
+        <p>Your next rent is due on July 5. Don’t forget!</p>
+        <small>1 day ago</small>
+      </div>
+    </div>
+
+    <div class="notification-card">
+      <div class="noti-icon">
+        <ion-icon name="bed-outline"></ion-icon>
+      </div>
+      <div class="noti-text">
+        <h3>New Room Added</h3>
+        <p>A new studio-type room is now available near your location.</p>
+        <small>3 days ago</small>
+      </div>
+    </div>
+    </div>
 </ion-content>

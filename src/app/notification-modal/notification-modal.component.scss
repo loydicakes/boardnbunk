@@ -1,46 +1,63 @@
-.notif-modal {
-  --background: #fff;
+.notifications-content {
+  --background: #f4f4f4;
+  font-family: 'Poppins', sans-serif;
 
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-
-    h2 {
-      font-size: 1.2rem;
-      font-weight: bold;
+  .top-shape {
+    background: linear-gradient(to right, #0054e9, #0b5be4);
+    height: 100px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    position: relative;
+    .center-text {
+      text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 100px; // vertically center text in 100px height
       margin: 0;
     }
+  }
 
-    .close-btn {
-      font-size: 1.4rem;
-      color: #555;
+  .notifications-wrapper {
+    position: relative;
+    top: 20px;
+    padding: 0 20px;
 
-      ion-icon {
+    .notification-card {
+      display: flex;
+      align-items: flex-start;
+      background: #fff;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      margin-bottom: 16px;
+      gap: 12px;
+
+      .noti-icon {
         font-size: 24px;
+        color: #005a9a;
+        margin-top: 4px;
+      }
+
+      .noti-text {
+        h3 {
+          font-size: 16px;
+          font-weight: 600;
+          margin: 0;
+          color: #222;
+        }
+
+        p {
+          font-size: 14px;
+          margin: 4px 0;
+          color: #555;
+        }
+
+        small {
+          font-size: 12px;
+          color: #999;
+        }
       }
     }
-  }
-
-  .modal-body {
-    padding: 0 16px 16px;
-
-    .message {
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-
-    .timestamp {
-      font-size: 0.85rem;
-      color: #999;
-    }
-  }
-
-  .modal-actions {
-    padding: 0 16px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
   }
 }

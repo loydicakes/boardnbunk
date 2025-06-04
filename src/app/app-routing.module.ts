@@ -32,10 +32,6 @@ const routes: Routes = [
     loadChildren: () => import('./faves/faves.module').then( m => m.FavesPageModule)
   },
   {
-    path: 'notifs',
-    loadChildren: () => import('./notifs/notifs.module').then( m => m.NotifsPageModule)
-  },
-  {
     path: 'homepage',
     loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepagePageModule)
   },

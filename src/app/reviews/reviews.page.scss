@@ -1,13 +1,30 @@
 ion-content.review-content {
   --background: #f6f6f6;
-  padding-bottom: 130px; // reserve space for the bottom bar
+  padding-bottom: 130px;
+  font-family: 'Poppins', sans-serif;
+
+  .top-shape {
+    background: linear-gradient(to right, #0054e9, #296adb);
+    height: 100px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    position: relative;
+
+    .center-text {
+      text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 100px;
+      margin: 0;
+    }
+  }
 }
 
 .write-review-container,
 .review-input-card {
   padding: 15px;
 }
-
 
 .review-label-row {
   display: flex;
@@ -150,4 +167,3 @@ ion-content.review-content {
     opacity: 1;
   }
 }
-

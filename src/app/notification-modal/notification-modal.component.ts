@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-notification-modal',
@@ -7,20 +6,10 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./notification-modal.component.scss'],
   standalone: false,
 })
-export class NotificationModalComponent {
-  @Input() notification: any;
+export class NotificationModalComponent  implements OnInit {
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor() { }
 
-  dismiss() {
-    this.modalCtrl.dismiss();
-  }
+  ngOnInit() {}
 
-  markAsRead() {
-    this.modalCtrl.dismiss({ action: 'read', id: this.notification?.id });
-  }
-
-  delete() {
-    this.modalCtrl.dismiss({ action: 'delete', id: this.notification?.id });
-  }
 }
