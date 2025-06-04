@@ -35,15 +35,21 @@ export class FavesPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.afAuth.authState.subscribe(async user => {
-      if (!user) {
-        this.router.navigate(['/login']);
-        return;
-      }
-      this.currentUserId = user.uid;
-      await this.loadFavorites();
-    });
+    this.loadCurrentUserAndFavorites();
   }
+
+  async loadCurrentUserAndFavorites() {
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const { uid } = JSON.parse(userData);
+    this.currentUserId = uid;
+    await this.loadFavorites();
+  }
+
 
   async loadFavorites() {
     const favorites = await this.firestoreService.getUserFavorites(this.currentUserId);
