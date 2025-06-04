@@ -9,15 +9,35 @@
     border-bottom-right-radius: 40px;
     position: relative;
 
+    .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; // left-align by default
+    height: 100px;
+    margin-left: 30px;
+
+    .back-btn {
+      font-size: 28px;
+      color: #fff;
+      margin-right: 14px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      opacity: 0.84;
+      &:hover { opacity: 1; }
+    }
+
     .center-text {
-      text-align: center;
-      color: #fff; // Always white for contrast
+      flex: 1;
+      text-align: center; // for strict left
+      color: #fff;
       font-size: 26px;
       font-weight: 600;
-      line-height: 100px; // vertically center text in 100px height
       margin: 0;
+      line-height: 100px;
+      margin-left: -34px;
     }
   }
+}
 
   .notifications-wrapper {
     position: relative;

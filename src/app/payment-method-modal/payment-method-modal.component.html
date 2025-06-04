@@ -1,6 +1,12 @@
 <ion-content [fullscreen]="true">
   <div class="payment-modal-container">
-    <h2 class="modal-title">Choose Payment Method</h2>
+    <div class="top-shape">
+      <div class="top-bar">
+        <ion-icon name="arrow-back-outline" class="back-btn" (click)="closeModal()"></ion-icon>
+        <span class="modal-title">Choose Payment Method</span>
+      </div>
+    </div>
+
     <div class="payment-option-list">
       <!-- Debit/Credit Card -->
       <div class="payment-option" [class.selected]="selectedMethod === 'Card'" (click)="selectedMethod='Card'">

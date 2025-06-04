@@ -3,70 +3,104 @@
   margin: 36px auto 0 auto;
   padding: 0 24px 36px 24px;
   font-family: 'Poppins', sans-serif;
-}
 
-.modal-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 24px;
-  text-align: center;
-  color: #232323;
-  letter-spacing: -1px;
-}
+  .top-shape {
+    background: linear-gradient(to right, #0054e9, #0b5be4);
+    height: 90px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-left: -24px; // aligns with container edge
+    margin-right: -24px;
+    margin-top: -36px;
+    position: relative;
 
-.payment-option-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 28px;
-}
+    .top-bar {
+      display: flex;
+      align-items: center;
+      height: 90px;
+      padding-left: 24px;
+      padding-right: 24px;
 
-.payment-option {
-  background: #fff;
-  border-radius: 18px;
-  padding: 16px 20px;
-  box-shadow: 0 2px 20px 0 rgba(0,0,0,0.03);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-  border: 2px solid #fff;
-  transition: border-color 0.18s;
-  font-size: 1.07rem;
-  color: #222;
-  position: relative;
+      .back-btn {
+        font-size: 28px;
+        color: #fff;
+        margin-right: 14px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        opacity: 0.84;
+        &:hover { opacity: 1; }
+      }
 
-  ion-icon,
-  .option-img {
-    font-size: 1.4rem;
-    width: 26px;
-    height: 26px;
+      .modal-title {
+        flex: 1;
+        text-align: center;
+        color: #fff;
+        font-size: 22px;   // <-- Change this from 26px to 18px or any size you want
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -1px;
+        line-height: 90px;
+        margin-left: -42px; // Adjust if needed for centering
+      }
+
+    }
   }
 
-  .option-img {
-    border-radius: 6px;
-    background: #f2f6ff;
-    object-fit: contain;
-    padding: 4px;
+  .payment-option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+    margin-top: 18px;
   }
 
-  span {
-    flex: 1;
-    margin-left: 12px;
-    font-weight: 500;
+  .payment-option {
+    background: #fff;
+    border-radius: 18px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 20px 0 rgba(0,0,0,0.03);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    border: 2px solid #fff;
+    transition: border-color 0.18s;
+    font-size: 1.07rem;
+    color: #222;
+    position: relative;
+
+    ion-icon,
+    .option-img {
+      font-size: 1.4rem;
+      width: 26px;
+      height: 26px;
+    }
+
+    .option-img {
+      border-radius: 6px;
+      background: #f2f6ff;
+      object-fit: contain;
+      padding: 4px;
+    }
+
+    span {
+      flex: 1;
+      margin-left: 12px;
+      font-weight: 500;
+    }
   }
-}
 
-.payment-option.selected {
-  border-color: #005a9a;
-  box-shadow: 0 6px 32px 0 rgba(0, 90, 154, 0.12);
-}
+  .payment-option.selected {
+    border-color: #005a9a;
+    box-shadow: 0 6px 32px 0 rgba(0, 90, 154, 0.12);
+  }
 
-.save-btn {
-  --background: linear-gradient(to right, #005a9a, #007dc3);
-  --border-radius: 14px;
-  font-size: 17px;
-  font-weight: 600;
-  width: 100%;
-  margin-top: 30px;
+  .save-btn {
+    --background: linear-gradient(to right, #005a9a, #007dc3);
+    --border-radius: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 30px;
+  }
 }

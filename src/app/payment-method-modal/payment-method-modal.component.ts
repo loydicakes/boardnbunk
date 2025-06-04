@@ -24,4 +24,9 @@ export class PaymentMethodModalComponent {
   save() {
     this.modalCtrl.dismiss(this.selectedMethod);
   }
+
+  closeModal() {
+  this.modalCtrl.dismiss(); // or whatever your dismiss method is
+}
+
 }

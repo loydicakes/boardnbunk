@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-notification-modal',
   templateUrl: './notification-modal.component.html',
@@ -12,10 +14,11 @@ export class NotificationModalComponent implements OnInit {
   currentUserId: string = '';
 
   constructor(
+    private modalCtrl: ModalController,
     private firestoreService: FirestoreService,
     private router: Router
   ) {}
-
+  
   async ngOnInit() {
     const user = localStorage.getItem('user');
     if (!user) {
@@ -42,6 +45,10 @@ export class NotificationModalComponent implements OnInit {
     if (hours < 24) return `${hours} hour(s) ago`;
     const days = Math.floor(hours / 24);
     return `${days} day(s) ago`;
+  }
+  
+  closeModal() {
+  this.modalCtrl.dismiss(); 
   }
 
 }
