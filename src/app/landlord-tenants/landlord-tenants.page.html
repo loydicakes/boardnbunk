@@ -43,27 +43,6 @@
       <ng-template #noTenants>
         <p class="empty-msg">No current tenants</p>
       </ng-template>
-
-      <h3>Approval</h3>
-      <ng-container *ngIf="approvalTenants.length > 0; else noApprovals">
-        <div class="tenant-card approval-card" *ngFor="let tenant of approvalTenants"
-          (click)="openApprovalModal(tenant, $event)">
-          <img [src]="tenant.image" class="tenant-img" />
-          <div class="tenant-content">
-            <strong>{{ tenant.name }}</strong>
-            <p><strong>Room:</strong> {{ tenant.roomName }}</p>
-            <p><strong>Room Type:</strong> {{ tenant.roomType }}</p>
-            <p><strong>Payment Method:</strong> {{ tenant.paymentMethod }}</p>
-            <div class="approval-buttons">
-              <button (click)="declineTenant(tenant.id)">Decline</button>
-              <button (click)="approveTenant(tenant.id)">Approve</button>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-      <ng-template #noApprovals>
-        <p class="empty-msg">No approval requests</p>
-      </ng-template>
     </div>
 
   </div>
