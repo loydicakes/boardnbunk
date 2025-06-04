@@ -243,7 +243,15 @@ export class FirestoreService {
     return await setDoc(userRef, data, { merge: true });
   }
 
-  async getUserProfile(uid: string): Promise<{ firstname: string; lastname: string; email: string; profilePicture?: string }> {
+  async getUserProfile(uid: string): Promise<{
+    firstname: string;
+    lastname: string;
+    email: string;
+    profilePicture?: string;
+    paymentMethod?: string;
+    cardNumber?: string;
+    gcashNumber?: string;
+  }> {
     const userDocRef = doc(this.firestore, 'users', uid);
     const userSnap = await getDoc(userDocRef);
     if (userSnap.exists()) {
@@ -252,11 +260,15 @@ export class FirestoreService {
         lastname: string;
         email: string;
         profilePicture?: string;
+        paymentMethod?: string;
+        cardNumber?: string;
+        gcashNumber?: string;
       };
     } else {
       throw new Error('User document does not exist');
     }
   }
+
 
   async getCollection(path: string) {
     const snapshot = await getDocs(collection(this.firestore, path));

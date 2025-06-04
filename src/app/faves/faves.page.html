@@ -1,4 +1,5 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
 <ion-content [fullscreen]="true">
   <!-- Header -->
   <div class="custom-header">
@@ -7,121 +8,51 @@
     </div>
   </div>
 
-  <!-- Category Filter -->
-  <div class="filter-bar">
-    <div
-      class="filter-shape"
-      *ngFor="let category of categories"
-      [class.active]="selectedCategory === category"
-      (click)="selectCategory(category)"
-    >
-      {{ category }}
+  <!-- Category Buttons -->
+  <div class="categ-part">
+    <div class="button-container">
+      <ion-button [color]="selectedType === '' ? 'primary' : 'medium'" (click)="filterRooms('')">All</ion-button>
+      <ion-button [color]="selectedType === 'solo' ? 'primary' : 'medium'"
+        (click)="filterRooms('solo')">Solo</ion-button>
+      <ion-button [color]="selectedType === 'studio' ? 'primary' : 'medium'" (click)="filterRooms('studio')">Studio
+        Type</ion-button>
+      <ion-button [color]="selectedType === 'bedspacer' ? 'primary' : 'medium'" (click)="filterRooms('bedspacer')">Bed
+        Spacer</ion-button>
     </div>
   </div>
 
   <!-- Favorite Room Cards -->
-  <div class="room-wrapper" [@fadeSlideAnimation]="selectedCategory">
+  <div class="room-wrapper" [@fadeSlideAnimation]="selectedType">
     <div class="room-card" *ngFor="let room of filteredRooms">
-      <!-- Image + Heart -->
+      <!-- Heart at top-right of the card -->
+      <div class="heart-btn" (click)="toggleFavorite(room)">
+        <ion-icon [name]="room.favorited ? 'heart' : 'heart-outline'"></ion-icon>
+      </div>
       <div class="image-section">
-        <img
-          [src]="room.imageUrl || room.image || 'https://via.placeholder.com/100'"
-          alt="{{ room.name }}"
-          class="room-image"
-        />
-        <div class="heart-btn" (click)="toggleFavorite(room)">
-          <ion-icon [name]="room.favorited ? 'heart' : 'heart-outline'"></ion-icon>
-        </div>
+        <img [src]="room.imageUrl || room.image || 'https://via.placeholder.com/100'" alt="{{ room.name }}"
+          class="room-image" />
       </div>
-
-      <!-- Info -->
       <div class="info-section">
-        <div class="type-review-row">
-          <div class="room-type">{{ room.type || 'N/A' }}</div>
-          <div class="review">
-            <ion-icon name="star"></ion-icon>
-            <span class="review-text">{{ room.rating | number: '1.1-1' }}</span>
-          </div>
-        </div>
-
-        <div class="title-rating">
-          <h3>{{ room.name }}</h3>
-        </div>
-
-        <div class="location">
-          <ion-icon name="location"></ion-icon>
-          {{ room.location || 'Unknown location' }}
-        </div>
-
-        <div class="price">
-          ₱{{ room.price | number }} <span>/month</span>
-        </div>
+        <h3 class="room-name">{{ room.name }}</h3>
+        <div class="price">₱{{ room.price | number }} <span>/month</span></div>
+        <div class="room-type-pill">{{ room.type || 'N/A' }}</div>
       </div>
     </div>
-  </div>
 
-  <!-- Remove Confirmation Dialog -->
-  <div class="overlay-container" *ngIf="showMessageBox">
-    <div class="overlay" (click)="cancel()"></div>
-
-    <div class="message-box">
-      <div class="message-header">
-        <h3>Remove from Favorites?</h3>
-      </div>
-
-      <div class="room-card message-card">
-        <div class="image-section">
-          <img
-            [src]="selectedRoom?.imageUrl || selectedRoom?.image || 'https://via.placeholder.com/100'"
-            alt="{{ selectedRoom?.name }}"
-            class="room-image"
-          />
-          <div class="heart-btn">
-            <ion-icon name="heart-outline"></ion-icon>
-          </div>
-        </div>
-
-        <div class="info-section">
-          <div class="type-review-row">
-            <div class="room-type">{{ selectedRoom?.type }}</div>
-            <div class="review">
-              <ion-icon name="star"></ion-icon>
-              <span class="review-text">{{ selectedRoom?.rating }}</span>
-            </div>
-          </div>
-
-          <div class="title-rating">
-            <h3>{{ selectedRoom?.name }}</h3>
-          </div>
-
-          <div class="price">
-            ₱{{ selectedRoom?.price | number }} <span>/month</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="message-actions">
-        <button class="cancel-btn" (click)="cancel()">Cancel</button>
-        <button class="remove-btn" (click)="remove()">Remove</button>
-      </div>
-    </div>
+    <!-- Show nothing if no favorites -->
+    <div *ngIf="filteredRooms.length === 0" class="no-faves">No favorites yet.</div>
   </div>
 </ion-content>
 
 <ion-footer class="custom-tab-bar">
   <div class="tab-container">
-    <ion-button fill="clear" routerLink="/homepage"
-      ><ion-icon name="home" class="tab-icon" color="light"></ion-icon
-    ></ion-button>
-    <ion-button fill="clear" routerLink="/faves"
-      ><ion-icon name="heart" class="tab-icon" color="light"></ion-icon
-    ></ion-button>
-    <ion-button fill="clear" routerLink="/current-rent"
-      ><ion-icon name="mail" class="tab-icon" color="light"></ion-icon
-    ></ion-button>
-    <ion-button fill="clear" routerLink="/profile"
-      ><ion-icon name="person" class="tab-icon" color="light"></ion-icon
-    ></ion-button>
+    <ion-button fill="clear" routerLink="/homepage"><ion-icon name="home" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/faves"><ion-icon name="heart" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/current-rent"><ion-icon name="mail" class="tab-icon"
+        color="light"></ion-icon></ion-button>
+    <ion-button fill="clear" routerLink="/profile"><ion-icon name="person" class="tab-icon"
+        color="light"></ion-icon></ion-button>
   </div>
 </ion-footer>
-
