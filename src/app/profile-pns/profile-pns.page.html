@@ -1,5 +1,5 @@
-<ion-content [fullscreen]="true">
-  <div id="container">
+<ion-content [fullscreen]="true" [scrollEvents]="true" keyboard-resizes="true">
+  <div id="container" #container>
     <!-- Back Button & Titles -->
     <div class="back-btn" (click)="goToProfileMethod()">
       <ion-icon name="arrow-back"></ion-icon>
@@ -20,7 +20,11 @@
       <div class="input-container">
         <label>Firstname</label>
         <div class="input-box">
-          <input type="text" [(ngModel)]="firstname" (ngModelChange)="onProfileChange()" (blur)="onProfileBlur('firstname')" />
+          <input type="text"
+                 [(ngModel)]="firstname"
+                 (ngModelChange)="onProfileChange()"
+                 (blur)="onProfileBlur('firstname')"
+                 (focus)="onInputFocus($event.target)" />
           <ion-icon name="create-outline" class="edit-icon"></ion-icon>
         </div>
       </div>
@@ -28,7 +32,11 @@
       <div class="input-container">
         <label>Lastname</label>
         <div class="input-box">
-          <input type="text" [(ngModel)]="lastname" (ngModelChange)="onProfileChange()" (blur)="onProfileBlur('lastname')" />
+          <input type="text"
+                 [(ngModel)]="lastname"
+                 (ngModelChange)="onProfileChange()"
+                 (blur)="onProfileBlur('lastname')"
+                 (focus)="onInputFocus($event.target)" />
           <ion-icon name="create-outline" class="edit-icon"></ion-icon>
         </div>
       </div>
@@ -55,11 +63,16 @@
       <div *ngIf="changePasswordStep === 1" class="input-container">
         <label>Enter Current Password</label>
         <div class="input-box" style="position: relative;">
-          <input type="password" [(ngModel)]="currentPassword" (ngModelChange)="onCurrentPasswordInput()" />
-          <ion-button *ngIf="currentPassword.length > 0 && !isVerifying" size="small" fill="outline"
+          <input type="password"
+                 [(ngModel)]="currentPassword"
+                 (ngModelChange)="onCurrentPasswordInput()"
+                 (focus)="onInputFocus($event.target)" />
+          <ion-button *ngIf="currentPassword.length > 0 && !isVerifying"
+                      size="small" fill="outline"
                       style="position: absolute; right: 5px; top: 5px; height: 22px; font-size: 10px;"
                       (click)="verifyCurrentPassword()">Verify</ion-button>
-          <ion-spinner *ngIf="isVerifying" name="crescent"
+          <ion-spinner *ngIf="isVerifying"
+                       name="crescent"
                        style="position: absolute; right: 10px; top: 8px; width: 16px; height: 16px;"></ion-spinner>
         </div>
         <small *ngIf="verificationError" style="color: red;">{{ verificationError }}</small>
@@ -69,8 +82,10 @@
         <div class="input-container">
           <label>New Password</label>
           <div class="input-box">
-            <input [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="newPassword"
-                   (ngModelChange)="validateNewPassword()" />
+            <input [type]="showNewPassword ? 'text' : 'password'"
+                   [(ngModel)]="newPassword"
+                   (ngModelChange)="validateNewPassword()"
+                   (focus)="onInputFocus($event.target)" />
             <ion-icon *ngIf="newPassword"
                       [name]="showNewPassword ? 'eye-outline' : 'eye-off-outline'"
                       class="toggle-icon" (click)="togglePassword('new')"></ion-icon>
@@ -83,8 +98,10 @@
         <div class="input-container">
           <label>Confirm Password</label>
           <div class="input-box">
-            <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmPassword"
-                   (ngModelChange)="validateConfirmPassword()" />
+            <input [type]="showConfirmPassword ? 'text' : 'password'"
+                   [(ngModel)]="confirmPassword"
+                   (ngModelChange)="validateConfirmPassword()"
+                   (focus)="onInputFocus($event.target)" />
             <ion-icon *ngIf="confirmPassword"
                       [name]="showConfirmPassword ? 'eye-outline' : 'eye-off-outline'"
                       class="toggle-icon" (click)="togglePassword('confirm')"></ion-icon>
@@ -95,14 +112,15 @@
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
-          <ion-button class="save-button" [disabled]="!isNewPasswordValid || !isConfirmPasswordValid"
+          <ion-button class="save-button"
+                      [disabled]="!isNewPasswordValid || !isConfirmPasswordValid"
                       (click)="confirmSave('password')">Save Password</ion-button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Save Modal -->
+  <!-- Modals, Popups, etc. (same as before) -->
   <div class="overlay" *ngIf="showSaveModal" (click)="closeSaveCard()" tabindex="0"></div>
   <div class="logout-card centered" *ngIf="showSaveModal" tabindex="0">
     <div class="card-title">Save Changes?</div>
@@ -111,12 +129,8 @@
       <ion-button fill="clear" class="logout-btn cancel-btn" (click)="closeSaveCard()">Cancel</ion-button>
     </div>
   </div>
-
-  <!-- Save Popup -->
   <div class="overlay" *ngIf="showSuccessPopup" tabindex="0"></div>
   <div *ngIf="showSuccessPopup" class="success-popup" tabindex="0">Saved Successfully</div>
-
-  <!-- Static Profile Modal -->
   <div class="overlay" *ngIf="showStaticPicModal" (click)="closeStaticPicModal()" tabindex="0"></div>
   <div class="static-pic-modal centered" *ngIf="showStaticPicModal" (click)="$event.stopPropagation()" tabindex="0">
     <ion-icon name="close" class="close-icon" (click)="closeStaticPicModal()"></ion-icon>

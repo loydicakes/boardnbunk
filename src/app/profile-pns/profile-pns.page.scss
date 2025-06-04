@@ -1,11 +1,17 @@
+ion-content{
+  min-height: 100%;
+}
+
 #container {
   display: flex;
   flex-direction: column;
   padding: 20px 30px 0px 30px;
   background-color: var(--ion-background-color);
   color: var(--ion-text-color);
-  height: 100%;
+  min-height: 100%;  // <- changed from height: 100%;
+  /* Remove height: 100%; */
 }
+
 
 .back-btn {
   margin-top: 10px;
