@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
+import { ModalController } from '@ionic/angular';
+import { PaymentMethodModalComponent } from '../payment-method-modal/payment-method-modal.component';
+
 
 @Component({
   standalone: false,
@@ -11,7 +14,7 @@ export class CurrentRentPage implements OnInit {
   currentTenant: any = null;
   loading = true;
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, private modalCtrl: ModalController) {}
 
   async ngOnInit() {
     console.log('[CurrentRentPage] INIT');
@@ -64,5 +67,23 @@ export class CurrentRentPage implements OnInit {
 
     console.log('[Payment Updated]');
   }
+  async changePaymentMethod() {
+  const modal = await this.modalCtrl.create({
+    component: PaymentMethodModalComponent,
+    componentProps: {
+      currentMethod: this.currentTenant.paymentMethod
+    }
+  });
+
+  await modal.present();
+
+  const { data } = await modal.onDidDismiss();
+  if (data && data !== this.currentTenant.paymentMethod) {
+    await this.firestoreService.updateDocument('tenants', this.currentTenant.id, {
+      paymentMethod: data
+    });
+    this.currentTenant.paymentMethod = data;
+  }
+}
 
 }
