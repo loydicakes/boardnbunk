@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   trigger,
   transition,
@@ -23,70 +24,53 @@ import {
   ],
 })
 export class FavesPage implements OnInit {
-  categories = ['All', 'Solo', 'Couple', 'Small Fam', 'BedSpace'];
-  selectedCategory = 'All';
+  selectedType: string = '';
   rooms: any[] = [];
-  selectedRoom: any = null;
-  showMessageBox = false;
   currentUserId: string = '';
 
   constructor(
     private firestoreService: FirestoreService,
-    private router: Router
+    private router: Router,
+    private afAuth: AngularFireAuth
   ) {}
 
-  async ngOnInit() {
-    const user = localStorage.getItem('user');
-    if (!user) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    const parsedUser = JSON.parse(user);
-    this.currentUserId = parsedUser.uid;
-
-    await this.loadFavorites();
+  ngOnInit() {
+    this.afAuth.authState.subscribe(async user => {
+      if (!user) {
+        this.router.navigate(['/login']);
+        return;
+      }
+      this.currentUserId = user.uid;
+      await this.loadFavorites();
+    });
   }
 
   async loadFavorites() {
     const favorites = await this.firestoreService.getUserFavorites(this.currentUserId);
-
     this.rooms = favorites.map(fav => ({
       ...fav,
-      rating: 4 + Math.random(), // optional: remove or replace with real rating
       favorited: true,
       imageUrl: fav.image || 'https://via.placeholder.com/100',
-      location: fav.location || 'Unknown floor', // optional: if not stored
     }));
   }
 
+  filterRooms(type: string) {
+    this.selectedType = type;
+  }
 
   get filteredRooms() {
-    if (this.selectedCategory === 'All') {
-      return this.rooms;
+    if (!this.selectedType) return this.rooms;
+    if (this.selectedType === 'studio')
+      return this.rooms.filter(room => room.type?.toLowerCase().includes('studio'));
+    if (this.selectedType === 'bedspacer')
+      return this.rooms.filter(room => room.type?.toLowerCase().includes('bedspace'));
+    return this.rooms.filter(room => room.type?.toLowerCase().includes('solo'));
+  }
+
+  async toggleFavorite(room: any) {
+    if (this.currentUserId && room?.id) {
+      await this.firestoreService.removeRoomFromUserFavorites(this.currentUserId, room.id);
+      this.rooms = this.rooms.filter(r => r.id !== room.id);
     }
-    return this.rooms.filter(room => room.type === this.selectedCategory);
-  }
-
-  selectCategory(category: string) {
-    this.selectedCategory = category;
-  }
-
-  toggleFavorite(room: any) {
-    this.selectedRoom = room;
-    this.showMessageBox = true;
-  }
-
-  cancel() {
-    this.showMessageBox = false;
-    this.selectedRoom = null;
-  }
-
-  async remove() {
-    if (this.currentUserId && this.selectedRoom?.id) {
-      await this.firestoreService.removeRoomFromUserFavorites(this.currentUserId, this.selectedRoom.id);
-      this.rooms = this.rooms.filter(r => r.id !== this.selectedRoom.id);
-    }
-    this.cancel();
   }
 }
