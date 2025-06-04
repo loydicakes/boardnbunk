@@ -1,41 +1,22 @@
 <ion-content class="notifications-content" [fullscreen]="true">
-  <div class="top-shape"> 
+  <div class="top-shape">
     <h1 class="center-text">Notifications</h1>
   </div>
 
   <div class="notifications-wrapper">
-    <div class="notification-card">
+    <div
+      class="notification-card"
+      *ngFor="let noti of notifications"
+      [class.read]="noti.read"
+    >
       <div class="noti-icon">
-        <ion-icon name="mail-unread-outline"></ion-icon>
+        <ion-icon [name]="noti.read ? 'mail-open-outline' : 'mail-unread-outline'"></ion-icon>
       </div>
       <div class="noti-text">
-        <h3>Request Approved</h3>
+        <h3>{{ noti.message }}</h3>
         <p>Your request has been approved. You may now proceed to payment.</p>
-        <small>2 hours ago</small>
+        <small>{{ getTimeAgo(noti.timestamp) }}</small>
       </div>
     </div>
-
-    <div class="notification-card">
-      <div class="noti-icon">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </div>
-      <div class="noti-text">
-        <h3>Payment Reminder</h3>
-        <p>Your next rent is due on July 5. Don’t forget!</p>
-        <small>1 day ago</small>
-      </div>
-    </div>
-
-    <div class="notification-card">
-      <div class="noti-icon">
-        <ion-icon name="bed-outline"></ion-icon>
-      </div>
-      <div class="noti-text">
-        <h3>New Room Added</h3>
-        <p>A new studio-type room is now available near your location.</p>
-        <small>3 days ago</small>
-      </div>
-    </div>
-    </div>
+  </div>
 </ion-content>
-
