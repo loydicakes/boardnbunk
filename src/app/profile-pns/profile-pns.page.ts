@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
 
 @Component({
   selector: 'app-profile-pns',
@@ -11,6 +10,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   standalone: false
 })
 export class ProfilePnsPage implements OnInit {
+  @ViewChild('container', { static: false }) containerRef: ElementRef;
+
   firstname = '';
   lastname = '';
   email = '';
@@ -62,6 +63,13 @@ export class ProfilePnsPage implements OnInit {
     });
   }
 
+  // --- KEYBOARD AWARE SCROLL (this is the fix) ---
+  onInputFocus(input: HTMLElement) {
+    setTimeout(() => {
+      input.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+    }, 400); // allow keyboard to open before scrolling
+  }
+
   async loadActiveUserProfile(uid: string) {
     try {
       const userDoc = await this.firestoreService.getUserProfile(uid);
@@ -79,7 +87,6 @@ export class ProfilePnsPage implements OnInit {
       console.error('Failed to load active user profile', err);
     }
   }
-
 
   goToProfileMethod() {
     this.router.navigate(['/profile']);
@@ -142,7 +149,6 @@ export class ProfilePnsPage implements OnInit {
       console.error('Failed to save profile', err);
     }
   }
-
 
   startChangePassword() {
     this.changePasswordStep = 1;
