@@ -1,31 +1,29 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Select Payment Method</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
-        <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="payment-modal-container">
+    <h2 class="modal-title">Choose Payment Method</h2>
+    <div class="payment-option-list">
+      <!-- Debit/Credit Card -->
+      <div class="payment-option" [class.selected]="selectedMethod === 'Card'" (click)="selectedMethod='Card'">
+        <ion-icon name="card-outline"></ion-icon>
+        <span>Debit / Credit Card</span>
+        <ion-icon *ngIf="selectedMethod === 'Card'" name="checkmark-circle"></ion-icon>
+      </div>
+      <!-- GCash -->
+      <div class="payment-option" [class.selected]="selectedMethod === 'GCash'" (click)="selectedMethod='GCash'">
+        <img src="assets/paypal.png" alt="GCash" class="option-img" />
+        <span>GCash</span>
+        <ion-icon *ngIf="selectedMethod === 'GCash'" name="checkmark-circle"></ion-icon>
+      </div>
+      <!-- Cash -->
+      <div class="payment-option" [class.selected]="selectedMethod === 'Cash'" (click)="selectedMethod='Cash'">
+        <img src="assets/dollar.png" alt="Cash" class="option-img" />
+        <span>Cash</span>
+        <ion-icon *ngIf="selectedMethod === 'Cash'" name="checkmark-circle"></ion-icon>
+      </div>
+    </div>
 
-<ion-content class="ion-padding">
-  <ion-list>
-    <ion-radio-group [(ngModel)]="selectedMethod">
-      <ion-item>
-        <ion-label>Cash</ion-label>
-        <ion-radio slot="start" value="Cash"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>GCash</ion-label>
-        <ion-radio slot="start" value="GCash"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Card</ion-label>
-        <ion-radio slot="start" value="Card"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
-
-  <ion-button expand="block" (click)="save()">Save</ion-button>
+    <ion-button expand="block" class="save-btn" (click)="save()">
+      Save
+    </ion-button>
+  </div>
 </ion-content>
