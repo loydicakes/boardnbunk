@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../services/firestore.service';
 import { ToastController, AlertController } from '@ionic/angular';
-
+import { Router } from '@angular/router';
 @Component({
   standalone: false,
   selector: 'app-add-room',
@@ -13,12 +13,13 @@ export class RoomPage implements OnInit {
   roomForm: FormGroup;
   previewUrl: string | null = null;
   usersList: { id: string; firstname: string; lastname: string; email: string }[] = [];
-
+  currentUserId: string = '';
   constructor(
     private fb: FormBuilder,
     private firestoreService: FirestoreService,
     private toastController: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {
     this.roomForm = this.fb.group({
       name: ['', Validators.required],
@@ -31,6 +32,14 @@ export class RoomPage implements OnInit {
   }
 
   ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     this.roomForm.get('availability')?.valueChanges.subscribe((available) => {
       if (available) {
         this.roomForm.get('tenants')?.setValue('None');

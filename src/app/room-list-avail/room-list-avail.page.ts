@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { RoomEditModalPage } from '../room-edit-modal/room-edit-modal.page';
 import { ModalController } from '@ionic/angular';
-
+import { Router } from '@angular/router';
 interface Room {
   id: string;
   name: string;
@@ -20,13 +20,22 @@ interface Room {
 })
 export class RoomListAvailPage implements OnInit {
   rooms: Room[] = [];
-
+  currentUserId: string = '';
   constructor(
     private firestoreService: FirestoreService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private router: Router
   ) {}
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     await this.loadRooms();
   }
 

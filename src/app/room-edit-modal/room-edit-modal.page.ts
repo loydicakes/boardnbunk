@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Firestore, doc, updateDoc, collection, getDocs, addDoc } from '@angular/fire/firestore';
-
+import { Router } from '@angular/router';
 @Component({
   standalone: false,
   selector: 'app-room-edit-modal',
@@ -13,12 +13,13 @@ export class RoomEditModalPage implements OnInit {
   @Input() room: any;
   editForm: FormGroup;
   usersList: { id: string; firstname: string; lastname: string; email: string }[] = [];
-
+  currentUserId: string = '';
   constructor(
     private fb: FormBuilder,
     private modalCtrl: ModalController,
     private firestore: Firestore,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {
     this.editForm = this.fb.group({
       name: ['', Validators.required],
@@ -30,6 +31,14 @@ export class RoomEditModalPage implements OnInit {
   }
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     if (this.room) {
       const tenantsStr = this.room.tenants ? this.room.tenants.join(', ') : 'None';
       this.editForm.patchValue({

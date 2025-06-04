@@ -8,10 +8,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./landlord-profile.page.scss'],
 })
 export class LandlordProfilePage implements OnInit {
+  currentUserId: string = '';
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
   }
 
     //edit profile

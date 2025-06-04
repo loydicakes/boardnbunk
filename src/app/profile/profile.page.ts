@@ -13,6 +13,7 @@ import { Firestore } from '@angular/fire/firestore';
 })
 export class ProfilePage implements OnInit {
   displayName: string = '...';
+  currentUserId: string = '';
 
   constructor(
     private firestoreService: FirestoreService,
@@ -21,6 +22,14 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     this.loadUserProfile();
   }
 

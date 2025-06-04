@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { FirestoreService } from '../services/firestore.service';
 import { RoomEditModalPage } from '../room-edit-modal/room-edit-modal.page';
-
+import { Router } from '@angular/router';
 interface Room {
   id: string;
   name: string;
@@ -21,14 +21,24 @@ interface Room {
 })
 export class RoomUnavailableListPage implements OnInit {
   rooms: Room[] = [];
-
+  currentUserId: string = '';
   constructor(
     private firestoreService: FirestoreService,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController // ✅ Inject AlertController
+    private alertCtrl: AlertController,
+    private router:Router // ✅ Inject AlertController
+
   ) {}
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     const allRooms = await this.firestoreService.getAllRooms();
     this.rooms = allRooms.filter(
       room => !room.availability && Array.isArray(room.tenants) && room.tenants.length > 0

@@ -13,6 +13,7 @@ export class ProfilePmPage implements OnInit {
     paymentMethod: string = 'cash';
     cardNumber: string = '';
     gcashNumber: string = '';
+    currentUserId: string = '';
 
   constructor(
     private router: Router,
@@ -20,7 +21,16 @@ export class ProfilePmPage implements OnInit {
     private firestoreService: FirestoreService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
+  }
 
   goToProfileMethod() {
     this.router.navigate(['/profile']);

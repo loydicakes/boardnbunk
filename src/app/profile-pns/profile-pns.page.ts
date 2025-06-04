@@ -46,6 +46,7 @@ export class ProfilePnsPage implements OnInit {
   };
 
   uid: string = '';
+  currentUserId: string = '';
 
   constructor(
     private router: Router,
@@ -54,6 +55,14 @@ export class ProfilePnsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.loadActiveUserProfile(user.uid);

@@ -17,6 +17,7 @@ export class InfosPage implements OnInit {
   room: Room | null = null;
   loading = true;
   requestSent = false;
+  currentUserId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +26,15 @@ export class InfosPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+      const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
+
     this.roomId = this.route.snapshot.paramMap.get('id');
     if (this.roomId) {
       this.room = await this.firestoreService.getRoomById(this.roomId);

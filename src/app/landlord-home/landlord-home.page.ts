@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landlord-home',
@@ -13,10 +14,20 @@ export class LandlordHomePage implements OnInit {
   availableRooms: number = 0;
   totalTenants: number = 0;
   totalRequests: number = 0;
+  currentUserId: string = '';
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, private router:Router) {}
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
+
     const allRooms = await this.firestoreService.getAllRooms();
     this.totalRooms = allRooms.length;
     this.rentedRooms = allRooms.filter(room => room.tenants.length > 0).length;

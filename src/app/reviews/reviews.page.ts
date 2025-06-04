@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
+import { Router } from '@angular/router';
 import {
   trigger,
   transition,
@@ -31,13 +32,22 @@ export class ReviewsPage implements OnInit {
   newReview: string = '';
   currentUser: any;
   showReviewBox: boolean = false;
-
+  currentUserId: string = '';
   constructor(
     private route: ActivatedRoute,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.currentUser = JSON.parse(localStorage.getItem('user')!);
     if (this.roomId) {

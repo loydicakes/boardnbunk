@@ -16,10 +16,18 @@ interface RequestItem {
 })
 export class RequestsPage implements OnInit {
   requests: RequestItem[] = [];
-
+  currentUserId: string = '';
   constructor(private firestore: Firestore, private router: Router) {}
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     await this.loadRequests();
   }
 

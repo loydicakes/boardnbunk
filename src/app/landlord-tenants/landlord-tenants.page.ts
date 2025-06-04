@@ -15,6 +15,7 @@ export class LandlordTenantsPage implements OnInit {
   approvalTenants: any[] = [];
   selectedTenant: any = null;
   approvalModalTenant: any = null;
+  currentUserId: string = '';
 
   constructor(
     private firestoreService: FirestoreService,
@@ -23,6 +24,14 @@ export class LandlordTenantsPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+     const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.currentUserId = parsedUser.uid;
+      } else {
+        this.router.navigate(['/login']);
+        return;
+      }
     await this.loadApprovalRequests();
     await this.loadCurrentTenants();
   }
